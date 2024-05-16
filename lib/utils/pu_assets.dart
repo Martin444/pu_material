@@ -10,4 +10,5 @@ class PUImages {
   static String catito =
       'https://res.cloudinary.com/photographer/image/upload/v1707588911/catito_wuzsen.jpg';
   static String isoLogo = 'assets/logo/iso-logo.png';
+  static String dashLogo = 'assets/logo/logo-dash.png';
 }
