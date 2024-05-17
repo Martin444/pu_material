@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pu_material/pu_material.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 
+import '../../utils/formaters/upercase_first_letter.dart';
+
 class PUInput extends StatefulWidget {
   final String? hintText;
   final String? labelText;
+  final TextInputType? textInputType;
   final String? Function(String?)? validator;
+  final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? formaters;
   final void Function(String)? onChanged;
   final bool? isPassword;
   final String? errorText;
@@ -17,6 +23,9 @@ class PUInput extends StatefulWidget {
     required this.controller,
     this.hintText,
     this.labelText,
+    this.textInputType,
+    this.textInputAction,
+    this.formaters,
     this.isPassword,
     this.onChanged,
     this.errorText,
@@ -28,6 +37,20 @@ class PUInput extends StatefulWidget {
 }
 
 class _PUInputState extends State<PUInput> {
+  List<TextInputFormatter> getFormatForTypeInput() {
+    if (widget.formaters != null) return widget.formaters!;
+    switch (widget.textInputType) {
+      case TextInputType.name:
+        return [UppercaseFirstLetterFormatter()];
+      case TextInputType.number:
+        return [
+          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        ];
+      default:
+        return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +60,8 @@ class _PUInputState extends State<PUInput> {
       child: TextFormField(
         obscureText: widget.isPassword ?? false,
         validator: widget.validator,
+        keyboardType: widget.textInputType,
+        inputFormatters: getFormatForTypeInput(),
         decoration: InputDecoration(
           fillColor: PUColors.bgInput,
           labelText: widget.labelText,

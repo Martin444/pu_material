@@ -28,7 +28,7 @@ class ButtonPrimary extends StatelessWidget {
               ? MaterialStateProperty.all(PUColors.bgButton)
               : MaterialStateProperty.all(PUColors.bgButton),
           overlayColor: MaterialStateProperty.all(
-            Colors.white.withOpacity(0.1),
+            Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
           ),
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(vertical: 15),
