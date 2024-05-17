@@ -9,6 +9,8 @@ class PUColors {
 
   static Color bgError = const Color(0xffB06641);
 
+  static Color bgHeader = const Color(0xffD9D9D9);
+
   static Color bgInput = const Color(0xffF7F6F4);
 
   static Color bgSucces = const Color(0xFF41B06A);

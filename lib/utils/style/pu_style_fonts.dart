@@ -21,6 +21,12 @@ class PuTextStyle {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle title3Withe = GoogleFonts.openSans(
+    color: PUColors.textColor2,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle title2 = GoogleFonts.openSans(
     color: PUColors.textColor1,
     fontSize: 24,
