@@ -11,12 +11,12 @@ class ButtonPrimary extends StatelessWidget {
   bool disabled = false;
 
   ButtonPrimary({
-    Key? key,
+    super.key,
     required this.title,
     required this.onPressed,
     required this.load,
     this.disabled = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ButtonPrimary extends StatelessWidget {
               ? MaterialStateProperty.all(PUColors.bgButton)
               : MaterialStateProperty.all(PUColors.bgButton),
           overlayColor: MaterialStateProperty.all(
-            Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
+            const Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
           ),
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(vertical: 15),
