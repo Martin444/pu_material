@@ -92,7 +92,7 @@ class PuTextStyle {
 
   static TextStyle textLabel1 = GoogleFonts.openSans(
     color: PUColors.textColor1,
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
   );
 }

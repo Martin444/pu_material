@@ -57,34 +57,45 @@ class _PUInputState extends State<PUInput> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextFormField(
-        obscureText: widget.isPassword ?? false,
-        validator: widget.validator,
-        keyboardType: widget.textInputType,
-        inputFormatters: getFormatForTypeInput(),
-        decoration: InputDecoration(
-          fillColor: PUColors.bgInput,
-          labelText: widget.labelText,
-          hintText: widget.hintText,
-          floatingLabelStyle: PuTextStyle.textLabel1,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          isCollapsed: false,
-          alignLabelWithHint: false,
-          errorText: widget.errorText,
-          errorStyle: const TextStyle(
-            fontWeight: FontWeight.w800,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              widget.labelText ?? '',
+              style: PuTextStyle.textLabel1,
+            ),
           ),
-          filled: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 3,
+          TextFormField(
+            obscureText: widget.isPassword ?? false,
+            validator: widget.validator,
+            keyboardType: widget.textInputType,
+            inputFormatters: getFormatForTypeInput(),
+            decoration: InputDecoration(
+              fillColor: PUColors.bgInput,
+              hintText: widget.hintText,
+              floatingLabelStyle: PuTextStyle.textLabel1,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              isCollapsed: false,
+              alignLabelWithHint: false,
+              errorText: widget.errorText,
+              errorStyle: const TextStyle(
+                fontWeight: FontWeight.w800,
+              ),
+              filled: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 3,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            controller: widget.controller,
+            onChanged: widget.onChanged,
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        controller: widget.controller,
-        onChanged: widget.onChanged,
+        ],
       ),
     );
   }
