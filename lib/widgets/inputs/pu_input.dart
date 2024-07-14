@@ -81,7 +81,7 @@ class _PUInputState extends State<PUInput> {
               alignLabelWithHint: false,
               errorText: widget.errorText,
               errorStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
               ),
               filled: true,
               contentPadding: const EdgeInsets.symmetric(
