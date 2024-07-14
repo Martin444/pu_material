@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 
 class PUColors {
-  static Color primaryBackground = const Color(0xffF7F6F4);
+  static Color primaryBackground = const Color(0xffF388BB);
 
   static Color secundaryBackground = const Color(0xff318580);
+
+  static Color secundaryBackgroundCircle1 = const Color(0xFF87F684);
+
+  static Color secundaryBackgroundCircle2 = const Color(0xffF388BB);
+
+  static Color secundaryBackgroundCircle3 = const Color(0xffF38888);
+
+  static Color secundaryBackgroundCircle4 = const Color(0xffF3C888);
+
+  static Color selectedItem = const Color(0xffE3C6A3);
+
+  static Color bgItem = const Color(0xFFFFFFFF);
 
   static Color primaryColor = const Color(0xff41B0A9);
 
