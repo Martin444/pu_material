@@ -4,6 +4,8 @@ class PUIcons {
   static String iconCheck = 'assets/iconos/icon-check.svg';
   static String iconLess = 'assets/iconos/icon-less.svg';
   static String iconMore = 'assets/iconos/icon-plus.svg';
+  static String iconWhatsapp = 'assets/logo/wpp.svg';
+  static String iconGmail = 'assets/logo/gmail.svg';
 }
 
 class PUImages {

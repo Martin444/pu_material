@@ -16,7 +16,6 @@ class _BackgroundCirclesState extends State<BackgroundCircles> {
   @override
   Widget build(BuildContext context) {
     var heigth = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Positioned(

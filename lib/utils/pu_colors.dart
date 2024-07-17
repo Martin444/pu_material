@@ -19,7 +19,7 @@ class PUColors {
 
   static Color primaryColor = const Color(0xff41B0A9);
 
-  static Color bgError = const Color(0xffB06641);
+  static Color bgError = Color(0xFFE44646);
 
   static Color bgHeader = const Color(0xffD9D9D9);
 
