@@ -23,6 +23,8 @@ class PUColors {
 
   static Color bgHeader = const Color(0xffD9D9D9);
 
+  static Color bgLink = Color.fromARGB(255, 10, 58, 146);
+
   static Color bgInput = const Color(0xffF7F6F4);
 
   static Color bgSucces = const Color(0xFF41B06A);

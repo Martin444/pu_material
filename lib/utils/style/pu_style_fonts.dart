@@ -95,4 +95,5 @@ class PuTextStyle {
     fontSize: 15,
     fontWeight: FontWeight.w700,
   );
+  static TextStyle redirectLink = textLabel1.copyWith(color: PUColors.bgLink);
 }
