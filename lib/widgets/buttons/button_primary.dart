@@ -25,15 +25,15 @@ class ButtonPrimary extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: disabled || onPressed == null
-              ? MaterialStateProperty.all(PUColors.bgButton)
-              : MaterialStateProperty.all(PUColors.bgButton),
-          overlayColor: MaterialStateProperty.all(
+              ? WidgetStateProperty.all(PUColors.bgButton)
+              : WidgetStateProperty.all(PUColors.bgButton),
+          overlayColor: WidgetStateProperty.all(
             const Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
           ),
-          padding: MaterialStateProperty.all(
+          padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(vertical: 15),
           ),
-          shape: MaterialStateProperty.all(
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

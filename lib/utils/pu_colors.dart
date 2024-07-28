@@ -19,11 +19,11 @@ class PUColors {
 
   static Color primaryColor = const Color(0xff41B0A9);
 
-  static Color bgError = Color(0xFFE44646);
+  static Color bgError = const Color(0xFFE44646);
 
   static Color bgHeader = const Color(0xffD9D9D9);
 
-  static Color bgLink = Color.fromARGB(255, 10, 58, 146);
+  static Color bgLink = const Color.fromARGB(255, 10, 58, 146);
 
   static Color bgInput = const Color(0xffF7F6F4);
 
