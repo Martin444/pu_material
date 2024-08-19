@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PUColors {
-  static Color primaryBackground = const Color(0xffF388BB);
+  static Color primaryBackground = const Color(0xFFFFFFFF);
 
   static Color secundaryBackground = const Color(0xff318580);
 
@@ -17,7 +17,9 @@ class PUColors {
 
   static Color bgItem = const Color(0xFFFFFFFF);
 
-  static Color primaryColor = const Color(0xff41B0A9);
+  static Color bgItemMenuSelected = const Color(0xFFF5F5F6);
+
+  static Color primaryColor = const Color(0xff3D72FD);
 
   static Color bgError = const Color(0xFFE44646);
 
@@ -25,13 +27,19 @@ class PUColors {
 
   static Color bgLink = const Color.fromARGB(255, 10, 58, 146);
 
-  static Color bgInput = const Color(0xffF7F6F4);
+  static Color bgInput = const Color(0xffEBEBEB);
 
   static Color bgSucces = const Color(0xFF41B06A);
 
-  static Color bgButton = const Color(0xff273332);
+  static Color bgButton = const Color(0xff3D72FD);
 
-  static Color textColor1 = const Color(0xFF2C3333);
+  static Color iconColor = const Color(0xff8E92A2);
+
+  static Color borderInputColor = const Color(0xffC5C4C4);
+
+  static Color textColor1 = const Color(0xFF969696);
+
+  static Color textColor3 = const Color(0xFF595959);
 
   static Color textColor2 = const Color(0xFFFDF5E6);
 }

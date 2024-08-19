@@ -1,99 +1,114 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 
+var styleGlobal = const TextStyle(
+  fontFamily: 'Sansation-bold',
+  fontStyle: FontStyle.normal,
+);
+
 class PuTextStyle {
-  static TextStyle title1 = GoogleFonts.openSans(
-    color: PUColors.textColor1,
+  static TextStyle title1 = styleGlobal.copyWith(
+    color: PUColors.textColor3,
     fontSize: 24,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
   );
 
-  static TextStyle titleSecundary = GoogleFonts.openSans(
+  static TextStyle titleSecundary = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 28,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle title3 = GoogleFonts.openSans(
+  static TextStyle title3 = styleGlobal.copyWith(
     color: PUColors.textColor1,
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle title3Withe = GoogleFonts.openSans(
+  static TextStyle textLabelMenu = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle title3Withe = styleGlobal.copyWith(
     color: PUColors.textColor2,
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle title2 = GoogleFonts.openSans(
-    color: PUColors.textColor1,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
+  static TextStyle title2 = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 20,
+    fontWeight: FontWeight.w300,
   );
 
-  static TextStyle title3disable = GoogleFonts.openSans(
+  static TextStyle title3disable = styleGlobal.copyWith(
     color: const Color.fromARGB(255, 213, 213, 213),
     fontSize: 16,
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle title4 = GoogleFonts.openSans(
+  static TextStyle title4 = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle title5 = GoogleFonts.openSans(
+  static TextStyle title5 = styleGlobal.copyWith(
     color: PUColors.textColor1,
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle title6 = GoogleFonts.openSans(
+  static TextStyle title6 = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 14,
     fontWeight: FontWeight.w500,
   );
 
-  static TextStyle description1 = GoogleFonts.openSans(
+  static TextStyle description1 = styleGlobal.copyWith(
     color: PUColors.textColor1,
     fontSize: 18,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.normal,
     height: 1.0,
   );
 
-  static TextStyle description2 = GoogleFonts.openSans(
+  static TextStyle hintTextStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 17,
+    fontWeight: FontWeight.w300,
+    height: 1.0,
+  );
+
+  static TextStyle description2 = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 14,
     fontWeight: FontWeight.w200,
-    height: 1.0,
   );
 
-  static TextStyle primaryButtonStyle = GoogleFonts.openSans(
+  static TextStyle primaryButtonStyle = styleGlobal.copyWith(
     color: PUColors.textColor2,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: FontWeight.w600,
     height: 1.8,
   );
 
-  static TextStyle secundaryButtonStyle = GoogleFonts.openSans(
+  static TextStyle secundaryButtonStyle = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle textInput1 = GoogleFonts.openSans(
+  static TextStyle textInput1 = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle textLabel1 = GoogleFonts.openSans(
-    color: PUColors.textColor1,
-    fontSize: 15,
+  static TextStyle redirectLink1 = styleGlobal.copyWith(
+    color: PUColors.bgLink,
+    fontSize: 18,
     fontWeight: FontWeight.w700,
   );
-  static TextStyle redirectLink = textLabel1.copyWith(color: PUColors.bgLink);
 }

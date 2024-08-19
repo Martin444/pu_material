@@ -21,7 +21,7 @@ class ButtonPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(8),
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: disabled || onPressed == null
@@ -35,7 +35,7 @@ class ButtonPrimary extends StatelessWidget {
           ),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ),
@@ -53,8 +53,7 @@ class ButtonPrimary extends StatelessWidget {
                     height: 25,
                     width: 25,
                     child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(PUColors.textColor2),
+                      valueColor: AlwaysStoppedAnimation<Color>(PUColors.textColor2),
                     ),
                   ),
           ],
