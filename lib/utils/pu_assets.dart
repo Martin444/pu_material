@@ -16,6 +16,8 @@ class PUIcons {
   static String iconWhatsapp = 'assets/logo/wpp.svg';
   static String iconDownload = 'assets/logo/download.svg';
   static String iconGmail = 'assets/logo/gmail.svg';
+  static String iconEdit = 'assets/edit-icon.svg';
+  static String iconDelete = 'assets/delete-icon.svg';
 }
 
 class PUImages {
@@ -23,4 +25,5 @@ class PUImages {
   static String isoLogo = 'assets/logo/iso-logo.png';
   static String dashLogo = 'assets/logo/logomenucom.png';
   static String succesImageSvg = 'assets/fivehand.svg';
+  static String noDataImageSvg = 'assets/nodata.svg';
 }

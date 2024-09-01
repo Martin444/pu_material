@@ -74,10 +74,12 @@ class _InputDropDownState<T> extends State<PUInputDropDown<T>> {
           ),
           items: widget.items,
           onChanged: (T? newValue) {
-            widget.onSelect(newValue!);
-            setState(() {
-              selectedValue = newValue;
-            });
+            if (newValue != null) {
+              widget.onSelect(newValue);
+              setState(() {
+                selectedValue = newValue;
+              });
+            }
           },
         ),
       ],

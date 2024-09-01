@@ -94,6 +94,13 @@ class PuTextStyle {
     height: 1.8,
   );
 
+  static TextStyle textbtnStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    height: 1.8,
+  );
+
   static TextStyle secundaryButtonStyle = styleGlobal.copyWith(
     color: Colors.white,
     fontSize: 16,

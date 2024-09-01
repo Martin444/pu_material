@@ -5,19 +5,13 @@ class PUColors {
 
   static Color secundaryBackground = const Color(0xff318580);
 
-  static Color secundaryBackgroundCircle1 = const Color(0xFF87F684);
-
-  static Color secundaryBackgroundCircle2 = const Color(0xffF388BB);
-
-  static Color secundaryBackgroundCircle3 = const Color(0xffF38888);
-
-  static Color secundaryBackgroundCircle4 = const Color(0xffF3C888);
-
   static Color selectedItem = const Color(0xffE3C6A3);
 
   static Color bgItem = const Color(0xFFFFFFFF);
 
   static Color bgItemMenuSelected = const Color(0xFFF5F5F6);
+
+  static Color bgCategorySelected = const Color(0xFFF1F5FF);
 
   static Color primaryColor = const Color(0xff3D72FD);
 
