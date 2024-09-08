@@ -3,14 +3,14 @@ import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 
 // ignore: must_be_immutable
-class ButtonPrimary extends StatelessWidget {
+class ButtonSecundary extends StatelessWidget {
   //parametros
   String title;
   VoidCallback? onPressed;
   bool load;
   bool disabled = false;
 
-  ButtonPrimary({
+  ButtonSecundary({
     super.key,
     required this.title,
     required this.onPressed,
@@ -25,15 +25,15 @@ class ButtonPrimary extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: disabled || onPressed == null
-              ? WidgetStateProperty.all(PUColors.bgButton)
-              : WidgetStateProperty.all(PUColors.bgButton),
+              ? WidgetStateProperty.all(PUColors.bgCategorySelected)
+              : WidgetStateProperty.all(PUColors.bgCategorySelected),
           overlayColor: WidgetStateProperty.all(
             const Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
           ),
           padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 15,
+              vertical: 15,
+              horizontal: 10,
             ),
           ),
           shape: WidgetStateProperty.all(
@@ -50,7 +50,7 @@ class ButtonPrimary extends StatelessWidget {
                 ? Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: PuTextStyle.primaryButtonStyle,
+                    style: PuTextStyle.secundaryButtonStyle,
                   )
                 : SizedBox(
                     height: 25,

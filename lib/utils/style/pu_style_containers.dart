@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PuStyleContainers {
+  static BoxDecoration borderAllContainer = BoxDecoration(
+    border: Border.all(
+      width: 1,
+      color: const Color(0xFFBCBCBC),
+    ),
+  );
   static BoxDecoration borderBottomContainer = const BoxDecoration(
     border: Border(
       bottom: BorderSide(

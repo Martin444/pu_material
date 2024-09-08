@@ -102,7 +102,7 @@ class PuTextStyle {
   );
 
   static TextStyle secundaryButtonStyle = styleGlobal.copyWith(
-    color: Colors.white,
+    color: PUColors.iconColor,
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );

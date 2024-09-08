@@ -12,6 +12,7 @@ class PUInput extends StatefulWidget {
   final String? hintText;
   final String? labelText;
   final TextInputType? textInputType;
+  final FocusNode? focusNode;
   final String? Function(String?)? validator;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? formaters;
@@ -34,6 +35,7 @@ class PUInput extends StatefulWidget {
     this.isPassword,
     this.onChanged,
     this.errorText,
+    this.focusNode,
     this.onSubmited,
     this.validator,
   });
@@ -102,6 +104,7 @@ class _PUInputState extends State<PUInput> {
           obscureText: isVisibleText,
           validator: widget.validator,
           keyboardType: widget.textInputType,
+          focusNode: widget.focusNode,
           inputFormatters: getFormatForTypeInput(),
           decoration: InputDecoration(
             fillColor: PUColors.bgInput,
