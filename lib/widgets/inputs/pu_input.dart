@@ -103,6 +103,7 @@ class _PUInputState extends State<PUInput> {
         TextFormField(
           obscureText: isVisibleText,
           validator: widget.validator,
+          textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
           focusNode: widget.focusNode,
           inputFormatters: getFormatForTypeInput(),
