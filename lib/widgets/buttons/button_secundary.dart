@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pu_material/utils/overflow_text.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 
@@ -47,10 +48,17 @@ class ButtonSecundary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             !load
-                ? Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: PuTextStyle.secundaryButtonStyle,
+                ? Flexible(
+                    child: PUOverflowTextDetector(
+                      message: title,
+                      children: [
+                        Text(
+                          title,
+                          textAlign: TextAlign.center,
+                          style: PuTextStyle.secundaryButtonStyle,
+                        ),
+                      ],
+                    ),
                   )
                 : SizedBox(
                     height: 25,
