@@ -1,6 +1,7 @@
 class PUIcons {
-  static String iconCart = 'assets/iconos/icon-cart.svg';
-  static String iconBack = 'assets/iconos/icon-back.svg';
+  static String iconCart = '../../../pu_material/assets/icon-cart.svg';
+  static String iconBack = '../../../pu_material/assets/icon-back.svg';
+  static String iconCheck = '../../../pu_material/assets/icon-check.svg';
   static String iconEyeClose = 'assets/eye-close.svg';
   static String iconEyeOpen = 'assets/eye-open.svg';
   static String iconHomeMenu = 'assets/home-icon.svg';
@@ -10,7 +11,6 @@ class PUIcons {
   static String iconProveeMenu = 'assets/prove-icon.svg';
   static String iconExitMenu = 'assets/exit-icon.svg';
   static String iconLink = 'assets/link-icon.svg';
-  static String iconCheck = 'assets/iconos/icon-check.svg';
   static String iconLess = 'assets/iconos/icon-less.svg';
   static String iconMore = 'assets/iconos/icon-plus.svg';
   static String iconWhatsapp = 'assets/logo/wpp.svg';

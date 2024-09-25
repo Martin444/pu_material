@@ -35,5 +35,7 @@ class PUColors {
 
   static Color textColor3 = const Color(0xFF595959);
 
+  static Color textColor4 = const Color(0xff8E92A2);
+
   static Color textColor2 = const Color(0xFFFDF5E6);
 }

@@ -74,6 +74,31 @@ class PuTextStyle {
     height: 1.0,
   );
 
+  //CART_ITEM
+
+  static TextStyle brandHeadStyle = styleGlobal.copyWith(
+    color: PUColors.textColor4,
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
+  static TextStyle nameProductStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
+  static TextStyle ingredientsListStyle = styleGlobal.copyWith(
+    color: PUColors.textColor4,
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
+  ///////////////
+
   static TextStyle hintTextStyle = styleGlobal.copyWith(
     color: PUColors.textColor3,
     fontSize: 17,
