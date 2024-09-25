@@ -3,11 +3,13 @@ import 'package:pu_material/pu_material.dart';
 
 class PuInputTags extends StatefulWidget {
   final TextEditingController controller;
+  final String hintText;
   final Function(List<String>)? onSubmitTag;
 
   const PuInputTags({
     super.key,
     required this.controller,
+    required this.hintText,
     this.onSubmitTag,
   });
 
@@ -43,7 +45,7 @@ class _PuInputTagsState extends State<PuInputTags> {
               child: PUInput(
                 controller: widget.controller,
                 focusNode: focusTagInput,
-                hintText: 'Agrega los ingredientes',
+                hintText: widget.hintText,
                 onSubmited: (value) {
                   if (value.isNotEmpty) {
                     _addTag(value);
