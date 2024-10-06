@@ -98,6 +98,17 @@ class PuTextStyle {
   );
 
   ///////////////
+  ///
+  ///
+  //////HEAD CATALOG
+  ///
+  ///
+  static TextStyle cartQuantityTextStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    height: 1.0,
+  );
 
   static TextStyle hintTextStyle = styleGlobal.copyWith(
     color: PUColors.textColor3,

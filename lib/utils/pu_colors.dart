@@ -29,6 +29,8 @@ class PUColors {
 
   static Color iconColor = const Color(0xff8E92A2);
 
+  static Color iconColorBlack = const Color(0xFF000000);
+
   static Color borderInputColor = const Color(0xffC5C4C4);
 
   static Color textColor1 = const Color(0xFF969696);
