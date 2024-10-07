@@ -102,7 +102,6 @@ class PuTextStyle {
   ///
   //////HEAD CATALOG
   ///
-  ///
   static TextStyle cartQuantityTextStyle = styleGlobal.copyWith(
     color: PUColors.textColor3,
     fontSize: 14,
@@ -110,6 +109,29 @@ class PuTextStyle {
     height: 1.0,
   );
 
+  static TextStyle titleHeadTextStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 21,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
+  //////////////////////
+  ///
+  ///
+  ///
+  /// CART PAGE
+  ///
+  ///
+
+  static TextStyle priceCartTOtal = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 21,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
+  ///
   static TextStyle hintTextStyle = styleGlobal.copyWith(
     color: PUColors.textColor3,
     fontSize: 17,
