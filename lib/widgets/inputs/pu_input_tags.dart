@@ -3,6 +3,7 @@ import 'package:pu_material/pu_material.dart';
 
 class PuInputTags extends StatefulWidget {
   final TextEditingController controller;
+  final List<String>? initTags;
   final String hintText;
   final Function(List<String>)? onSubmitTag;
 
@@ -11,6 +12,7 @@ class PuInputTags extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.onSubmitTag,
+    this.initTags,
   });
 
   @override
@@ -20,6 +22,15 @@ class PuInputTags extends StatefulWidget {
 class _PuInputTagsState extends State<PuInputTags> {
   List<String> tags = ["Todos"];
   FocusNode focusTagInput = FocusNode();
+
+  @override
+  void initState() {
+    if (widget.initTags?.isNotEmpty ?? false) {
+      tags.clear();
+      tags.addAll(widget.initTags ?? []);
+    }
+    super.initState();
+  }
 
   void _addTag(String tag) {
     setState(() {
@@ -83,7 +94,10 @@ class _PuInputTagsState extends State<PuInputTags> {
             return Chip(
               label: Text(tag),
               deleteIcon: const Icon(Icons.cancel),
-              onDeleted: () => _removeTag(tag),
+              onDeleted: () {
+                _removeTag(tag);
+                widget.onSubmitTag!(tags);
+              },
             );
           }).toList(),
         ),
