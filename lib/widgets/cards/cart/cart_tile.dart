@@ -4,6 +4,7 @@ import 'package:pu_material/utils/overflow_text.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 import 'package:pu_material/widgets/cards/cart/model/cart_item_model.dart';
+import 'package:pu_material/widgets/pu_robust_network_image.dart';
 
 class CartTile extends StatelessWidget {
   final CartItemModel item;
@@ -41,8 +42,8 @@ class CartTile extends StatelessWidget {
         children: [
           Flexible(
             flex: 1,
-            child: Image.network(
-              item.photoUrl!,
+            child: PuRobustNetworkImage(
+              imageUrl: item.photoUrl ?? '',
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
