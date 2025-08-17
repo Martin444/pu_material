@@ -11,18 +11,15 @@ class ImageTestPage extends StatefulWidget {
 }
 
 class _ImageTestPageState extends State<ImageTestPage> {
-  
   // URL problemática del error que mencionaste
-  final String problematicUrl = 
-    'http://localhost:3000/api/image-proxy/image?url=http%3A%2F%2Fres.cloudinary.com%2Fphotographer%2Fimage%2Fupload%2Fv1752925600%2Fn7bqg0sjmhgmaz9y1jtx.jpg';
-  
+  final String problematicUrl =
+      'http://localhost:3000/api/image-proxy/image?url=http%3A%2F%2Fres.cloudinary.com%2Fphotographer%2Fimage%2Fupload%2Fv1752925600%2Fn7bqg0sjmhgmaz9y1jtx.jpg';
+
   // URL original extraída
-  final String originalUrl = 
-    'http://res.cloudinary.com/photographer/image/upload/v1752925600/n7bqg0sjmhgmaz9y1jtx.jpg';
-  
+  final String originalUrl = 'http://res.cloudinary.com/photographer/image/upload/v1752925600/n7bqg0sjmhgmaz9y1jtx.jpg';
+
   // URL de prueba conocida
-  final String testUrl = 
-    'https://res.cloudinary.com/photographer/image/upload/v1707588911/catito_wuzsen.jpg';
+  final String testUrl = 'https://res.cloudinary.com/photographer/image/upload/v1707588911/catito_wuzsen.jpg';
 
   @override
   Widget build(BuildContext context) {

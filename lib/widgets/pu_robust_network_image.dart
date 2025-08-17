@@ -32,7 +32,7 @@ class PuRobustNetworkImage extends StatelessWidget {
 
     final cleanedUrl = _cleanUrl(imageUrl);
     final processedUrl = _preprocessUrl(cleanedUrl);
-    
+
     if (!_isValidUrl(processedUrl)) {
       print('Invalid URL after processing: $processedUrl');
       return _buildErrorWidget();
@@ -84,7 +84,7 @@ class PuRobustNetworkImage extends StatelessWidget {
 
   Widget _buildErrorWithFallback(String url, dynamic error) {
     print('Error loading image: $url - Error: $error');
-    
+
     // Debug detallado de la URL usando utilidades
     ImageDebugUtils.analyzeUrl(url);
 
@@ -95,7 +95,7 @@ class PuRobustNetworkImage extends StatelessWidget {
 
     // Extraer URL original si está usando proxy
     String originalUrl = _extractOriginalUrl(url);
-    
+
     // Validar que la URL original sea válida
     if (!ImageDebugUtils.isValidImageUrl(originalUrl)) {
       print('Invalid URL after extraction: $originalUrl');
@@ -128,11 +128,11 @@ class PuRobustNetworkImage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildPlaceholder();
         }
-        
+
         if (snapshot.hasData) {
           return snapshot.data!;
         }
-        
+
         return _buildErrorWidget();
       },
     );
@@ -182,9 +182,7 @@ class PuRobustNetworkImage extends StatelessWidget {
   bool _isValidUrl(String url) {
     try {
       final uri = Uri.parse(url);
-      return uri.hasScheme && 
-             (uri.scheme == 'http' || uri.scheme == 'https') &&
-             uri.host.isNotEmpty;
+      return uri.hasScheme && (uri.scheme == 'http' || uri.scheme == 'https') && uri.host.isNotEmpty;
     } catch (e) {
       return false;
     }
@@ -204,12 +202,12 @@ class PuRobustNetworkImage extends StatelessWidget {
       print('Extracted URL: $extracted');
       return extracted;
     }
-    
+
     // Si la URL ya es una URL directa de Cloudinary, mantenerla
     if (url.contains('res.cloudinary.com')) {
       return url;
     }
-    
+
     return url;
   }
 }
