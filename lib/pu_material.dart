@@ -8,6 +8,7 @@ export 'package:pu_material/widgets/inputs/pu_input.dart';
 export 'package:pu_material/widgets/dialogs/warning_dialog.dart';
 export 'package:pu_material/widgets/menu/items/itemdraw.dart';
 export 'package:pu_material/utils/pu_colors.dart';
+export 'package:pu_material/widgets/pu_robust_network_image.dart';
 
 // Atoms
 export 'package:pu_material/atoms/label_text.dart';
