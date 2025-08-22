@@ -197,9 +197,7 @@ class PuRobustNetworkImage extends StatelessWidget {
   String _preprocessUrl(String url) {
     // Si detectamos un proxy localhost, extraer la URL original inmediatamente
     if (url.contains('localhost') && url.contains('image-proxy')) {
-      print('Detected localhost proxy URL, extracting original: $url');
       String extracted = _extractOriginalUrl(url);
-      print('Extracted URL: $extracted');
       return extracted;
     }
 
