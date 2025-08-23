@@ -173,6 +173,21 @@ class PuRobustNetworkImage extends StatelessWidget {
 
   // Preprocesar URL para manejar URLs problemáticas
   String _preprocessUrl(String url) {
+    // Si detectamos un proxy localhost, extraer la URL de Cloudinary directamente
+    if (url.contains('localhost') && url.contains('image-proxy') && url.contains('url=')) {
+      try {
+        final uri = Uri.parse(url);
+        final encodedUrl = uri.queryParameters['url'];
+        if (encodedUrl != null) {
+          final decodedUrl = Uri.decodeComponent(encodedUrl);
+          print('Proxy localhost detectado, usando URL directa: $decodedUrl');
+          return decodedUrl;
+        }
+      } catch (e) {
+        print('Error extrayendo URL del proxy: $e');
+      }
+    }
+
     // Si la URL ya es una URL directa de Cloudinary, mantenerla
     if (url.contains('res.cloudinary.com')) {
       return url;

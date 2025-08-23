@@ -27,7 +27,7 @@ class StatusHeaderConfig {
 class StatusHeader extends StatefulWidget {
   final bool isMobile;
   final StatusHeaderConfig config;
-  final List<InfoItem> infoItems;
+  final List<InfoItem>? infoItems;
   final bool showStatusAnimation;
   final bool showProgressIndicator;
   final int? currentStep;
@@ -38,7 +38,7 @@ class StatusHeader extends StatefulWidget {
     Key? key,
     required this.isMobile,
     required this.config,
-    required this.infoItems,
+    this.infoItems,
     this.showStatusAnimation = false,
     this.showProgressIndicator = false,
     this.currentStep,
@@ -50,29 +50,135 @@ class StatusHeader extends StatefulWidget {
   State<StatusHeader> createState() => _StatusHeaderState();
 }
 
-class _StatusHeaderState extends State<StatusHeader>
-    with TickerProviderStateMixin {
+class _StatusHeaderState extends State<StatusHeader> with TickerProviderStateMixin {
   late AnimationController _statusController;
+  late AnimationController _textController;
+  late AnimationController _infoController;
+  late AnimationController _progressController;
+
   late Animation<double> _statusAnimation;
+  late Animation<double> _textAnimation;
+  late Animation<double> _infoAnimation;
+  late Animation<double> _progressAnimation;
+  late Animation<Offset> _textSlideAnimation;
+  late Animation<Offset> _infoSlideAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    // Controlador principal para el ícono de estado
     _statusController = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
+
+    // Controlador para el texto (título y subtítulo)
+    _textController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    // Controlador para la tarjeta de información
+    _infoController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    // Controlador para el indicador de progreso
+    _progressController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    // Animaciones de escala y opacidad
     _statusAnimation = CurvedAnimation(
       parent: _statusController,
       curve: Curves.elasticOut,
     );
 
-    _statusController.forward();
+    _textAnimation = CurvedAnimation(
+      parent: _textController,
+      curve: Curves.easeOutBack,
+    );
+
+    _infoAnimation = CurvedAnimation(
+      parent: _infoController,
+      curve: Curves.easeOutQuart,
+    );
+
+    _progressAnimation = CurvedAnimation(
+      parent: _progressController,
+      curve: Curves.easeOut,
+    );
+
+    // Animaciones de deslizamiento
+    _textSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(_textAnimation);
+
+    _infoSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.5),
+      end: Offset.zero,
+    ).animate(_infoAnimation);
+
+    // Iniciar secuencia de animaciones
+    _startAnimationSequence();
+  }
+
+  Future<void> _startAnimationSequence() async {
+    // 1. Animar ícono de estado
+    await _statusController.forward();
+
+    // 2. Animar texto con un pequeño delay
+    await Future.delayed(const Duration(milliseconds: 100));
+    await _textController.forward();
+
+    // 3. Animar tarjeta de información
+    await Future.delayed(const Duration(milliseconds: 150));
+    await _infoController.forward();
+
+    // 4. Animar indicador de progreso si está presente
+    if (widget.showProgressIndicator) {
+      await Future.delayed(const Duration(milliseconds: 100));
+      await _progressController.forward();
+    }
+  }
+
+  void _resetAndReplayAnimations() {
+    _statusController.reset();
+    _textController.reset();
+    _infoController.reset();
+    _progressController.reset();
+    _startAnimationSequence();
+  }
+
+  @override
+  void didUpdateWidget(StatusHeader oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Si cambia la configuración de estado, reiniciar animaciones
+    if (oldWidget.config.title != widget.config.title || oldWidget.config.icon != widget.config.icon) {
+      _resetAndReplayAnimations();
+    }
+
+    // Si se muestra/oculta el indicador de progreso
+    if (oldWidget.showProgressIndicator != widget.showProgressIndicator) {
+      if (widget.showProgressIndicator) {
+        _progressController.forward();
+      } else {
+        _progressController.reverse();
+      }
+    }
   }
 
   @override
   void dispose() {
     _statusController.dispose();
+    _textController.dispose();
+    _infoController.dispose();
+    _progressController.dispose();
     super.dispose();
   }
 
@@ -92,56 +198,108 @@ class _StatusHeaderState extends State<StatusHeader>
           ),
           child: Column(
             children: [
-              StatusIcon(
-                size: widget.isMobile ? 50 : 60,
-                backgroundColor: widget.config.iconBackgroundColor,
-                icon: widget.config.icon,
-                iconColor: widget.config.iconColor,
-                borderWidth: widget.isMobile ? 4 : 6,
+              // Ícono de estado animado
+              AnimatedBuilder(
                 animation: _statusAnimation,
-                isRotating: widget.config.icon == Icons.sync,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _statusAnimation.value,
+                    child: Opacity(
+                      opacity: _statusAnimation.value,
+                      child: StatusIcon(
+                        size: widget.isMobile ? 50 : 60,
+                        backgroundColor: widget.config.iconBackgroundColor,
+                        icon: widget.config.icon,
+                        iconColor: widget.config.iconColor,
+                        borderWidth: widget.isMobile ? 4 : 6,
+                        animation: _statusAnimation,
+                        isRotating: widget.config.icon == Icons.sync,
+                      ),
+                    ),
+                  );
+                },
               ),
               SizedBox(height: widget.isMobile ? 16 : 20),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: Column(
-                  key: ValueKey(widget.config.title),
-                  children: [
-                    Text(
-                      widget.config.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: widget.isMobile ? 24 : 36,
-                        fontWeight: FontWeight.w600,
+
+              // Texto animado con deslizamiento
+              AnimatedBuilder(
+                animation: _textAnimation,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _textSlideAnimation,
+                    child: FadeTransition(
+                      opacity: _textAnimation,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        child: Column(
+                          key: ValueKey(widget.config.title),
+                          children: [
+                            Text(
+                              widget.config.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: widget.isMobile ? 24 : 36,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: widget.isMobile ? 4 : 8),
+                            Text(
+                              widget.config.subtitle,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.9),
+                                fontSize: widget.isMobile ? 14 : 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: widget.isMobile ? 4 : 8),
-                    Text(
-                      widget.config.subtitle,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
-                        fontSize: widget.isMobile ? 14 : 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
               SizedBox(height: widget.isMobile ? 20 : 32),
-              InfoCard(
-                items: widget.infoItems,
-                isMobile: widget.isMobile,
+
+              // Tarjeta de información animada
+              AnimatedBuilder(
+                animation: _infoAnimation,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _infoSlideAnimation,
+                    child: FadeTransition(
+                      opacity: _infoAnimation,
+                      child: Transform.scale(
+                        scale: 0.8 + (0.2 * _infoAnimation.value),
+                        child: InfoCard(
+                          items: widget.infoItems ?? [],
+                          isMobile: widget.isMobile,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-              if (widget.showProgressIndicator &&
-                  widget.currentStep != null &&
-                  widget.totalSteps != null) ...[
+
+              // Indicador de progreso animado
+              if (widget.showProgressIndicator && widget.currentStep != null && widget.totalSteps != null) ...[
                 SizedBox(height: widget.isMobile ? 16 : 20),
-                StatusProgressIndicator(
-                  currentStep: widget.currentStep!,
-                  totalSteps: widget.totalSteps!,
-                  isMobile: widget.isMobile,
+                AnimatedBuilder(
+                  animation: _progressAnimation,
+                  builder: (context, child) {
+                    return FadeTransition(
+                      opacity: _progressAnimation,
+                      child: Transform.translate(
+                        offset: Offset(0, 20 * (1 - _progressAnimation.value)),
+                        child: StatusProgressIndicator(
+                          currentStep: widget.currentStep!,
+                          totalSteps: widget.totalSteps!,
+                          isMobile: widget.isMobile,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ],
