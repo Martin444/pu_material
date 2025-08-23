@@ -130,8 +130,51 @@ class PuRobustNetworkImage extends StatelessWidget {
   }
 
   Future<Widget> _attemptImageLoad(String url) async {
+    // Lista de URLs a intentar (en orden de preferencia)
+    final urlsToTry = <String>[];
+
+    // Primero intentar con la URL original
+    urlsToTry.add(url);
+
+    // Si es un proxy, también intentar con la URL directa extraída
+    if (url.contains('image-proxy') && url.contains('url=')) {
+      try {
+        final uri = Uri.parse(url);
+        final encodedUrl = uri.queryParameters['url'];
+        if (encodedUrl != null) {
+          final directUrl = Uri.decodeComponent(encodedUrl);
+          if (directUrl != url && !urlsToTry.contains(directUrl)) {
+            urlsToTry.add(directUrl);
+          }
+        }
+      } catch (e) {
+        print('Error parsing proxy URL: $e');
+      }
+    }
+
+    // Intentar cada URL en orden
+    for (int i = 0; i < urlsToTry.length; i++) {
+      final currentUrl = urlsToTry[i];
+      print('Intentando cargar imagen (${i + 1}/${urlsToTry.length}): $currentUrl');
+
+      try {
+        return await _loadImageWithUrl(currentUrl);
+      } catch (e) {
+        print('Falló carga ${i + 1}/${urlsToTry.length} para $currentUrl: $e');
+
+        // Si es el último intento, lanzar el error
+        if (i == urlsToTry.length - 1) {
+          rethrow;
+        }
+      }
+    }
+
+    throw Exception('No se pudo cargar ninguna URL de imagen');
+  }
+
+  Future<Widget> _loadImageWithUrl(String url) async {
     try {
-      // Estrategia 1: Image.network con headers básicos
+      // Estrategia: Image.network con headers básicos
       return Image.network(
         url,
         width: width,
@@ -151,7 +194,7 @@ class PuRobustNetworkImage extends StatelessWidget {
         },
       );
     } catch (e) {
-      print('All image loading strategies failed for $url: $e');
+      print('Image loading failed for $url: $e');
       rethrow;
     }
   }
@@ -185,6 +228,20 @@ class PuRobustNetworkImage extends StatelessWidget {
         }
       } catch (e) {
         print('Error extrayendo URL del proxy: $e');
+      }
+    }
+
+    // Si detectamos proxy de API Heroku, extraer la URL de Cloudinary directamente
+    if (url.contains('menucom-api') && url.contains('image-proxy') && url.contains('url=')) {
+      try {
+        final uri = Uri.parse(url);
+        final encodedUrl = uri.queryParameters['url'];
+        if (encodedUrl != null) {
+          final decodedUrl = Uri.decodeComponent(encodedUrl);
+          return decodedUrl;
+        }
+      } catch (e) {
+        print('Error extrayendo URL del proxy API: $e');
       }
     }
 
