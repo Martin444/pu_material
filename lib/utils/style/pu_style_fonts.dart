@@ -90,6 +90,13 @@ class PuTextStyle {
     height: 1.0,
   );
 
+  static TextStyle namePriceCardStyle = styleGlobal.copyWith(
+    color: PUColors.textColor3,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    height: 1.0,
+  );
+
   static TextStyle ingredientsListStyle = styleGlobal.copyWith(
     color: PUColors.textColor4,
     fontSize: 13,
