@@ -93,23 +93,14 @@ class PuRobustNetworkImage extends StatelessWidget {
       _clearImageCache(url);
     }
 
-    // Extraer URL original si está usando proxy
-    String originalUrl = _extractOriginalUrl(url);
-
-    // Validar que la URL original sea válida
-    if (!ImageDebugUtils.isValidImageUrl(originalUrl)) {
-      print('Invalid URL after extraction: $originalUrl');
+    // Validar que la URL sea válida
+    if (!ImageDebugUtils.isValidImageUrl(url)) {
+      print('Invalid URL: $url');
       return _buildErrorWidget();
     }
 
-    // Si tenemos una URL diferente (sin proxy), intentar cargarla
-    if (originalUrl != url) {
-      print('Attempting fallback with original URL: $originalUrl');
-      return _buildMultiStrategyImage(originalUrl);
-    }
-
-    // Si la URL original es la misma, intentar con diferentes estrategias
-    return _buildMultiStrategyImage(originalUrl);
+    // Intentar con diferentes estrategias
+    return _buildMultiStrategyImage(url);
   }
 
   void _clearImageCache(String url) {
@@ -165,19 +156,6 @@ class PuRobustNetworkImage extends StatelessWidget {
     }
   }
 
-  // Extraer la URL original si está usando proxy
-  String _extractOriginalUrl(String proxyUrl) {
-    try {
-      final uri = Uri.parse(proxyUrl);
-      if (uri.queryParameters.containsKey('url')) {
-        return Uri.decodeComponent(uri.queryParameters['url']!);
-      }
-    } catch (e) {
-      print('Error extracting original URL: $e');
-    }
-    return proxyUrl;
-  }
-
   // Validar si una URL es válida
   bool _isValidUrl(String url) {
     try {
@@ -193,14 +171,8 @@ class PuRobustNetworkImage extends StatelessWidget {
     return url.trim().replaceAll(RegExp(r'\s+'), '');
   }
 
-  // Preprocesar URL para manejar proxies y URLs problemáticas
+  // Preprocesar URL para manejar URLs problemáticas
   String _preprocessUrl(String url) {
-    // Si detectamos un proxy localhost, extraer la URL original inmediatamente
-    if (url.contains('localhost') && url.contains('image-proxy')) {
-      String extracted = _extractOriginalUrl(url);
-      return extracted;
-    }
-
     // Si la URL ya es una URL directa de Cloudinary, mantenerla
     if (url.contains('res.cloudinary.com')) {
       return url;
