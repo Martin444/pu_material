@@ -17,6 +17,12 @@ export 'package:pu_material/atoms/status_icon.dart';
 export 'package:pu_material/atoms/gradient_container.dart';
 export 'package:pu_material/atoms/info_badge.dart';
 export 'package:pu_material/atoms/progress_dot.dart';
+export 'package:pu_material/atoms/product_title.dart';
+export 'package:pu_material/atoms/product_price.dart';
+export 'package:pu_material/atoms/product_image.dart';
+export 'package:pu_material/atoms/product_additional_info.dart';
+export 'package:pu_material/atoms/cart_icon_button.dart';
+export 'package:pu_material/atoms/product_badge.dart';
 
 // Molecules
 export 'package:pu_material/molecule/order_item_card.dart';
@@ -24,10 +30,13 @@ export 'package:pu_material/molecule/status_progress_indicator.dart';
 export 'package:pu_material/molecule/info_card.dart';
 export 'package:pu_material/molecule/section_header.dart';
 export 'package:pu_material/molecule/total_row.dart';
+export 'package:pu_material/molecule/product_info_block.dart';
+export 'package:pu_material/molecule/product_action_block.dart';
 
 // Organisms
 export 'package:pu_material/organisms/orders/order_summary_section.dart';
 export 'package:pu_material/organisms/status_header.dart';
+export 'package:pu_material/organisms/product_card.dart';
 
 // Orders Feature - Models
 export 'package:pu_material/features/orders/models/order.dart';
