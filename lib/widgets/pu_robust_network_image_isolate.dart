@@ -1,8 +1,19 @@
+import 'dart:isolate';
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../utils/image_debug_utils.dart';
+
+// Clase para pasar datos al isolate
+class ImageProcessingData {
+  final String imageUrl;
+  final SendPort sendPort;
+
+  ImageProcessingData({
+    required this.imageUrl,
+    required this.sendPort,
+  });
+}
 
 // Resultado del procesamiento de imagen
 class ImageProcessingResult {
@@ -19,7 +30,112 @@ class ImageProcessingResult {
   });
 }
 
-class PuRobustNetworkImage extends StatefulWidget {
+// Función que se ejecuta en el isolate para procesar URLs de imágenes
+void imageProcessingIsolate(ImageProcessingData data) {
+  try {
+    // Limpiar URL
+    final cleanedUrl = data.imageUrl.trim().replaceAll(RegExp(r'\s+'), '');
+
+    // Procesar URL y generar fallbacks
+    final processedUrl = _processUrlInIsolate(cleanedUrl);
+    final fallbackUrls = _generateFallbackUrls(cleanedUrl);
+
+    // Validar URL
+    final isValid = _isValidUrlInIsolate(processedUrl);
+
+    final result = ImageProcessingResult(
+      processedUrl: processedUrl,
+      fallbackUrls: fallbackUrls,
+      isValid: isValid,
+    );
+
+    data.sendPort.send(result);
+  } catch (e) {
+    final result = ImageProcessingResult(
+      processedUrl: data.imageUrl,
+      fallbackUrls: [data.imageUrl],
+      isValid: false,
+      error: e.toString(),
+    );
+    data.sendPort.send(result);
+  }
+}
+
+// Función helper para procesar URLs en isolate
+String _processUrlInIsolate(String url) {
+  // Si detectamos un proxy localhost, extraer la URL de Cloudinary directamente
+  if (url.contains('localhost') && url.contains('image-proxy') && url.contains('url=')) {
+    try {
+      final uri = Uri.parse(url);
+      final encodedUrl = uri.queryParameters['url'];
+      if (encodedUrl != null) {
+        final decodedUrl = Uri.decodeComponent(encodedUrl);
+        return decodedUrl;
+      }
+    } catch (e) {
+      // Si falla, devolver URL original
+    }
+  }
+
+  // Si detectamos proxy de API Heroku, extraer la URL de Cloudinary directamente
+  if (url.contains('menucom-api') && url.contains('image-proxy') && url.contains('url=')) {
+    try {
+      final uri = Uri.parse(url);
+      final encodedUrl = uri.queryParameters['url'];
+      if (encodedUrl != null) {
+        final decodedUrl = Uri.decodeComponent(encodedUrl);
+        return decodedUrl;
+      }
+    } catch (e) {
+      // Si falla, devolver URL original
+    }
+  }
+
+  // Si la URL ya es una URL directa de Cloudinary, mantenerla
+  if (url.contains('res.cloudinary.com')) {
+    return url;
+  }
+
+  return url;
+}
+
+// Función helper para generar URLs de fallback
+List<String> _generateFallbackUrls(String originalUrl) {
+  final urls = <String>[];
+
+  // Agregar URL original
+  urls.add(originalUrl);
+
+  // Si es un proxy, también intentar con la URL directa extraída
+  if (originalUrl.contains('image-proxy') && originalUrl.contains('url=')) {
+    try {
+      final uri = Uri.parse(originalUrl);
+      final encodedUrl = uri.queryParameters['url'];
+      if (encodedUrl != null) {
+        final directUrl = Uri.decodeComponent(encodedUrl);
+        if (directUrl != originalUrl && !urls.contains(directUrl)) {
+          urls.add(directUrl);
+        }
+      }
+    } catch (e) {
+      // Si falla, continuar con las URLs que tenemos
+    }
+  }
+
+  return urls;
+}
+
+// Función helper para validar URLs en isolate
+bool _isValidUrlInIsolate(String url) {
+  try {
+    final uri = Uri.parse(url);
+    return uri.hasScheme && (uri.scheme == 'http' || uri.scheme == 'https') && uri.host.isNotEmpty;
+  } catch (e) {
+    return false;
+  }
+}
+
+class PuRobustNetworkImageWithIsolate extends StatefulWidget {
   final String imageUrl;
   final double? width;
   final double? height;
@@ -28,7 +144,7 @@ class PuRobustNetworkImage extends StatefulWidget {
   final Widget? errorWidget;
   final bool clearCacheOnError;
 
-  const PuRobustNetworkImage({
+  const PuRobustNetworkImageWithIsolate({
     super.key,
     required this.imageUrl,
     this.width,
@@ -40,10 +156,10 @@ class PuRobustNetworkImage extends StatefulWidget {
   });
 
   @override
-  State<PuRobustNetworkImage> createState() => _PuRobustNetworkImageState();
+  State<PuRobustNetworkImageWithIsolate> createState() => _PuRobustNetworkImageWithIsolateState();
 }
 
-class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
+class _PuRobustNetworkImageWithIsolateState extends State<PuRobustNetworkImageWithIsolate> {
   ImageProcessingResult? _processingResult;
   bool _isProcessing = true;
   String? _currentUrl;
@@ -56,7 +172,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
   }
 
   @override
-  void didUpdateWidget(PuRobustNetworkImage oldWidget) {
+  void didUpdateWidget(PuRobustNetworkImageWithIsolate oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.imageUrl != widget.imageUrl) {
       _isProcessing = true;
@@ -82,15 +198,32 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
     }
 
     try {
-      ImageProcessingResult result;
+      // Crear ReceivePort para recibir datos del isolate
+      final receivePort = ReceivePort();
 
-      // En Flutter Web, usar procesamiento síncrono
-      if (kIsWeb) {
-        result = await _processUrlSynchronously(widget.imageUrl);
-      } else {
-        // En plataformas nativas, intentar usar isolates
-        result = await _processUrlWithIsolateIfAvailable(widget.imageUrl);
-      }
+      // Crear el isolate
+      final isolate = await Isolate.spawn(
+        imageProcessingIsolate,
+        ImageProcessingData(
+          imageUrl: widget.imageUrl,
+          sendPort: receivePort.sendPort,
+        ),
+      );
+
+      // Escuchar el resultado con un timeout
+      final result = await receivePort.first.timeout(
+        const Duration(seconds: 5),
+        onTimeout: () => ImageProcessingResult(
+          processedUrl: widget.imageUrl,
+          fallbackUrls: [widget.imageUrl],
+          isValid: true,
+          error: 'Processing timeout',
+        ),
+      ) as ImageProcessingResult;
+
+      // Limpiar el isolate
+      isolate.kill(priority: Isolate.immediate);
+      receivePort.close();
 
       if (mounted) {
         setState(() {
@@ -100,147 +233,19 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
         });
       }
     } catch (e) {
-      print('Error processing image URL: $e');
+      print('Error processing image URL in isolate: $e');
       if (mounted) {
         setState(() {
           _processingResult = ImageProcessingResult(
             processedUrl: widget.imageUrl,
             fallbackUrls: [widget.imageUrl],
-            isValid: true,
+            isValid: true, // Asumir válida para intentar cargar
             error: e.toString(),
           );
           _currentUrl = widget.imageUrl;
           _isProcessing = false;
         });
       }
-    }
-  }
-
-  Future<ImageProcessingResult> _processUrlSynchronously(String url) async {
-    try {
-      // Limpiar URL
-      final cleanedUrl = url.trim().replaceAll(RegExp(r'\s+'), '');
-
-      // Procesar URL y generar fallbacks
-      final processedUrl = _processUrl(cleanedUrl);
-      final fallbackUrls = _generateFallbackUrls(cleanedUrl);
-
-      // Validar URL
-      final isValid = _isValidUrl(processedUrl);
-
-      return ImageProcessingResult(
-        processedUrl: processedUrl,
-        fallbackUrls: fallbackUrls,
-        isValid: isValid,
-      );
-    } catch (e) {
-      return ImageProcessingResult(
-        processedUrl: url,
-        fallbackUrls: [url],
-        isValid: false,
-        error: e.toString(),
-      );
-    }
-  }
-
-  Future<ImageProcessingResult> _processUrlWithIsolateIfAvailable(String url) async {
-    try {
-      // Intentar usar isolates si están disponibles
-      if (!kIsWeb) {
-        // Importar isolates dinámicamente solo en plataformas nativas
-        final isolate = await _createIsolateIfAvailable(url);
-        if (isolate != null) {
-          return isolate;
-        }
-      }
-
-      // Fallback a procesamiento síncrono
-      return await _processUrlSynchronously(url);
-    } catch (e) {
-      print('Error with isolate processing, falling back to sync: $e');
-      return await _processUrlSynchronously(url);
-    }
-  }
-
-  Future<ImageProcessingResult?> _createIsolateIfAvailable(String url) async {
-    try {
-      // Esta función se implementaría usando isolates en plataformas nativas
-      // Por ahora, siempre usar procesamiento síncrono para evitar problemas
-      return null;
-    } catch (e) {
-      print('Isolate not available: $e');
-      return null;
-    }
-  }
-
-  String _processUrl(String url) {
-    // Si detectamos un proxy localhost, extraer la URL de Cloudinary directamente
-    if (url.contains('localhost') && url.contains('image-proxy') && url.contains('url=')) {
-      try {
-        final uri = Uri.parse(url);
-        final encodedUrl = uri.queryParameters['url'];
-        if (encodedUrl != null) {
-          final decodedUrl = Uri.decodeComponent(encodedUrl);
-          return decodedUrl;
-        }
-      } catch (e) {
-        // Si falla, devolver URL original
-      }
-    }
-
-    // Si detectamos proxy de API Heroku, extraer la URL de Cloudinary directamente
-    if (url.contains('menucom-api') && url.contains('image-proxy') && url.contains('url=')) {
-      try {
-        final uri = Uri.parse(url);
-        final encodedUrl = uri.queryParameters['url'];
-        if (encodedUrl != null) {
-          final decodedUrl = Uri.decodeComponent(encodedUrl);
-          return decodedUrl;
-        }
-      } catch (e) {
-        // Si falla, devolver URL original
-      }
-    }
-
-    // Si la URL ya es una URL directa de Cloudinary, mantenerla
-    if (url.contains('res.cloudinary.com')) {
-      return url;
-    }
-
-    return url;
-  }
-
-  List<String> _generateFallbackUrls(String originalUrl) {
-    final urls = <String>[];
-
-    // Agregar URL original
-    urls.add(originalUrl);
-
-    // Si es un proxy, también intentar con la URL directa extraída
-    if (originalUrl.contains('image-proxy') && originalUrl.contains('url=')) {
-      try {
-        final uri = Uri.parse(originalUrl);
-        final encodedUrl = uri.queryParameters['url'];
-        if (encodedUrl != null) {
-          final directUrl = Uri.decodeComponent(encodedUrl);
-          if (directUrl != originalUrl && !urls.contains(directUrl)) {
-            urls.add(directUrl);
-          }
-        }
-      } catch (e) {
-        // Si falla, continuar con las URLs que tenemos
-      }
-    }
-
-    return urls;
-  }
-
-  bool _isValidUrl(String url) {
-    try {
-      final uri = Uri.parse(url);
-      return uri.hasScheme && (uri.scheme == 'http' || uri.scheme == 'https') && uri.host.isNotEmpty;
-    } catch (e) {
-      return false;
     }
   }
 
