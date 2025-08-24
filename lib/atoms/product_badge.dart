@@ -20,9 +20,10 @@ class ProductBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final isTablet = screenWidth >= 768;
-        final isDesktop = screenWidth >= 1024;
+        // Usar constraints del LayoutBuilder para responsive más preciso
+        final maxWidth = constraints.maxWidth;
+        final isTablet = maxWidth >= 400;
+        final isDesktop = maxWidth >= 600;
 
         final textScaleFactor = isDesktop ? 1.0 : (isTablet ? 0.95 : 0.9);
         final baseFontSize = fontSize ?? (PuTextStyle.ingredientsListStyle.fontSize ?? 12);

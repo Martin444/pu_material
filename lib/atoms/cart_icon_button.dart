@@ -27,12 +27,13 @@ class CartIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final isTablet = screenWidth >= 768;
-        final isDesktop = screenWidth >= 1024;
+        // Usar constraints del LayoutBuilder para responsive más preciso
+        final maxWidth = constraints.maxWidth;
+        final isTablet = maxWidth >= 400;
+        final isDesktop = maxWidth >= 600;
 
-        final iconSize = size ?? (isDesktop ? 40.0 : (isTablet ? 35.0 : 30.0));
-        final buttonPadding = isDesktop ? 10.0 : (isTablet ? 9.0 : 8.0);
+        final iconSize = size ?? (isDesktop ? 35.0 : (isTablet ? 35.0 : 30.0));
+        final buttonPadding = isDesktop ? 3.0 : (isTablet ? 5.0 : 4.0);
 
         return GestureDetector(
           onTap: onPressed,

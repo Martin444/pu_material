@@ -154,9 +154,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final isTablet = screenWidth >= 768;
-        final isDesktop = screenWidth >= 1024;
+        // Usar constraints del LayoutBuilder para responsive más preciso
+        final maxWidth = constraints.maxWidth;
+        final isTablet = maxWidth >= 400;
+        final isDesktop = maxWidth >= 600;
 
         return layout == ProductCardLayout.vertical
             ? _buildVerticalCard(context, isTablet, isDesktop)
@@ -166,35 +167,37 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildVerticalCard(BuildContext context, bool isTablet, bool isDesktop) {
-    final verticalPadding = isDesktop ? 15.0 : (isTablet ? 12.0 : 10.0);
+    final verticalPadding = isDesktop ? 12.0 : (isTablet ? 10.0 : 8.0);
     final horizontalPadding = isDesktop ? 10.0 : (isTablet ? 8.0 : 6.0);
-    final minHeight = isDesktop ? 200.0 : (isTablet ? 180.0 : 160.0);
-    final spacing = isDesktop ? 10.0 : (isTablet ? 8.0 : 6.0);
+    final spacing = isDesktop ? 8.0 : (isTablet ? 6.0 : 4.0);
 
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: verticalPadding,
         horizontal: horizontalPadding,
       ),
-      constraints: BoxConstraints(
-        minHeight: minHeight,
-      ),
       decoration: PuStyleContainers.borderAllContainer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Imagen del producto
-          ProductImage(
-            imageUrl: imageUrl,
-            borderRadius: BorderRadius.circular(8),
+          Expanded(
+            flex: 3,
+            child: ProductImage(
+              imageUrl: imageUrl,
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
 
           SizedBox(height: spacing),
 
           // Información y acción
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // Información del producto
                 Expanded(
@@ -241,70 +244,67 @@ class ProductCard extends StatelessWidget {
     final horizontalPadding = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
     final spacing = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
     final imageSize = isDesktop ? 90.0 : (isTablet ? 85.0 : 75.0);
-    final minHeight = isDesktop ? 140.0 : (isTablet ? 130.0 : 120.0);
-    final minWidth = isDesktop ? 340.0 : (isTablet ? 320.0 : 300.0);
 
     return Container(
-      constraints: BoxConstraints(
-        minHeight: minHeight,
-        minWidth: minWidth,
-      ),
       padding: EdgeInsets.all(horizontalPadding),
       decoration: PuStyleContainers.borderAllContainer,
-      child: Row(
-        children: [
-          // Imagen del producto
-          ProductImage(
-            imageUrl: imageUrl,
-            width: imageSize,
-            height: imageSize,
-            borderRadius: BorderRadius.circular(8),
-          ),
-
-          SizedBox(width: spacing),
-
-          // Información del producto
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Información del producto
-                Expanded(
-                  child: ProductInfoBlock(
-                    title: title,
-                    primaryInfo: primaryInfo,
-                    secondaryInfo: secondaryInfo,
-                    badge: badge,
-                    primaryInfoColor: primaryInfoColor,
-                    primaryInfoBackgroundColor: primaryInfoBackgroundColor,
-                    badgeColor: badgeColor,
-                    badgeBackgroundColor: badgeBackgroundColor,
-                    primaryInfoPrefix: primaryInfoPrefix,
-                    secondaryInfoPrefix: secondaryInfoPrefix,
-                    maxTitleLines: maxTitleLines,
-                    maxSecondaryInfoLines: maxSecondaryInfoLines,
-                  ),
-                ),
-
-                SizedBox(height: spacing / 2),
-
-                // Precio y botón de acción
-                ProductActionBlock(
-                  price: price,
-                  onAddToCart: onAddToCart,
-                  isSelected: isSelected,
-                  additionalBadge: actionBadge,
-                  additionalBadgeColor: actionBadgeColor,
-                  additionalBadgeBackgroundColor: actionBadgeBackgroundColor,
-                  selectedIcon: selectedIcon,
-                  unselectedIcon: unselectedIcon,
-                  selectedButtonColor: selectedButtonColor,
-                  unselectedButtonColor: unselectedButtonColor,
-                ),
-              ],
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            // Imagen del producto
+            ProductImage(
+              imageUrl: imageUrl,
+              width: imageSize,
+              height: imageSize,
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-        ],
+
+            SizedBox(width: spacing),
+
+            // Información del producto
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Información del producto
+                  Expanded(
+                    child: ProductInfoBlock(
+                      title: title,
+                      primaryInfo: primaryInfo,
+                      secondaryInfo: secondaryInfo,
+                      badge: badge,
+                      primaryInfoColor: primaryInfoColor,
+                      primaryInfoBackgroundColor: primaryInfoBackgroundColor,
+                      badgeColor: badgeColor,
+                      badgeBackgroundColor: badgeBackgroundColor,
+                      primaryInfoPrefix: primaryInfoPrefix,
+                      secondaryInfoPrefix: secondaryInfoPrefix,
+                      maxTitleLines: maxTitleLines,
+                      maxSecondaryInfoLines: maxSecondaryInfoLines,
+                    ),
+                  ),
+
+                  SizedBox(height: spacing / 2),
+
+                  // Precio y botón de acción
+                  ProductActionBlock(
+                    price: price,
+                    onAddToCart: onAddToCart,
+                    isSelected: isSelected,
+                    additionalBadge: actionBadge,
+                    additionalBadgeColor: actionBadgeColor,
+                    additionalBadgeBackgroundColor: actionBadgeBackgroundColor,
+                    selectedIcon: selectedIcon,
+                    unselectedIcon: unselectedIcon,
+                    selectedButtonColor: selectedButtonColor,
+                    unselectedButtonColor: unselectedButtonColor,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
