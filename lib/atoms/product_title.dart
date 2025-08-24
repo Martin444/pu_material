@@ -39,6 +39,7 @@ class ProductTitle extends StatelessWidget {
           ),
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.start,
         );
       },
     );

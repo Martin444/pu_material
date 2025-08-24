@@ -36,7 +36,7 @@ class ProductBadge extends StatelessWidget {
             vertical: verticalPadding,
           ),
           decoration: BoxDecoration(
-            color: backgroundColor ?? Colors.grey.withValues(alpha: 0.1),
+            color: backgroundColor ?? Colors.transparent,
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
@@ -45,6 +45,7 @@ class ProductBadge extends StatelessWidget {
               fontSize: baseFontSize * textScaleFactor,
               color: textColor ?? Colors.grey[700],
             ),
+            textAlign: TextAlign.start,
           ),
         );
       },

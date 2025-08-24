@@ -37,7 +37,7 @@ class ProductPrice extends StatelessWidget {
           style: PuTextStyle.namePriceCardStyle.copyWith(
             fontSize: baseFontSize * textScaleFactor,
             fontWeight: fontWeight ?? FontWeight.bold,
-            color: color ?? Colors.green[600],
+            color: color ?? Color(0xFF595959),
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

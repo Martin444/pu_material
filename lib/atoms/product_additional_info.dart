@@ -44,6 +44,7 @@ class ProductAdditionalInfo extends StatelessWidget {
           ),
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.start,
         );
 
         if (showBackground && backgroundColor != null) {

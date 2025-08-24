@@ -47,6 +47,7 @@ class ProductInfoBlock extends StatelessWidget {
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             // Información primaria (tiempo de entrega, marca, etc.)
             if (primaryInfo != null) ...[
@@ -65,6 +66,7 @@ class ProductInfoBlock extends StatelessWidget {
             ProductTitle(
               title: title,
               maxLines: maxTitleLines,
+              color: null,
             ),
 
             // Badge (stock, ofertas, etc.)
@@ -84,6 +86,9 @@ class ProductInfoBlock extends StatelessWidget {
                 text: secondaryInfo!.join(', '),
                 prefix: secondaryInfoPrefix,
                 maxLines: maxSecondaryInfoLines,
+                textColor: null,
+                backgroundColor: null,
+                showBackground: false,
               ),
             ],
           ],
