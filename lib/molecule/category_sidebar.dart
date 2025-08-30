@@ -41,6 +41,17 @@ class CategorySidebar<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Debug: Verificar las categorías recibidas
+    debugPrint('=== DEBUG CategorySidebar ===');
+    debugPrint('Title: $title');
+    debugPrint('Categories length: ${categories.length}');
+    for (int i = 0; i < categories.length; i++) {
+      debugPrint('Category $i: ${titleBuilder(categories[i])}');
+    }
+    if (selectedCategory != null) {
+      debugPrint('Selected category: ${titleBuilder(selectedCategory as T)}');
+    }
+
     return Container(
       height: constraints.maxHeight,
       padding: const EdgeInsets.only(left: 20),
