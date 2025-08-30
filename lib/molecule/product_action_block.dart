@@ -11,8 +11,8 @@ class ProductActionBlock extends StatelessWidget {
   final String? additionalBadge;
   final Color? additionalBadgeColor;
   final Color? additionalBadgeBackgroundColor;
-  final String? selectedIcon;
-  final String? unselectedIcon;
+  final IconData? selectedIcon;
+  final IconData? unselectedIcon;
   final Color? selectedButtonColor;
   final Color? unselectedButtonColor;
 

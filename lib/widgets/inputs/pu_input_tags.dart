@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pu_material/pu_material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class PuInputTags extends StatefulWidget {
   final TextEditingController controller;
@@ -93,7 +94,7 @@ class _PuInputTagsState extends State<PuInputTags> {
           children: tags.map((tag) {
             return Chip(
               label: Text(tag),
-              deleteIcon: const Icon(Icons.cancel),
+              deleteIcon: const Icon(FluentIcons.dismiss_24_regular),
               onDeleted: () {
                 _removeTag(tag);
                 widget.onSubmitTag!(tags);

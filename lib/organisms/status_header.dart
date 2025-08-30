@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../atoms/gradient_container.dart';
 import '../atoms/status_icon.dart';
 import '../molecule/info_card.dart';
@@ -213,7 +214,7 @@ class _StatusHeaderState extends State<StatusHeader> with TickerProviderStateMix
                         iconColor: widget.config.iconColor,
                         borderWidth: widget.isMobile ? 4 : 6,
                         animation: _statusAnimation,
-                        isRotating: widget.config.icon == Icons.sync,
+                        isRotating: widget.config.icon == FluentIcons.arrow_sync_24_regular,
                       ),
                     ),
                   );

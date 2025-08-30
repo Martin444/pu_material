@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../widgets/pu_robust_network_image.dart';
 import '../utils/image_debug_utils.dart';
 
@@ -116,7 +117,7 @@ class _ImageTestPageState extends State<ImageTestPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.error, color: Colors.red, size: 40),
+                      Icon(FluentIcons.error_circle_24_regular, color: Colors.red, size: 40),
                       SizedBox(height: 8),
                       Text('Error al cargar imagen'),
                     ],

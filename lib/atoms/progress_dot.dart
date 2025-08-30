@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 /// Progress Dot Atom - A single dot in a progress indicator
 class ProgressDot extends StatelessWidget {
@@ -39,7 +40,7 @@ class ProgressDot extends StatelessWidget {
       ),
       child: isCompleted
           ? Icon(
-              Icons.check,
+              FluentIcons.checkmark_24_regular,
               size: size * 0.75,
               color: completedIconColor,
             )

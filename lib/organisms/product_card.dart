@@ -42,8 +42,8 @@ class ProductCard extends StatelessWidget {
   final int maxSecondaryInfoLines;
 
   // Configuración de iconos
-  final String? selectedIcon;
-  final String? unselectedIcon;
+  final IconData? selectedIcon;
+  final IconData? unselectedIcon;
   final Color? selectedButtonColor;
   final Color? unselectedButtonColor;
 

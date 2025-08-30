@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../utils/pu_colors.dart';
 import '../../utils/style/pu_style_fonts.dart';
@@ -17,7 +18,7 @@ class WarningDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.warning_amber_rounded,
+              FluentIcons.warning_24_regular,
               color: PUColors.bgError,
               size: 60,
             ),

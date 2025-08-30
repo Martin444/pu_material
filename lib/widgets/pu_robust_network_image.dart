@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../utils/image_debug_utils.dart';
 
@@ -294,7 +295,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
           height: widget.height,
           color: Colors.grey[300],
           child: const Icon(
-            Icons.image_not_supported,
+            FluentIcons.image_off_24_regular,
             color: Colors.grey,
             size: 50,
           ),

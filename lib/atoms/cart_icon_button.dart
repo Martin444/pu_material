@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:svg_flutter/svg.dart';
-import 'package:pu_material/utils/pu_assets.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 /// Átomo: Botón de carrito
 class CartIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isSelected;
-  final String? selectedIcon;
-  final String? unselectedIcon;
+  final IconData? selectedIcon;
+  final IconData? unselectedIcon;
   final Color? selectedColor;
   final Color? unselectedColor;
   final double? size;
@@ -43,13 +42,12 @@ class CartIconButton extends StatelessWidget {
               color: isSelected ? (selectedColor ?? Colors.green) : (unselectedColor ?? Colors.blue),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: SvgPicture.asset(
-              isSelected ? (selectedIcon ?? PUIcons.iconCheck) : (unselectedIcon ?? PUIcons.iconCart),
-              height: iconSize,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
-                BlendMode.srcIn,
-              ),
+            child: Icon(
+              isSelected
+                  ? (selectedIcon ?? FluentIcons.checkmark_24_regular)
+                  : (unselectedIcon ?? FluentIcons.shopping_bag_24_regular),
+              size: iconSize,
+              color: Colors.white,
             ),
           ),
         );

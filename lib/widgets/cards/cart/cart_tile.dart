@@ -5,6 +5,7 @@ import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 import 'package:pu_material/widgets/cards/cart/model/cart_item_model.dart';
 import 'package:pu_material/widgets/pu_robust_network_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class CartTile extends StatelessWidget {
   final CartItemModel item;
@@ -99,7 +100,7 @@ class CartTile extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Icon(
-                                Icons.remove,
+                                FluentIcons.subtract_24_regular,
                                 color: Colors.white,
                               ),
                             ),
@@ -126,7 +127,7 @@ class CartTile extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Icon(
-                                Icons.add,
+                                FluentIcons.add_24_regular,
                                 color: Colors.white,
                               ),
                             ),

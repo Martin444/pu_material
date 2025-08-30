@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pu_material/utils/pu_colors.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class McOptionBtnTile<T> extends StatelessWidget {
   const McOptionBtnTile({
@@ -29,20 +30,20 @@ class McOptionBtnTile<T> extends StatelessWidget {
           const PopupMenuItem<String>(
             value: 'settings',
             child: ListTile(
-              leading: Icon(Icons.edit_rounded),
+              leading: Icon(FluentIcons.edit_24_regular),
               title: Text('Editar'),
             ),
           ),
           const PopupMenuItem<String>(
             value: 'info',
             child: ListTile(
-              leading: Icon(Icons.delete_outline_rounded),
+              leading: Icon(FluentIcons.delete_24_regular),
               title: Text('Eliminar'),
             ),
           ),
         ],
         child: Icon(
-          Icons.more_vert_rounded,
+          FluentIcons.more_vertical_24_regular,
           color: PUColors.iconColor,
         ),
       ),

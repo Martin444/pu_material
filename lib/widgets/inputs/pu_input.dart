@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:pu_material/pu_material.dart';
-import 'package:pu_material/utils/pu_assets.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../utils/formaters/upercase_first_letter.dart';
 
@@ -63,9 +62,10 @@ class _PUInputState extends State<PUInput> {
           bottom: widget.errorText != null ? 18 : 0,
         ),
         child: GestureDetector(
-          child: SvgPicture.asset(
-            isVisibleText ? PUIcons.iconEyeOpen : PUIcons.iconEyeClose,
-            height: 30,
+          child: Icon(
+            isVisibleText ? FluentIcons.eye_24_regular : FluentIcons.eye_off_24_regular,
+            size: 24,
+            color: PUColors.iconColor,
           ),
           onTap: () {
             setState(() {
