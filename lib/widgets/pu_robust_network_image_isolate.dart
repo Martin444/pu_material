@@ -234,7 +234,7 @@ class _PuRobustNetworkImageWithIsolateState extends State<PuRobustNetworkImageWi
         });
       }
     } catch (e) {
-      print('Error processing image URL in isolate: $e');
+      debugPrint('Error processing image URL in isolate: $e');
       if (mounted) {
         setState(() {
           _processingResult = ImageProcessingResult(
@@ -308,7 +308,7 @@ class _PuRobustNetworkImageWithIsolateState extends State<PuRobustNetworkImageWi
   }
 
   Widget _buildErrorWithFallback(String url, dynamic error) {
-    print('Error loading image: $url - Error: $error');
+    debugPrint('Error loading image: $url - Error: $error');
 
     // Debug detallado de la URL
     ImageDebugUtils.analyzeUrl(url);
@@ -323,7 +323,8 @@ class _PuRobustNetworkImageWithIsolateState extends State<PuRobustNetworkImageWi
       _currentFallbackIndex++;
       final nextUrl = _processingResult!.fallbackUrls[_currentFallbackIndex];
 
-      print('Trying fallback URL ${_currentFallbackIndex + 1}/${_processingResult!.fallbackUrls.length}: $nextUrl');
+      debugPrint(
+          'Trying fallback URL ${_currentFallbackIndex + 1}/${_processingResult!.fallbackUrls.length}: $nextUrl');
 
       // Actualizar la URL actual y reconstruir
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -344,9 +345,9 @@ class _PuRobustNetworkImageWithIsolateState extends State<PuRobustNetworkImageWi
   void _clearImageCache(String url) {
     try {
       CachedNetworkImage.evictFromCache(url);
-      print('Cleared cache for URL: $url');
+      debugPrint('Cleared cache for URL: $url');
     } catch (e) {
-      print('Error clearing cache for $url: $e');
+      debugPrint('Error clearing cache for $url: $e');
     }
   }
 }

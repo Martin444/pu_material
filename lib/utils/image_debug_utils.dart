@@ -4,41 +4,41 @@ import 'package:flutter/material.dart';
 class ImageDebugUtils {
   /// Analiza una URL y proporciona información detallada sobre su estructura
   static void analyzeUrl(String url) {
-    print('=== ANÁLISIS DETALLADO DE URL ===');
-    print('URL Original: $url');
-    print('Longitud: ${url.length}');
-    print('Está vacía: ${url.isEmpty}');
-    print('Contiene espacios: ${url.contains(' ')}');
-    print('Contiene proxy: ${url.contains('image-proxy')}');
-    print('Contiene localhost: ${url.contains('localhost')}');
-    print('Es Cloudinary: ${url.contains('res.cloudinary.com')}');
+    debugPrint('=== ANÁLISIS DETALLADO DE URL ===');
+    debugPrint('URL Original: $url');
+    debugPrint('Longitud: ${url.length}');
+    debugPrint('Está vacía: ${url.isEmpty}');
+    debugPrint('Contiene espacios: ${url.contains(' ')}');
+    debugPrint('Contiene proxy: ${url.contains('image-proxy')}');
+    debugPrint('Contiene localhost: ${url.contains('localhost')}');
+    debugPrint('Es Cloudinary: ${url.contains('res.cloudinary.com')}');
 
     if (url.contains('localhost')) {
-      print('⚠️  PROBLEMA DETECTADO: URL contiene localhost');
-      print('   Esto indica que hay un proxy local interceptando las imágenes');
+      debugPrint('⚠️  PROBLEMA DETECTADO: URL contiene localhost');
+      debugPrint('   Esto indica que hay un proxy local interceptando las imágenes');
     }
 
     try {
       final uri = Uri.parse(url);
-      print('Esquema: ${uri.scheme}');
-      print('Host: ${uri.host}');
-      print('Puerto: ${uri.port}');
-      print('Ruta: ${uri.path}');
+      debugPrint('Esquema: ${uri.scheme}');
+      debugPrint('Host: ${uri.host}');
+      debugPrint('Puerto: ${uri.port}');
+      debugPrint('Ruta: ${uri.path}');
 
       if (uri.queryParameters.isNotEmpty) {
-        print('Parámetros de consulta:');
+        debugPrint('Parámetros de consulta:');
         uri.queryParameters.forEach((key, value) {
-          print('  $key: $value');
+          debugPrint('  $key: $value');
           if (key == 'url') {
-            print('  📎 URL decodificada: ${Uri.decodeComponent(value)}');
+            debugPrint('  📎 URL decodificada: ${Uri.decodeComponent(value)}');
           }
         });
       }
     } catch (e) {
-      print('❌ Error parseando URI: $e');
+      debugPrint('❌ Error parseando URI: $e');
     }
 
-    print('=== FIN ANÁLISIS ===\n');
+    debugPrint('=== FIN ANÁLISIS ===\n');
   }
 
   /// Intenta extraer la URL original de una URL de proxy
@@ -47,11 +47,11 @@ class ImageDebugUtils {
       final uri = Uri.parse(proxyUrl);
       if (uri.queryParameters.containsKey('url')) {
         String original = Uri.decodeComponent(uri.queryParameters['url']!);
-        print('✅ URL original extraída: $original');
+        debugPrint('✅ URL original extraída: $original');
         return original;
       }
     } catch (e) {
-      print('❌ Error extrayendo URL original: $e');
+      debugPrint('❌ Error extrayendo URL original: $e');
     }
     return proxyUrl;
   }
@@ -59,7 +59,7 @@ class ImageDebugUtils {
   /// Valida si una URL es válida para carga de imágenes
   static bool isValidImageUrl(String url) {
     if (url.isEmpty) {
-      print('❌ URL vacía');
+      debugPrint('❌ URL vacía');
       return false;
     }
 
@@ -67,29 +67,29 @@ class ImageDebugUtils {
       final uri = Uri.parse(url);
 
       if (!uri.hasScheme) {
-        print('❌ URL sin esquema: $url');
+        debugPrint('❌ URL sin esquema: $url');
         return false;
       }
 
       if (uri.scheme != 'http' && uri.scheme != 'https') {
-        print('❌ Esquema inválido (${uri.scheme}): $url');
+        debugPrint('❌ Esquema inválido (${uri.scheme}): $url');
         return false;
       }
 
       if (uri.host.isEmpty) {
-        print('❌ Host vacío: $url');
+        debugPrint('❌ Host vacío: $url');
         return false;
       }
 
       if (uri.host == 'localhost' || uri.host == '127.0.0.1') {
-        print('⚠️  URL apunta a localhost: $url');
-        print('   Esto puede causar problemas en producción');
+        debugPrint('⚠️  URL apunta a localhost: $url');
+        debugPrint('   Esto puede causar problemas en producción');
       }
 
-      print('✅ URL válida: $url');
+      debugPrint('✅ URL válida: $url');
       return true;
     } catch (e) {
-      print('❌ Error validando URL: $e');
+      debugPrint('❌ Error validando URL: $e');
       return false;
     }
   }

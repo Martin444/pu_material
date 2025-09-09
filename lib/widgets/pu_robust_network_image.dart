@@ -101,7 +101,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
         });
       }
     } catch (e) {
-      print('Error processing image URL: $e');
+      debugPrint('Error processing image URL: $e');
       if (mounted) {
         setState(() {
           _processingResult = ImageProcessingResult(
@@ -158,7 +158,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
       // Fallback a procesamiento síncrono
       return await _processUrlSynchronously(url);
     } catch (e) {
-      print('Error with isolate processing, falling back to sync: $e');
+      debugPrint('Error with isolate processing, falling back to sync: $e');
       return await _processUrlSynchronously(url);
     }
   }
@@ -169,7 +169,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
       // Por ahora, siempre usar procesamiento síncrono para evitar problemas
       return null;
     } catch (e) {
-      print('Isolate not available: $e');
+      debugPrint('Isolate not available: $e');
       return null;
     }
   }
@@ -303,7 +303,7 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
   }
 
   Widget _buildErrorWithFallback(String url, dynamic error) {
-    print('Error loading image: $url - Error: $error');
+    debugPrint('Error loading image: $url - Error: $error');
 
     // Debug detallado de la URL
     ImageDebugUtils.analyzeUrl(url);
@@ -318,7 +318,8 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
       _currentFallbackIndex++;
       final nextUrl = _processingResult!.fallbackUrls[_currentFallbackIndex];
 
-      print('Trying fallback URL ${_currentFallbackIndex + 1}/${_processingResult!.fallbackUrls.length}: $nextUrl');
+      debugPrint(
+          'Trying fallback URL ${_currentFallbackIndex + 1}/${_processingResult!.fallbackUrls.length}: $nextUrl');
 
       // Actualizar la URL actual y reconstruir
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -339,9 +340,9 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
   void _clearImageCache(String url) {
     try {
       CachedNetworkImage.evictFromCache(url);
-      print('Cleared cache for URL: $url');
+      debugPrint('Cleared cache for URL: $url');
     } catch (e) {
-      print('Error clearing cache for $url: $e');
+      debugPrint('Error clearing cache for $url: $e');
     }
   }
 }
