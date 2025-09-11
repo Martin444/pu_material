@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pu_material/utils/overflow_text.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 
@@ -74,19 +73,16 @@ class ButtonPrimary extends StatelessWidget {
                             const SizedBox(width: 10),
                           ],
                           Flexible(
-                            child: PUOverflowTextDetector(
-                              message: title,
-                              children: [
-                                Text(
-                                  title,
-                                  textAlign: TextAlign.center,
-                                  style: PuTextStyle.primaryButtonStyle.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    letterSpacing: 0.2,
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              title,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: PuTextStyle.primaryButtonStyle.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                letterSpacing: 0.2,
+                              ),
                             ),
                           ),
                         ],
