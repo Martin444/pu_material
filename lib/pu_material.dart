@@ -32,6 +32,7 @@ export 'package:pu_material/atoms/action_button_atom.dart';
 export 'package:pu_material/atoms/ward_statistics_atom.dart';
 export 'package:pu_material/atoms/atom_text.dart';
 export 'package:pu_material/atoms/atom_button.dart';
+export 'package:pu_material/atoms/category_tag_atom.dart';
 
 // Molecules
 export 'package:pu_material/molecule/order_item_card.dart';
@@ -45,12 +46,14 @@ export 'package:pu_material/molecule/ward_item_grid.dart';
 export 'package:pu_material/molecule/category_sidebar.dart';
 export 'package:pu_material/molecule/ward_header_molecule.dart';
 export 'package:pu_material/molecule/molecule_promo_card.dart';
+export 'package:pu_material/molecule/category_tile_molecule.dart';
 
 // Organisms
 export 'package:pu_material/organisms/orders/order_summary_section.dart';
 export 'package:pu_material/organisms/status_header.dart';
 export 'package:pu_material/organisms/product_card.dart';
 export 'package:pu_material/organisms/wards_home_organism.dart';
+export 'package:pu_material/organisms/category_section_organism.dart';
 
 // Orders Feature - Models
 export 'package:pu_material/features/orders/models/order.dart';
