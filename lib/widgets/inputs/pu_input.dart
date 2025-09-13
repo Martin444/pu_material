@@ -21,6 +21,7 @@ class PUInput extends StatefulWidget {
   final bool? visibleText;
   final String? errorText;
   final TextEditingController controller;
+  final bool compact;
 
   const PUInput({
     super.key,
@@ -37,6 +38,7 @@ class PUInput extends StatefulWidget {
     this.focusNode,
     this.onSubmited,
     this.validator,
+    this.compact = false,
   });
 
   @override
@@ -112,33 +114,30 @@ class _PUInputState extends State<PUInput> {
             hoverColor: PUColors.bgInput,
             focusColor: PUColors.bgInput,
             hintText: widget.hintText,
-            hintStyle: PuTextStyle.hintTextStyle,
+            hintStyle: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            isCollapsed: false,
+            isCollapsed: widget.compact,
             alignLabelWithHint: false,
             errorText: widget.errorText,
-            errorStyle: const TextStyle(
-              fontWeight: FontWeight.w400,
-            ),
+            errorStyle: const TextStyle(fontWeight: FontWeight.w400),
             filled: true,
-            // contentPadding: const EdgeInsets.symmetric(
-            //   horizontal: 10,
-            //   vertical: 3,
-            // ),
+            contentPadding: widget.compact
+                ? const EdgeInsets.symmetric(horizontal: 8, vertical: 0)
+                : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.primaryColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
             ),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
             ),
           ),
-          style: PuTextStyle.hintTextStyle,
+          style: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
           controller: widget.controller,
           onChanged: widget.onChanged,
           onFieldSubmitted: widget.onSubmited,

@@ -203,10 +203,12 @@ class _StatusHeaderState extends State<StatusHeader> with TickerProviderStateMix
               AnimatedBuilder(
                 animation: _statusAnimation,
                 builder: (context, child) {
+                  final scale = _statusAnimation.value;
+                  final opacity = (_statusAnimation.value).clamp(0.0, 1.0);
                   return Transform.scale(
-                    scale: _statusAnimation.value,
+                    scale: scale,
                     child: Opacity(
-                      opacity: _statusAnimation.value,
+                      opacity: opacity,
                       child: StatusIcon(
                         size: widget.isMobile ? 50 : 60,
                         backgroundColor: widget.config.iconBackgroundColor,

@@ -12,6 +12,7 @@ export 'package:pu_material/widgets/pu_robust_network_image.dart';
 export 'package:pu_material/utils/style/pu_style_fonts.dart';
 export 'package:pu_material/utils/style/pu_style_containers.dart';
 export 'package:svg_flutter/svg.dart';
+export 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 // Atoms
 export 'package:pu_material/atoms/label_text.dart';
