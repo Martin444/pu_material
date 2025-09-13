@@ -87,19 +87,19 @@ class BusinessGridOrganism<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Header con título y acciones
-        _buildHeader(),
-
-        const SizedBox(height: 16),
-
-        // Contenido principal
-        Expanded(
-          child: _buildContent(context),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final hasBoundedHeight = constraints.hasBoundedHeight && constraints.maxHeight < double.infinity;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            const SizedBox(height: 16),
+            // Contenido principal
+            if (hasBoundedHeight) Expanded(child: _buildContent(context)) else _buildContent(context),
+          ],
+        );
+      },
     );
   }
 
@@ -298,37 +298,101 @@ class BusinessGridOrganism<T> extends StatelessWidget {
   }
 
   Widget _buildGrid(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final availableWidth = mediaQuery.size.width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth;
 
-    // Calcular número de columnas según el ancho disponible
-    int calculatedCrossAxisCount = crossAxisCount ?? _calculateCrossAxisCount(availableWidth, isCompact);
+        // Responsive breakpoint calculations
+        final isMobile = availableWidth < 768;
+        final isTablet = availableWidth >= 768 && availableWidth < 1200;
+        final isDesktop = availableWidth >= 1200;
 
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: calculatedCrossAxisCount,
-        childAspectRatio: childAspectRatio,
-        mainAxisSpacing: mainAxisSpacing,
-        crossAxisSpacing: crossAxisSpacing,
-      ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return itemBuilder(items[index], index);
+        // Calculate columns based on device type and content density
+        final calculatedCrossAxisCount = crossAxisCount ??
+            _calculateResponsiveCrossAxisCount(
+              availableWidth,
+              isCompact,
+              isMobile: isMobile,
+              isTablet: isTablet,
+              isDesktop: isDesktop,
+            );
+
+        // Adaptive aspect ratio based on device and column count
+        final adaptiveAspectRatio = _calculateAdaptiveAspectRatio(
+          calculatedCrossAxisCount,
+          isMobile: isMobile,
+          isTablet: isTablet,
+          baseAspectRatio: childAspectRatio,
+        );
+
+        // Responsive spacing
+        final adaptiveMainSpacing = _calculateAdaptiveSpacing(mainAxisSpacing, isMobile);
+        final adaptiveCrossSpacing = _calculateAdaptiveSpacing(crossAxisSpacing, isMobile);
+
+        return GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: calculatedCrossAxisCount,
+            childAspectRatio: adaptiveAspectRatio,
+            mainAxisSpacing: adaptiveMainSpacing,
+            crossAxisSpacing: adaptiveCrossSpacing,
+          ),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return itemBuilder(items[index], index);
+          },
+        );
       },
     );
   }
 
-  int _calculateCrossAxisCount(double availableWidth, bool isCompact) {
+  /// Calculate responsive column count with enhanced mobile/tablet support
+  int _calculateResponsiveCrossAxisCount(
+    double availableWidth,
+    bool isCompact, {
+    required bool isMobile,
+    required bool isTablet,
+    required bool isDesktop,
+  }) {
+    // Unified breakpoint system
     if (isCompact) {
-      if (availableWidth > 1200) return 4;
-      if (availableWidth > 800) return 3;
-      if (availableWidth > 600) return 2;
-      return 1;
+      // Compact mode: prioritize density
+      if (availableWidth >= 1600) return 5; // Large desktop
+      if (isDesktop) return 4;
+      if (availableWidth >= 1024) return 3; // Large tablet
+      if (isTablet) return 2;
+      return 1; // Mobile
     } else {
-      if (availableWidth > 1400) return 3;
-      if (availableWidth > 900) return 2;
-      return 1;
+      // Normal mode: prioritize content visibility
+      if (availableWidth >= 1600) return 4; // Large desktop
+      if (isDesktop) return 3;
+      if (isTablet) return 2;
+      return 1; // Mobile
     }
+  }
+
+  /// Calculate adaptive aspect ratio with responsive scaling
+  double _calculateAdaptiveAspectRatio(
+    int columnCount, {
+    required bool isMobile,
+    required bool isTablet,
+    required double baseAspectRatio,
+  }) {
+    if (isMobile) {
+      // Mobile: taller cards for better content display
+      return baseAspectRatio * 1.2;
+    } else if (isTablet) {
+      // Tablet: slightly adjusted based on column count
+      return columnCount == 1 ? baseAspectRatio * 1.1 : baseAspectRatio;
+    } else {
+      // Desktop: use base ratio
+      return baseAspectRatio;
+    }
+  }
+
+  /// Calculate adaptive spacing with responsive scaling
+  double _calculateAdaptiveSpacing(double baseSpacing, bool isMobile) {
+    return isMobile ? baseSpacing * 0.75 : baseSpacing;
   }
 }
 
