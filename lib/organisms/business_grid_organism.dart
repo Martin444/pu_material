@@ -27,7 +27,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
     this.emptyTitle = 'No hay elementos',
     this.emptySubtitle = 'No se encontraron elementos para mostrar',
     this.emptyIcon = FluentIcons.box_24_regular,
-    this.loadingMessage = 'Cargando...',
+    this.loadingMessage = '-',
     this.errorMessage,
     this.onRefresh,
     this.headerActions = const [],
@@ -95,8 +95,11 @@ class BusinessGridOrganism<T> extends StatelessWidget {
           children: [
             _buildHeader(),
             const SizedBox(height: 16),
-            // Contenido principal
-            if (hasBoundedHeight) Expanded(child: _buildContent(context)) else _buildContent(context),
+            // Si la altura está acotada, usar Expanded y shrinkWrap: false
+            // Si no, usar shrinkWrap: true y sin Expanded
+            hasBoundedHeight
+                ? Expanded(child: _buildContent(context, shrinkWrap: false))
+                : _buildContent(context, shrinkWrap: true),
           ],
         );
       },
@@ -107,8 +110,9 @@ class BusinessGridOrganism<T> extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Título con contador
+        // Título con contador e ícono de comercios
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TitleAtom(
               text: title,
@@ -121,44 +125,32 @@ class BusinessGridOrganism<T> extends StatelessWidget {
                 color: PUColors.primaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                isLoading ? loadingMessage : '${items.length} elementos',
-                style: PuTextStyle.brandHeadStyle.copyWith(
-                  color: PUColors.primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: isCompact ? 11 : 12,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    isLoading ? loadingMessage : '${items.length} ',
+                    style: PuTextStyle.brandHeadStyle.copyWith(
+                      color: PUColors.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: isCompact ? 15 : 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  IconAtom(
+                    icon: FluentIcons.building_shop_24_regular,
+                    size: isCompact ? 11 : 18,
+                    color: PUColors.primaryColor,
+                  ),
+                ],
               ),
             ),
           ],
         ),
-
-        // Acciones del header
-        if (headerActions.isNotEmpty)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: headerActions
-                .map((action) => Padding(
-                      padding: EdgeInsets.only(
-                        left: headerActions.indexOf(action) > 0 ? 8 : 0,
-                      ),
-                      child: IconButton(
-                        onPressed: action.onPressed,
-                        icon: IconAtom(
-                          icon: action.icon,
-                          size: isCompact ? 20 : 24,
-                          color: action.color,
-                        ),
-                        tooltip: action.tooltip,
-                      ),
-                    ))
-                .toList(),
-          ),
       ],
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildContent(BuildContext context, {bool shrinkWrap = false}) {
     // Estado de error
     if (errorMessage != null) {
       return _buildErrorState();
@@ -175,7 +167,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
     }
 
     // Grid de elementos
-    return _buildGrid(context);
+    return _buildGrid(context, shrinkWrap: shrinkWrap);
   }
 
   Widget _buildLoadingState() {
@@ -297,7 +289,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
     );
   }
 
-  Widget _buildGrid(BuildContext context) {
+  Widget _buildGrid(BuildContext context, {bool shrinkWrap = false}) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final availableWidth = constraints.maxWidth;
@@ -329,8 +321,12 @@ class BusinessGridOrganism<T> extends StatelessWidget {
         final adaptiveMainSpacing = _calculateAdaptiveSpacing(mainAxisSpacing, isMobile);
         final adaptiveCrossSpacing = _calculateAdaptiveSpacing(crossAxisSpacing, isMobile);
 
+        // Detectar plataforma para scroll
+        final bool isMobilePlatform =
+            Theme.of(context).platform == TargetPlatform.android || Theme.of(context).platform == TargetPlatform.iOS;
         return GridView.builder(
-          shrinkWrap: true,
+          shrinkWrap: shrinkWrap,
+          physics: isMobilePlatform ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: calculatedCrossAxisCount,
             childAspectRatio: adaptiveAspectRatio,

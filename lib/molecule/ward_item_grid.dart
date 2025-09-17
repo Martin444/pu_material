@@ -39,6 +39,7 @@ class WardItemGrid<T> extends StatelessWidget {
 
     return GridLayoutAtom(
       constraints: constraints,
+      mainAxisExtent: 140,
       children: items.asMap().entries.map((entry) {
         return itemBuilder(entry.value, entry.key);
       }).toList(),
