@@ -289,15 +289,32 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
   }
 
   Widget _buildErrorWidget() {
+    final errorMsg = _processingResult?.error ?? 'No se pudo cargar la imagen.';
     return widget.errorWidget ??
         Container(
           width: widget.width,
           height: widget.height,
           color: Colors.grey[300],
-          child: const Icon(
-            FluentIcons.image_off_24_regular,
-            color: Colors.grey,
-            size: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                FluentIcons.image_off_24_regular,
+                color: Colors.grey,
+                size: 50,
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  errorMsg,
+                  style: const TextStyle(fontSize: 12, color: Colors.black54),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
         );
   }
