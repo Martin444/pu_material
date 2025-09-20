@@ -93,6 +93,7 @@ class WardsHomeOrganism<TCategory, TItem> extends StatelessWidget {
           // Main content
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Items grid
                 Flexible(
