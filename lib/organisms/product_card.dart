@@ -186,6 +186,7 @@ class ProductCard extends StatelessWidget {
             flex: 3,
             child: ProductImage(
               imageUrl: imageUrl,
+              fit: BoxFit.contain,
               borderRadius: BorderRadius.circular(8),
             ),
           ),
