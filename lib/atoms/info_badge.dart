@@ -11,7 +11,7 @@ class InfoBadge extends StatelessWidget {
   final FontWeight fontWeight;
 
   const InfoBadge({
-    Key? key,
+    super.key,
     required this.text,
     this.backgroundColor = const Color(0xFFe3f2fd),
     this.textColor = const Color(0xFF1976d2),
@@ -19,7 +19,7 @@ class InfoBadge extends StatelessWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
     this.fontSize = 12,
     this.fontWeight = FontWeight.w600,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

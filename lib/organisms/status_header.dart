@@ -36,7 +36,7 @@ class StatusHeader extends StatefulWidget {
   final VoidCallback? onStatusChange;
 
   const StatusHeader({
-    Key? key,
+    super.key,
     required this.isMobile,
     required this.config,
     this.infoItems,
@@ -45,7 +45,7 @@ class StatusHeader extends StatefulWidget {
     this.currentStep,
     this.totalSteps,
     this.onStatusChange,
-  }) : super(key: key);
+  });
 
   @override
   State<StatusHeader> createState() => _StatusHeaderState();

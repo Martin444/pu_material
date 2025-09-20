@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pu_material/atoms/ward_statistics_atom.dart';
-import 'package:pu_material/atoms/action_button_atom.dart';
 import 'package:pu_material/pu_material.dart';
 
 /// Ward Header Molecule - Molécula para el header del wardrobe con estadísticas y acciones

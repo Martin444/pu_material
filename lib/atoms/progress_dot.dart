@@ -11,14 +11,14 @@ class ProgressDot extends StatelessWidget {
   final Color completedIconColor;
 
   const ProgressDot({
-    Key? key,
+    super.key,
     required this.isActive,
     required this.isCompleted,
     this.size = 10,
     this.activeColor = Colors.white,
     this.inactiveColor = const Color(0x4DFFFFFF),
     this.completedIconColor = Colors.green,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

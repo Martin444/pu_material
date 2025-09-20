@@ -13,7 +13,7 @@ class StatusProgressIndicator extends StatelessWidget {
   final Color completedIconColor;
 
   const StatusProgressIndicator({
-    Key? key,
+    super.key,
     required this.currentStep,
     required this.totalSteps,
     this.isMobile = false,
@@ -21,7 +21,7 @@ class StatusProgressIndicator extends StatelessWidget {
     this.activeColor = Colors.white,
     this.inactiveColor = const Color(0x4DFFFFFF),
     this.completedIconColor = Colors.green,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

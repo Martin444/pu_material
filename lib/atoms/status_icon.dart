@@ -11,7 +11,7 @@ class StatusIcon extends StatelessWidget {
   final bool isRotating;
 
   const StatusIcon({
-    Key? key,
+    super.key,
     required this.size,
     required this.backgroundColor,
     required this.icon,
@@ -19,7 +19,7 @@ class StatusIcon extends StatelessWidget {
     this.borderWidth = 4.0,
     this.animation,
     this.isRotating = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,18 +83,17 @@ class RotatingIcon extends StatefulWidget {
   final double size;
 
   const RotatingIcon({
-    Key? key,
+    super.key,
     required this.icon,
     required this.color,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<RotatingIcon> createState() => _RotatingIconState();
 }
 
-class _RotatingIconState extends State<RotatingIcon>
-    with SingleTickerProviderStateMixin {
+class _RotatingIconState extends State<RotatingIcon> with SingleTickerProviderStateMixin {
   late AnimationController _rotationController;
 
   @override

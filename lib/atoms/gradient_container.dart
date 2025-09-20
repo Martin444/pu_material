@@ -14,7 +14,7 @@ class GradientContainer extends StatelessWidget {
   final Duration? animationDuration;
 
   const GradientContainer({
-    Key? key,
+    super.key,
     required this.child,
     required this.gradientColors,
     this.begin = Alignment.topLeft,
@@ -25,7 +25,7 @@ class GradientContainer extends StatelessWidget {
     this.width,
     this.height,
     this.animationDuration,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

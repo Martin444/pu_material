@@ -220,7 +220,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: onRefresh,
-              icon: IconAtom(
+              icon: const IconAtom(
                 icon: FluentIcons.arrow_sync_24_regular,
                 size: 16,
                 color: Colors.white,
@@ -247,7 +247,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconAtom(
+            const IconAtom(
               icon: FluentIcons.error_circle_24_regular,
               size: 48,
               color: Colors.red,
@@ -271,7 +271,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton.icon(
                 onPressed: onRefresh,
-                icon: IconAtom(
+                icon: const IconAtom(
                   icon: FluentIcons.arrow_sync_24_regular,
                   size: 16,
                   color: Colors.white,

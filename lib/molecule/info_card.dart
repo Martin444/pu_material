@@ -10,13 +10,13 @@ class InfoCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const InfoCard({
-    Key? key,
+    super.key,
     required this.items,
     this.isMobile = false,
     this.backgroundColor = const Color(0x33FFFFFF),
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.padding = const EdgeInsets.all(16),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

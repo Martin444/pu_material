@@ -10,13 +10,13 @@ class SectionHeader extends StatelessWidget {
   final Color? badgeTextColor;
 
   const SectionHeader({
-    Key? key,
+    super.key,
     required this.title,
     this.badgeText,
     this.titleStyle,
     this.badgeBackgroundColor,
     this.badgeTextColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

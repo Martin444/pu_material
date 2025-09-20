@@ -9,13 +9,13 @@ class TotalRow extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const TotalRow({
-    Key? key,
+    super.key,
     required this.label,
     required this.amount,
     this.isFinal = false,
     this.color,
     this.padding = const EdgeInsets.symmetric(horizontal: 4),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,7 @@ class TotalRow extends StatelessWidget {
             style: TextStyle(
               fontSize: isFinal ? 22 : 15,
               fontWeight: isFinal ? FontWeight.w700 : FontWeight.normal,
-              color: isFinal
-                  ? const Color(0xFF1976d2)
-                  : (color ?? const Color(0xFF666666)),
+              color: isFinal ? const Color(0xFF1976d2) : (color ?? const Color(0xFF666666)),
             ),
           ),
           Text(
@@ -39,9 +37,7 @@ class TotalRow extends StatelessWidget {
             style: TextStyle(
               fontSize: isFinal ? 22 : 15,
               fontWeight: isFinal ? FontWeight.w700 : FontWeight.w600,
-              color: isFinal
-                  ? const Color(0xFF1976d2)
-                  : (color ?? const Color(0xFF2e7d32)),
+              color: isFinal ? const Color(0xFF1976d2) : (color ?? const Color(0xFF2e7d32)),
             ),
           ),
         ],
