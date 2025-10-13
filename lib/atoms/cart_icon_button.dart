@@ -31,8 +31,8 @@ class CartIconButton extends StatelessWidget {
         final isTablet = maxWidth >= 400;
         final isDesktop = maxWidth >= 600;
 
-        final iconSize = size ?? (isDesktop ? 35.0 : (isTablet ? 35.0 : 30.0));
-        final buttonPadding = isDesktop ? 3.0 : (isTablet ? 5.0 : 4.0);
+        final iconSize = size ?? (isDesktop ? 35.0 : (isTablet ? 22.0 : 20.0));
+        final buttonPadding = isDesktop ? 3.0 : (isTablet ? 5.0 : 2.0);
 
         return GestureDetector(
           onTap: onPressed,

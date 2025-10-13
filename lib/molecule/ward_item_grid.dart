@@ -39,7 +39,8 @@ class WardItemGrid<T> extends StatelessWidget {
 
     return GridLayoutAtom(
       constraints: constraints,
-      mainAxisExtent: 260, // Ajuste para evitar overflow
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisExtent: 360, // Ajuste para evitar overflow
       children: items.asMap().entries.map((entry) {
         return itemBuilder(entry.value, entry.key);
       }).toList(),

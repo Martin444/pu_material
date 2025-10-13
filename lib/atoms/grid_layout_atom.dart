@@ -28,7 +28,7 @@ class GridLayoutAtom extends StatelessWidget {
     super.key,
     required this.children,
     required this.constraints,
-    this.mainAxisExtent = 530,
+    this.mainAxisExtent = 580, // Aumentar de 530 a 580 para más espacio vertical
     this.mainAxisSpacing = 0,
     this.crossAxisSpacing = 0,
     this.childAspectRatio = 1.0,
@@ -38,11 +38,14 @@ class GridLayoutAtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Calcular altura adaptativa basada en el dispositivo
+    final adaptiveMainAxisExtent = _getAdaptiveMainAxisExtent();
+
     return GridView.builder(
       itemCount: children.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: _getCrossAxisCount(),
-        mainAxisExtent: mainAxisExtent,
+        mainAxisExtent: adaptiveMainAxisExtent,
         mainAxisSpacing: mainAxisSpacing,
         childAspectRatio: childAspectRatio,
         crossAxisSpacing: crossAxisSpacing,
@@ -58,5 +61,19 @@ class GridLayoutAtom extends StatelessWidget {
       return constraints.maxWidth > 600 ? 3 : 2;
     }
     return 4;
+  }
+
+  /// Calcula la altura adaptativa basada en el ancho del dispositivo
+  double _getAdaptiveMainAxisExtent() {
+    final isDesktop = constraints.maxWidth >= 800;
+    final isTablet = constraints.maxWidth >= 600 && constraints.maxWidth < 800;
+
+    if (isDesktop) {
+      return mainAxisExtent * 1.1; // 10% más de altura en desktop
+    } else if (isTablet) {
+      return mainAxisExtent * 1.05; // 5% más de altura en tablet
+    } else {
+      return mainAxisExtent; // Altura base en móvil
+    }
   }
 }

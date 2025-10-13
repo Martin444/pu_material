@@ -36,10 +36,14 @@ class ProductActionBlock extends StatelessWidget {
       builder: (context, constraints) {
         // Usar constraints del LayoutBuilder para responsive más preciso
         final maxWidth = constraints.maxWidth;
+        final maxHeight = constraints.maxHeight;
         final isTablet = maxWidth >= 400;
         final isDesktop = maxWidth >= 600;
 
         final spacing = isDesktop ? 8.0 : (isTablet ? 6.0 : 4.0);
+
+        // Si el espacio vertical es muy limitado, usar layout compacto
+        final hasLimitedHeight = maxHeight != double.infinity && maxHeight < 40;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,17 +53,22 @@ class ProductActionBlock extends StatelessWidget {
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // Evitar expansion innecesaria
                 children: [
+                  // Precio - siempre visible
                   ProductPrice(
                     price: price,
                     textAlign: TextAlign.start,
                   ),
-                  if (additionalBadge != null) ...[
+                  // Badge adicional - solo si hay espacio y no estamos en modo compacto
+                  if (additionalBadge != null && !hasLimitedHeight) ...[
                     SizedBox(height: spacing / 2),
-                    ProductBadge(
-                      text: additionalBadge!,
-                      textColor: additionalBadgeColor,
-                      backgroundColor: additionalBadgeBackgroundColor,
+                    Flexible(
+                      child: ProductBadge(
+                        text: additionalBadge!,
+                        textColor: additionalBadgeColor,
+                        backgroundColor: additionalBadgeBackgroundColor,
+                      ),
                     ),
                   ],
                 ],
