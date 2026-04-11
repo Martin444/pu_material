@@ -81,6 +81,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+<<<<<<< Updated upstream
   convert:
     dependency: transitive
     description:
@@ -97,6 +98,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+=======
+>>>>>>> Stashed changes
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -267,6 +270,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+<<<<<<< Updated upstream
   octo_image:
     dependency: transitive
     description:
@@ -275,6 +279,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+=======
+>>>>>>> Stashed changes
   path:
     dependency: transitive
     description:
