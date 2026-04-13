@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
@@ -38,6 +39,13 @@ class _InputDropDownState<T> extends State<PUInputDropDown<T>> {
         DropdownButtonFormField<T>(
           value: selectedValue ?? widget.initialItem,
           iconEnabledColor: PUColors.iconColor,
+          elevation: 4,
+          dropdownColor: PUColors.bgInput,
+          borderRadius: BorderRadius.circular(12),
+          icon: const Icon(
+            FluentIcons.chevron_down_24_regular,
+            size: 24,
+          ),
           decoration: InputDecoration(
             fillColor: PUColors.bgInput,
             hoverColor: PUColors.bgInput,
@@ -54,19 +62,19 @@ class _InputDropDownState<T> extends State<PUInputDropDown<T>> {
             filled: true,
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.primaryColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
           focusColor: Colors.transparent,
-          style: PuTextStyle.hintTextStyle,
+          style: PuTextStyle.description1,
           validator: widget.validator,
           hint: Text(
             widget.hintText,

@@ -53,32 +53,6 @@ class _PUInputState extends State<PUInput> {
     isVisibleText = widget.isPassword ?? false;
   }
 
-  Widget getIcon() {
-    if (widget.isPassword ?? false) {
-      return Container(
-        margin: EdgeInsets.only(
-          right: 5,
-          top: widget.errorText != null ? 0 : 10,
-          bottom: widget.errorText != null ? 18 : 0,
-        ),
-        child: GestureDetector(
-          child: Icon(
-            isVisibleText ? FluentIcons.eye_24_regular : FluentIcons.eye_off_24_regular,
-            size: 24,
-            color: PUColors.iconColor,
-          ),
-          onTap: () {
-            setState(() {
-              isVisibleText = !isVisibleText;
-            });
-          },
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
-
   List<TextInputFormatter> getFormatForTypeInput() {
     if (widget.formaters != null) return widget.formaters!;
     switch (widget.textInputType) {
@@ -97,11 +71,8 @@ class _PUInputState extends State<PUInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: widget.errorText != null ? Alignment.centerRight : Alignment.topRight,
-      children: [
-        TextFormField(
-          obscureText: isVisibleText,
+    return TextFormField(
+      obscureText: isVisibleText,
           validator: widget.validator,
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
@@ -121,7 +92,24 @@ class _PUInputState extends State<PUInput> {
             filled: true,
             contentPadding: widget.compact
                 ? const EdgeInsets.symmetric(horizontal: 8, vertical: 0)
-                : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                : const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            suffixIcon: (widget.isPassword ?? false)
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isVisibleText = !isVisibleText;
+                      });
+                    },
+                    icon: Icon(
+                      isVisibleText
+                          ? FluentIcons.eye_24_regular
+                          : FluentIcons.eye_off_24_regular,
+                      size: 24,
+                      color: PUColors.iconColor,
+                    ),
+                    splashRadius: 20,
+                  )
+                : null,
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: PUColors.primaryColor),
               borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
@@ -139,9 +127,6 @@ class _PUInputState extends State<PUInput> {
           controller: widget.controller,
           onChanged: widget.onChanged,
           onFieldSubmitted: widget.onSubmited,
-        ),
-        getIcon(),
-      ],
     );
   }
 }
