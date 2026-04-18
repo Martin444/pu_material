@@ -28,7 +28,7 @@ class CategorySectionOrganism<T> extends StatelessWidget {
     this.emptyMessage = 'No hay elementos disponibles',
     this.maxTagsToShow = 10,
     this.showAsGrid = true,
-    this.constrains,
+    this.constraints,
   });
 
   /// Título de la sección
@@ -74,9 +74,9 @@ class CategorySectionOrganism<T> extends StatelessWidget {
   final bool showAsGrid;
 
   /// Constraints del contenedor padre para responsividad
-  final BoxConstraints? constrains;
+  final BoxConstraints? constraints;
 
-  bool get _isSmallScreen => constrains != null ? constrains!.maxWidth < 600 : false;
+  bool get _isSmallScreen => constraints != null ? constraints!.maxWidth < 600 : false;
 
   @override
   Widget build(BuildContext context) {

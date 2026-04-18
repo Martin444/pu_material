@@ -12,7 +12,7 @@ import '../utils/style/pu_style_fonts.dart';
 /// - Acciones principales (editar, eliminar, seleccionar)
 ///
 /// Generic parameter T permite reutilización con cualquier tipo de modelo.
-class CategoryTileMolecule<T> extends StatelessWidget {
+class CategoryTileMolecule<T> extends StatefulWidget {
   const CategoryTileMolecule({
     super.key,
     required this.item,
@@ -54,92 +54,123 @@ class CategoryTileMolecule<T> extends StatelessWidget {
   final Widget? trailing;
 
   @override
+  State<CategoryTileMolecule<T>> createState() => _CategoryTileMoleculeState<T>();
+}
+
+class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
+  bool _isHovering = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onSelect(item),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 16,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? PUColors.bgCategorySelected : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          border: isSelected
-              ? Border.all(
-                  color: PUColors.primaryColor.withOpacity(0.3),
-                  width: 1,
-                )
-              : null,
-        ),
-        child: Row(
-          children: [
-            // Indicador de selección
-            if (isSelected) ...[
-              Container(
-                width: 4,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => widget.onSelect(widget.item),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
+          decoration: BoxDecoration(
+            color: widget.isSelected 
+                ? PUColors.bgCategorySelected 
+                : (_isHovering ? PUColors.primaryColor.withOpacity(0.05) : Colors.transparent),
+            borderRadius: BorderRadius.circular(12),
+            border: widget.isSelected
+                ? Border.all(
+                    color: PUColors.primaryColor.withOpacity(0.3),
+                    width: 1.5,
+                  )
+                : Border.all(
+                    color: _isHovering ? PUColors.primaryColor.withOpacity(0.1) : Colors.transparent,
+                    width: 1.5,
+                  ),
+            boxShadow: _isHovering && !widget.isSelected
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            children: [
+              // Indicador de selección
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: widget.isSelected ? 4 : (_isHovering ? 2 : 0),
                 height: 20,
                 decoration: BoxDecoration(
-                  color: PUColors.primaryColor,
+                  color: widget.isSelected ? PUColors.primaryColor : PUColors.primaryColor.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(width: 12),
-            ],
+              SizedBox(width: widget.isSelected || _isHovering ? 12 : 0),
 
-            // Contenido principal
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: PuTextStyle.textbtnStyle.copyWith(
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                      color: isSelected ? PUColors.primaryColor : PUColors.textColor3,
+              // Contenido principal
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.label,
+                      style: PuTextStyle.textbtnStyle.copyWith(
+                        fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w500,
+                        color: widget.isSelected ? PUColors.primaryColor : PUColors.textColor3,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            // Widget personalizado al final
-            if (trailing != null) ...[
-              const SizedBox(width: 8),
-              trailing!,
-              const SizedBox(width: 8),
-            ],
-
-            // Acciones
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Botón de editar
-                if (showEditAction && onEdit != null)
-                  _ActionButton(
-                    icon: FluentIcons.edit_24_regular,
-                    color: PUColors.primaryColor,
-                    onTap: () => onEdit!(item),
-                    tooltip: 'Editar',
-                  ),
-
-                // Espaciado entre botones
-                if (showEditAction && showDeleteAction && onEdit != null && onDelete != null) const SizedBox(width: 8),
-
-                // Botón de eliminar
-                if (showDeleteAction && onDelete != null)
-                  _ActionButton(
-                    icon: FluentIcons.delete_24_regular,
-                    color: Colors.red,
-                    onTap: () => onDelete!(item),
-                    tooltip: 'Eliminar',
-                  ),
+              // Widget personalizado al final
+              if (widget.trailing != null) ...[
+                const SizedBox(width: 8),
+                widget.trailing!,
+                const SizedBox(width: 8),
               ],
-            ),
-          ],
+
+              // Acciones (solo mostrar si está seleccionado o en hover)
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 200),
+                opacity: widget.isSelected || _isHovering ? 1.0 : 0.0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Botón de editar
+                    if (widget.showEditAction && widget.onEdit != null)
+                      _ActionButton(
+                        icon: FluentIcons.edit_24_regular,
+                        color: PUColors.primaryColor,
+                        onTap: () => widget.onEdit!(widget.item),
+                        tooltip: 'Editar',
+                      ),
+
+                    // Espaciado entre botones
+                    if (widget.showEditAction && widget.showDeleteAction && widget.onEdit != null && widget.onDelete != null) 
+                      const SizedBox(width: 8),
+
+                    // Botón de eliminar
+                    if (widget.showDeleteAction && widget.onDelete != null)
+                      _ActionButton(
+                        icon: FluentIcons.delete_24_regular,
+                        color: Colors.red,
+                        onTap: () => widget.onDelete!(widget.item),
+                        tooltip: 'Eliminar',
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
