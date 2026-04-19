@@ -183,4 +183,19 @@ class PuTextStyle {
     fontSize: 18,
     fontWeight: FontWeight.w700,
   );
+
+  // Restaurant Hero Section Styles
+  static TextStyle subtitle = styleGlobal.copyWith(
+    color: PUColors.textColor1,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    height: 1.5,
+  );
+
+  static TextStyle buttonTextStyle = styleGlobal.copyWith(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    height: 1.0,
+  );
 }

@@ -1,9 +1,11 @@
+// Level: Organism
+// Description: Item de la lista de compras con controles de cantidad.
 import 'package:flutter/material.dart';
 import 'package:pu_material/utils/formaters/currency_converter.dart';
 import 'package:pu_material/utils/overflow_text.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
-import 'package:pu_material/widgets/cards/cart/model/cart_item_model.dart';
+import 'package:pu_material/organisms/cart/model/cart_item_model.dart';
 import 'package:pu_material/widgets/pu_robust_network_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
