@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
+import 'package:pu_material/utils/pu_colors.dart';
 
 /// Átomo: Información adicional del producto (tiempo de entrega, marca, etc.)
 class ProductAdditionalInfo extends StatelessWidget {
@@ -22,47 +23,32 @@ class ProductAdditionalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Usar constraints del LayoutBuilder para responsive más preciso
-        final maxWidth = constraints.maxWidth;
-        final isTablet = maxWidth >= 400;
-        final isDesktop = maxWidth >= 600;
+    final displayText = '${prefix ?? ''}$text';
 
-        final textScaleFactor = isDesktop ? 1.0 : (isTablet ? 0.95 : 0.9);
-        final baseFontSize = PuTextStyle.ingredientsListStyle.fontSize ?? 12;
-        final horizontalPadding = isDesktop ? 8.0 : 6.0;
-        final verticalPadding = isDesktop ? 3.0 : 2.0;
-
-        final displayText = '${prefix ?? ''}$text';
-
-        Widget textWidget = Text(
-          displayText.toUpperCase(),
-          style: PuTextStyle.ingredientsListStyle.copyWith(
-            fontSize: baseFontSize * textScaleFactor,
-            color: textColor,
-          ),
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.start,
-        );
-
-        if (showBackground && backgroundColor != null) {
-          return Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-              vertical: verticalPadding,
-            ),
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: textWidget,
-          );
-        }
-
-        return textWidget;
-      },
+    Widget textWidget = Text(
+      displayText.toUpperCase(),
+      style: PuTextStyle.bodySmall.copyWith(
+        fontSize: 10,
+        letterSpacing: 1.5,
+        fontWeight: FontWeight.w700,
+        color: textColor ?? PUColors.textColorMuted,
+      ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.start,
     );
+
+    if (showBackground) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: backgroundColor ?? PUColors.accentColor.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: textWidget,
+      );
+    }
+
+    return textWidget;
   }
 }

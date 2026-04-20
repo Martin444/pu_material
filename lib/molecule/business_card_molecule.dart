@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import '../utils/pu_colors.dart';
+import '../utils/style/pu_style_fonts.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../atoms/container_atom.dart';
 import '../atoms/title_atom.dart';
 import '../atoms/subtitle_atom.dart';
 import '../atoms/icon_atom.dart';
 import '../widgets/pu_robust_network_image.dart';
-import '../utils/pu_colors.dart';
 
 /// Molécula genérica para cards de negocios/entidades
 ///
@@ -88,46 +89,64 @@ class BusinessCardMolecule extends StatelessWidget {
     // Usar solo las acciones pasadas externamente, sin agregar botón automático
     final allActions = <BusinessCardAction>[...actions];
 
-    return ContainerAtom(
-      backgroundColor: backgroundColor ?? Colors.white,
-      borderRadius: BorderRadius.circular(borderRadius),
-      padding: padding,
-      child: InkWell(
-        onTap: onTap,
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor ?? Colors.white,
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header principal
-            BusinessCardHeader(
-              name: name,
-              category: category,
-              imageUrl: imageUrl,
-              isVerified: isVerified,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: Padding(
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header principal
+                BusinessCardHeader(
+                  name: name,
+                  category: category,
+                  imageUrl: imageUrl,
+                  isVerified: isVerified,
+                ),
+
+                // Información de contacto
+                if (contactInfo.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  const Divider(height: 1, thickness: 0.5, color: Color(0xFFF1F1F0)),
+                  const SizedBox(height: 16),
+                  BusinessCardContactSection(contactInfo: contactInfo),
+                ],
+
+                // Información adicional
+                if (additionalInfo.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  BusinessCardAdditionalInfoSection(additionalInfo: additionalInfo),
+                ],
+
+                // Badges
+                if (badges.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  BusinessCardBadgesSection(badges: badges),
+                ],
+
+                // Acciones
+                if (allActions.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  BusinessCardActionsSection(actions: allActions),
+                ],
+              ],
             ),
-
-            // Información de contacto
-            if (contactInfo.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              BusinessCardContactSection(contactInfo: contactInfo),
-              const SizedBox(height: 8),
-            ],
-
-            // Información adicional
-            if (additionalInfo.isNotEmpty) ...[
-              BusinessCardAdditionalInfoSection(additionalInfo: additionalInfo),
-              const SizedBox(height: 8),
-            ],
-
-            // Badges
-            if (badges.isNotEmpty) ...[
-              BusinessCardBadgesSection(badges: badges),
-              const SizedBox(height: 8),
-            ],
-
-            // Acciones
-            if (allActions.isNotEmpty) BusinessCardActionsSection(actions: allActions),
-          ],
+          ),
         ),
       ),
     );
@@ -152,48 +171,56 @@ class BusinessCardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Imagen
-        BusinessCardImage(imageUrl: imageUrl),
+        // Imagen circular premium
+        BusinessCardImage(imageUrl: imageUrl, size: 70),
 
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
 
         // Información textual
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Nombre con verificación
+              // Nombre con verificación Gold
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: TitleAtom(
-                      text: name,
-                      level: TitleLevel.h3,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87, // Color más oscuro para mejor contraste
-                      maxLines: 2,
+                    child: Text(
+                      name,
+                      style: PuTextStyle.title3.copyWith(
+                        color: PUColors.textColorRich,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   if (isVerified) ...[
                     const SizedBox(width: 6),
-                    IconAtom(
-                      icon: FluentIcons.checkmark_circle_24_filled,
-                      size: 20,
-                      color: Colors.blue[600],
+                    Icon(
+                      Icons.verified_rounded,
+                      size: 18,
+                      color: PUColors.accentColor,
                     ),
                   ],
                 ],
               ),
 
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
 
-              // Categoría
-              SubtitleAtom(
-                text: category,
-                fontSize: 14,
-                color: PUColors.textColor3, // Cambiar a textColor3 para mejor contraste
+              // Categoría con estilo minimalista
+              Text(
+                category.toUpperCase(),
+                style: PuTextStyle.bodySmall.copyWith(
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                  color: PUColors.accentColor,
+                ),
                 maxLines: 1,
               ),
             ],
@@ -204,7 +231,7 @@ class BusinessCardHeader extends StatelessWidget {
   }
 }
 
-/// Widget para la imagen de la business card
+/// Widget para la imagen de la business card (Circular con borde fino)
 class BusinessCardImage extends StatelessWidget {
   const BusinessCardImage({
     super.key,
@@ -217,11 +244,15 @@ class BusinessCardImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: SizedBox(
-        width: size,
-        height: size,
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: const Color(0xFFF1F1F0), width: 1),
+      ),
+      padding: const EdgeInsets.all(2),
+      child: ClipOval(
         child: PuRobustNetworkImage(
           imageUrl: imageUrl,
           fit: BoxFit.cover,

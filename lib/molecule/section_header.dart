@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../atoms/info_badge.dart';
+import '../utils/pu_colors.dart';
+import '../utils/style/pu_style_fonts.dart';
 
 /// Section Header Molecule - A header with title and optional badge
 class SectionHeader extends StatelessWidget {
@@ -20,25 +22,26 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: titleStyle ??
-              const TextStyle(
-                color: Color(0xFF333333),
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        if (badgeText != null)
-          InfoBadge(
-            text: badgeText!,
-            backgroundColor: badgeBackgroundColor ?? const Color(0xFFe3f2fd),
-            textColor: badgeTextColor ?? const Color(0xFF1976d2),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: titleStyle ?? PuTextStyle.title2.copyWith(
+              fontSize: 22,
+              color: PUColors.textColorRich,
+            ),
           ),
-      ],
+          if (badgeText != null)
+            InfoBadge(
+              text: badgeText!,
+              backgroundColor: badgeBackgroundColor ?? PUColors.accentColor.withValues(alpha: 0.1),
+              textColor: badgeTextColor ?? PUColors.accentColor,
+            ),
+        ],
+      ),
     );
   }
 }

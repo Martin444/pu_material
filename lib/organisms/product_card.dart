@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pu_material/atoms/product_image.dart';
 import 'package:pu_material/molecule/product_info_block.dart';
 import 'package:pu_material/molecule/product_action_block.dart';
+import 'package:pu_material/utils/pu_colors.dart';
 
 /// Enum para el layout del card
 enum ProductCardLayout {
@@ -176,91 +177,113 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildVerticalCard(BuildContext context, bool isTablet, bool isDesktop) {
-    final verticalPadding = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
-    final horizontalPadding = isDesktop ? 14.0 : (isTablet ? 12.0 : 10.0);
-    final spacing = isDesktop ? 12.0 : (isTablet ? 10.0 : 8.0);
-    final borderRadius = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
+    final verticalPadding = isDesktop ? 12.0 : 8.0;
+    final horizontalPadding = isDesktop ? 12.0 : 8.0;
+    final spacing = isDesktop ? 12.0 : 8.0;
+    final borderRadius = 16.0;
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: verticalPadding,
-        horizontal: horizontalPadding,
-      ),
-      decoration: _buildCardDecoration(context, borderRadius),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Imagen del producto - Proporción más equilibrada
-          Expanded(
-            flex: 4,
-            child: Container(
-              margin: EdgeInsets.only(bottom: spacing / 2),
-              child: ProductImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.circular(borderRadius * 0.7),
-              ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: TweenAnimationBuilder<double>(
+        duration: const Duration(milliseconds: 200),
+        tween: Tween(begin: 1.0, end: 1.0), // Scale effect can be added here if wrapped in a stateful widget or using a custom hover state
+        builder: (context, scale, child) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: verticalPadding,
+              horizontal: horizontalPadding,
             ),
-          ),
-
-          // Información y acción - Más espacio para el contenido
-          Expanded(
-            flex: 3,
+            decoration: _buildCardDecoration(context, borderRadius),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Información del producto - Distribución optimizada
                 Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: spacing * 0.5),
-                    child: ProductInfoBlock(
-                      title: title,
-                      primaryInfo: primaryInfo,
-                      secondaryInfo: secondaryInfo,
-                      badge: badge,
-                      primaryInfoColor: primaryInfoColor,
-                      primaryInfoBackgroundColor: primaryInfoBackgroundColor,
-                      badgeColor: badgeColor,
-                      badgeBackgroundColor: badgeBackgroundColor,
-                      primaryInfoPrefix: primaryInfoPrefix,
-                      secondaryInfoPrefix: secondaryInfoPrefix,
-                      maxTitleLines: maxTitleLines,
-                      maxSecondaryInfoLines: maxSecondaryInfoLines,
+                  flex: 5,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: spacing),
+                    child: ProductImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(borderRadius - 4),
                     ),
                   ),
                 ),
-
-                // Separador visual sutil
-                Container(
-                  height: 1,
-                  margin: EdgeInsets.symmetric(
-                    vertical: spacing * 0.8,
-                    horizontal: spacing,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ProductInfoBlock(
+                        title: title,
+                        primaryInfo: primaryInfo,
+                        secondaryInfo: secondaryInfo,
+                        badge: badge,
+                        primaryInfoColor: primaryInfoColor,
+                        maxTitleLines: maxTitleLines,
+                        maxSecondaryInfoLines: maxSecondaryInfoLines,
+                      ),
+                      const Spacer(),
+                      ProductActionBlock(
+                        price: price,
+                        onAddToCart: onAddToCart,
+                        isSelected: isSelected,
+                        additionalBadge: actionBadge,
+                        selectedIcon: selectedIcon,
+                        unselectedIcon: unselectedIcon,
+                        selectedButtonColor: selectedButtonColor,
+                        unselectedButtonColor: unselectedButtonColor,
+                      ),
+                    ],
                   ),
                 ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
-                // Precio y botón de acción - Espacio fijo optimizado
-                Container(
-                  height: isDesktop ? 60.0 : (isTablet ? 55.0 : 50.0),
-                  padding: EdgeInsets.symmetric(horizontal: spacing * 0.5),
-                  child: ProductActionBlock(
-                    price: price,
-                    onAddToCart: onAddToCart,
-                    isSelected: isSelected,
-                    additionalBadge: actionBadge,
-                    additionalBadgeColor: actionBadgeColor,
-                    additionalBadgeBackgroundColor: actionBadgeBackgroundColor,
-                    selectedIcon: selectedIcon,
-                    unselectedIcon: unselectedIcon,
-                    selectedButtonColor: selectedButtonColor,
-                    unselectedButtonColor: unselectedButtonColor,
-                  ),
+  Widget _buildHorizontalCard(BuildContext context, bool isTablet, bool isDesktop) {
+    final padding = 12.0;
+    final spacing = 12.0;
+    final imageSize = isDesktop ? 90.0 : 70.0;
+    final borderRadius = 16.0;
+
+    return Container(
+      padding: EdgeInsets.all(padding),
+      decoration: _buildCardDecoration(context, borderRadius),
+      child: Row(
+        children: [
+          ProductImage(
+            imageUrl: imageUrl,
+            width: imageSize,
+            height: imageSize,
+            fit: BoxFit.cover,
+            borderRadius: BorderRadius.circular(borderRadius - 4),
+          ),
+          SizedBox(width: spacing),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ProductInfoBlock(
+                  title: title,
+                  primaryInfo: primaryInfo,
+                  secondaryInfo: secondaryInfo,
+                  badge: badge,
+                  primaryInfoColor: primaryInfoColor,
+                  maxTitleLines: 2,
+                  maxSecondaryInfoLines: 1,
+                ),
+                ProductActionBlock(
+                  price: price,
+                  onAddToCart: onAddToCart,
+                  isSelected: isSelected,
+                  additionalBadge: actionBadge,
                 ),
               ],
             ),
@@ -270,129 +293,21 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalCard(BuildContext context, bool isTablet, bool isDesktop) {
-    final padding = isDesktop ? 20.0 : (isTablet ? 18.0 : 16.0);
-    final spacing = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
-    final imageSize = isDesktop ? 100.0 : (isTablet ? 90.0 : 80.0);
-    final borderRadius = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
-
-    return Container(
-      padding: EdgeInsets.all(padding),
-      decoration: _buildCardDecoration(context, borderRadius),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            // Imagen del producto con container profesional
-            Container(
-              width: imageSize,
-              height: imageSize,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius * 0.7),
-                color: Theme.of(context).colorScheme.surface,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
-                  width: 1,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(borderRadius * 0.7),
-                child: ProductImage(
-                  imageUrl: imageUrl,
-                  width: imageSize,
-                  height: imageSize,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-
-            SizedBox(width: spacing),
-
-            // Información del producto con mejor estructura
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Información del producto
-                  Flexible(
-                    flex: 3,
-                    child: ProductInfoBlock(
-                      title: title,
-                      primaryInfo: primaryInfo,
-                      secondaryInfo: secondaryInfo,
-                      badge: badge,
-                      primaryInfoColor: primaryInfoColor,
-                      primaryInfoBackgroundColor: primaryInfoBackgroundColor,
-                      badgeColor: badgeColor,
-                      badgeBackgroundColor: badgeBackgroundColor,
-                      primaryInfoPrefix: primaryInfoPrefix,
-                      secondaryInfoPrefix: secondaryInfoPrefix,
-                      maxTitleLines: maxTitleLines,
-                      maxSecondaryInfoLines: maxSecondaryInfoLines,
-                    ),
-                  ),
-
-                  SizedBox(height: spacing * 0.8),
-
-                  // Precio y botón de acción en la parte inferior
-                  Container(
-                    height: isDesktop ? 50.0 : (isTablet ? 45.0 : 40.0),
-                    child: ProductActionBlock(
-                      price: price,
-                      onAddToCart: onAddToCart,
-                      isSelected: isSelected,
-                      additionalBadge: actionBadge,
-                      additionalBadgeColor: actionBadgeColor,
-                      additionalBadgeBackgroundColor: actionBadgeBackgroundColor,
-                      selectedIcon: selectedIcon,
-                      unselectedIcon: unselectedIcon,
-                      selectedButtonColor: selectedButtonColor,
-                      unselectedButtonColor: unselectedButtonColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// Construye la decoración profesional del card
   BoxDecoration _buildCardDecoration(BuildContext context, double borderRadius) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return BoxDecoration(
-      color: isSelected ? colorScheme.primaryContainer.withOpacity(0.1) : colorScheme.surface,
+      color: Colors.white,
       borderRadius: BorderRadius.circular(borderRadius),
-      border: Border.all(
-        color: isSelected ? colorScheme.primary.withOpacity(0.4) : colorScheme.outline.withOpacity(0.15),
-        width: isSelected ? 1.5 : 1,
-      ),
       boxShadow: [
-        if (isSelected) ...[
-          BoxShadow(
-            color: colorScheme.primary.withOpacity(0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-        ],
         BoxShadow(
-          color: colorScheme.shadow.withOpacity(isSelected ? 0.12 : 0.08),
-          blurRadius: isSelected ? 20 : 16,
-          offset: Offset(0, isSelected ? 6 : 4),
-          spreadRadius: 0,
-        ),
-        BoxShadow(
-          color: colorScheme.shadow.withOpacity(0.04),
-          blurRadius: 4,
-          offset: const Offset(0, 2),
-          spreadRadius: 0,
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
         ),
       ],
+      border: Border.all(
+        color: isSelected ? PUColors.accentColor.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.05),
+        width: isSelected ? 1.5 : 1,
+      ),
     );
   }
 }
