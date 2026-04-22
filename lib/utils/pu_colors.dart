@@ -65,4 +65,23 @@ class PUColors {
   // Hover & Interactive states
   static Color restaurantPrimaryHover = const Color(0xFF292524);
   static Color restaurantSecondaryHover = const Color(0xFFA16207);
+
+  // --- Membership Feature Colors ---
+  // Premium tier (sophisticated alternative to gold for premium features)
+  static const Color premiumPrimary = Color(0xFF1C1917);   // Dark Stone
+  static const Color premiumAccent = Color(0xFFCA8A04);      // Rich Gold
+  static const Color premiumBackground = Color(0xFFFEF9C3); // Soft Gold BG
+  
+  // Enterprise tier
+  static const Color enterprisePrimary = Color(0xFF1C1917);   // Dark Stone
+  static const Color enterpriseAccent = Color(0xFF44403C);   // Slate
+  
+  // CTA Colors (semantic)
+  static const Color ctaSuccess = Color(0xFF166534);          // Green CTA
+  static const Color ctaPrimary = Color(0xFFCA8A04);             // Gold CTA (default)
+  
+  // Glassmorphism for membership cards
+  static Color glassPremiumBg = const Color(0xFF1C1917).withValues(alpha: 0.85);
+  static Color glassPremiumBorder = Colors.white.withValues(alpha: 0.2);
+  static Color glassPremiumShadow = const Color(0xFF1C1917).withValues(alpha: 0.25);
 }

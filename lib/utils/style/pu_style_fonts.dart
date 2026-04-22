@@ -134,4 +134,76 @@ class PuTextStyle {
 
   static TextStyle subtitle = bodyMedium;
   static TextStyle buttonTextStyle = primaryButtonStyle;
+
+  // --- Membership Feature Styles ---
+  // Glassmorphism card price display
+  static TextStyle get membershipPriceLarge => GoogleFonts.jost(
+    fontSize: 48,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
+  );
+
+  static TextStyle get membershipPriceLabel => GoogleFonts.jost(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    color: Colors.white70,
+  );
+
+  // Membership plan title
+  static TextStyle membershipPlanTitle = headingBase.copyWith(
+    fontSize: 36,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
+  );
+
+  // Membership plan subtitle
+  static TextStyle membershipPlanSubtitle = bodyBase.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
+  // Membership badge text
+  static TextStyle membershipBadge = bodySmall.copyWith(
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
+  // Status label
+  static TextStyle membershipStatus = bodyBase.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
+  // Plan card title
+  static TextStyle membershipCardTitle = bodyBase.copyWith(
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: PUColors.textColorRich,
+  );
+
+  // Plan card description
+  static TextStyle membershipCardDescription = bodySmall.copyWith(
+    color: PUColors.textColorLight,
+  );
+
+  // Plan card feature
+  static TextStyle membershipFeature = bodyBase.copyWith(
+    fontSize: 14,
+    color: PUColors.textColor3,
+  );
+
+  // Discount code applied text
+  static TextStyle discountAppliedText = bodyBase.copyWith(
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+  );
+
+  // Billing history amount
+  static TextStyle billingAmount = bodyBase.copyWith(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: PUColors.textColorRich,
+  );
 }

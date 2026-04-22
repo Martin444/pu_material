@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pu_material/atoms/product_image.dart';
 import 'package:pu_material/molecule/product_info_block.dart';
 import 'package:pu_material/molecule/product_action_block.dart';
+import 'package:pu_material/atoms/product_badge.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 
 /// Enum para el layout del card
@@ -177,80 +178,107 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildVerticalCard(BuildContext context, bool isTablet, bool isDesktop) {
-    final verticalPadding = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
-    final horizontalPadding = isDesktop ? 14.0 : (isTablet ? 12.0 : 10.0);
     final spacing = isDesktop ? 12.0 : (isTablet ? 10.0 : 8.0);
-    final borderRadius = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
+    final borderRadius = isDesktop ? 20.0 : (isTablet ? 18.0 : 16.0);
+    final theme = Theme.of(context);
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: verticalPadding,
-        horizontal: horizontalPadding,
-      ),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       decoration: _buildCardDecoration(context, borderRadius),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Imagen del producto - Proporción más equilibrada
-          Expanded(
-            flex: 4,
-            child: Container(
-              margin: EdgeInsets.only(bottom: spacing / 2),
-              child: ProductImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.circular(borderRadius * 0.7),
-              ),
-            ),
-          ),
-
-          // Información y acción - Más espacio para el contenido
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Imagen del producto con Stack para badges e indicadores
+            Stack(
               children: [
-                // Información del producto - Distribución optimizada
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: spacing * 0.5),
-                    child: ProductInfoBlock(
-                      title: title,
-                      primaryInfo: primaryInfo,
-                      secondaryInfo: secondaryInfo,
-                      badge: badge,
-                      primaryInfoColor: primaryInfoColor,
-                      primaryInfoBackgroundColor: primaryInfoBackgroundColor,
-                      badgeColor: badgeColor,
-                      badgeBackgroundColor: badgeBackgroundColor,
-                      primaryInfoPrefix: primaryInfoPrefix,
-                      secondaryInfoPrefix: secondaryInfoPrefix,
-                      maxTitleLines: maxTitleLines,
-                      maxSecondaryInfoLines: maxSecondaryInfoLines,
+                AspectRatio(
+                  aspectRatio: 1, // Imagen cuadrada para consistencia
+                  child: ProductImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(borderRadius),
+                      topRight: Radius.circular(borderRadius),
                     ),
                   ),
                 ),
-
-                // Separador visual sutil
-                Container(
-                  height: 1,
-                  margin: EdgeInsets.symmetric(
-                    vertical: spacing * 0.8,
-                    horizontal: spacing,
+                // Indicador de selección (Checkmark)
+                if (isSelected)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: PUColors.accentColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
+                // Badge principal del producto
+                if (badge != null)
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: ProductBadge(
+                      text: badge!,
+                      textColor: badgeColor,
+                      backgroundColor: badgeBackgroundColor,
+                    ),
                   ),
-                ),
+              ],
+            ),
 
-                // Precio y botón de acción - Espacio fijo optimizado
-                Container(
-                  height: isDesktop ? 60.0 : (isTablet ? 55.0 : 50.0),
-                  padding: EdgeInsets.symmetric(horizontal: spacing * 0.5),
-                  child: ProductActionBlock(
+            // Contenido informativo y acciones
+            Padding(
+              padding: EdgeInsets.all(spacing * 1.2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Título e Info Primaria/Secundaria
+                  ProductInfoBlock(
+                    title: title,
+                    primaryInfo: primaryInfo,
+                    secondaryInfo: secondaryInfo,
+                    badge: null, // El badge ya lo pusimos arriba
+                    primaryInfoColor: primaryInfoColor,
+                    primaryInfoBackgroundColor: primaryInfoBackgroundColor,
+                    badgeColor: badgeColor,
+                    badgeBackgroundColor: badgeBackgroundColor,
+                    primaryInfoPrefix: primaryInfoPrefix,
+                    secondaryInfoPrefix: secondaryInfoPrefix,
+                    maxTitleLines: maxTitleLines,
+                    maxSecondaryInfoLines: maxSecondaryInfoLines,
+                  ),
+                  
+                  SizedBox(height: spacing),
+                  
+                  // Separador sutil
+                  Divider(
+                    height: 1,
+                    color: theme.colorScheme.outline.withValues(alpha: 0.1),
+                  ),
+                  
+                  SizedBox(height: spacing),
+
+                  // Precio y botón de acción
+                  ProductActionBlock(
                     price: price,
                     onAddToCart: onAddToCart,
                     isSelected: isSelected,
@@ -262,11 +290,11 @@ class ProductCard extends StatelessWidget {
                     selectedButtonColor: selectedButtonColor,
                     unselectedButtonColor: unselectedButtonColor,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
