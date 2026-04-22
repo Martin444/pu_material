@@ -69,10 +69,11 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
       child: GestureDetector(
         onTap: () => widget.onSelect(widget.item),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          margin: const EdgeInsets.symmetric(vertical: 5),
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          margin: const EdgeInsets.symmetric(vertical: 4),
           padding: const EdgeInsets.symmetric(
-            vertical: 12,
+            vertical: 14,
             horizontal: 16,
           ),
           decoration: BoxDecoration(
@@ -111,64 +112,50 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              SizedBox(width: widget.isSelected || _isHovering ? 12 : 0),
+              
+              const SizedBox(width: 8),
 
-              // Contenido principal
+              // Texto con tipografía premium
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.label,
-                      style: PuTextStyle.textbtnStyle.copyWith(
-                        fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w500,
-                        color: widget.isSelected ? PUColors.primaryColor : PUColors.textColor3,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                child: Text(
+                  widget.label,
+                  style: PuTextStyle.bodyMedium.copyWith(
+                    fontWeight: widget.isSelected ? FontWeight.w700 : FontWeight.w500,
+                    color: widget.isSelected ? PUColors.accentColor : PUColors.textColorMuted,
+                    fontSize: 15,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
 
-              // Widget personalizado al final
-              if (widget.trailing != null) ...[
-                const SizedBox(width: 8),
-                widget.trailing!,
-                const SizedBox(width: 8),
-              ],
-
-              // Acciones (solo mostrar si está seleccionado o en hover)
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: widget.isSelected || _isHovering ? 1.0 : 0.0,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Botón de editar
-                    if (widget.showEditAction && widget.onEdit != null)
-                      _ActionButton(
-                        icon: FluentIcons.edit_24_regular,
-                        color: PUColors.primaryColor,
-                        onTap: () => widget.onEdit!(widget.item),
-                        tooltip: 'Editar',
-                      ),
-
-                    // Espaciado entre botones
-                    if (widget.showEditAction && widget.showDeleteAction && widget.onEdit != null && widget.onDelete != null) 
-                      const SizedBox(width: 8),
-
-                    // Botón de eliminar
-                    if (widget.showDeleteAction && widget.onDelete != null)
-                      _ActionButton(
-                        icon: FluentIcons.delete_24_regular,
-                        color: Colors.red,
-                        onTap: () => widget.onDelete!(widget.item),
-                        tooltip: 'Eliminar',
-                      ),
-                  ],
+              // Acciones
+              if (widget.isSelected || _isHovering)
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: 1.0,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.showEditAction && widget.onEdit != null)
+                        _ActionButton(
+                          icon: Icons.edit_outlined,
+                          color: Colors.white70,
+                          onTap: () => widget.onEdit!(widget.item),
+                          tooltip: 'Editar',
+                        ),
+                      if (widget.showDeleteAction && widget.onDelete != null) ...[
+                        const SizedBox(width: 8),
+                        _ActionButton(
+                          icon: Icons.delete_outline,
+                          color: Colors.redAccent.withOpacity(0.8),
+                          onTap: () => widget.onDelete!(widget.item),
+                          tooltip: 'Eliminar',
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),

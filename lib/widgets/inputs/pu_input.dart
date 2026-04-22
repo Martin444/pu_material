@@ -20,6 +20,7 @@ class PUInput extends StatefulWidget {
   final String? errorText;
   final TextEditingController controller;
   final bool compact;
+  final Color? activeBorderColor;
 
   const PUInput({
     super.key,
@@ -37,6 +38,7 @@ class PUInput extends StatefulWidget {
     this.onSubmited,
     this.validator,
     this.compact = false,
+    this.activeBorderColor,
   });
 
   @override
@@ -73,60 +75,60 @@ class _PUInputState extends State<PUInput> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isVisibleText,
-          validator: widget.validator,
-          textInputAction: widget.textInputAction,
-          keyboardType: widget.textInputType,
-          focusNode: widget.focusNode,
-          inputFormatters: getFormatForTypeInput(),
-          decoration: InputDecoration(
-            fillColor: PUColors.bgInput,
-            hoverColor: PUColors.bgInput,
-            focusColor: PUColors.bgInput,
-            hintText: widget.hintText,
-            hintStyle: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            isCollapsed: widget.compact,
-            alignLabelWithHint: false,
-            errorText: widget.errorText,
-            errorStyle: const TextStyle(fontWeight: FontWeight.w400),
-            filled: true,
-            contentPadding: widget.compact
-                ? const EdgeInsets.symmetric(horizontal: 8, vertical: 0)
-                : const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            suffixIcon: (widget.isPassword ?? false)
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isVisibleText = !isVisibleText;
-                      });
-                    },
-                    icon: Icon(
-                      isVisibleText
-                          ? FluentIcons.eye_24_regular
-                          : FluentIcons.eye_off_24_regular,
-                      size: 24,
-                      color: PUColors.iconColor,
-                    ),
-                    splashRadius: 20,
-                  )
-                : null,
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: PUColors.primaryColor),
-              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: PUColors.borderInputColor),
-              borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
-            ),
-          ),
-          style: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
-          controller: widget.controller,
-          onChanged: widget.onChanged,
-          onFieldSubmitted: widget.onSubmited,
+      validator: widget.validator,
+      textInputAction: widget.textInputAction,
+      keyboardType: widget.textInputType,
+      focusNode: widget.focusNode,
+      inputFormatters: getFormatForTypeInput(),
+      decoration: InputDecoration(
+        fillColor: PUColors.bgInput,
+        hoverColor: PUColors.bgInput,
+        focusColor: PUColors.bgInput,
+        hintText: widget.hintText,
+        hintStyle: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        isCollapsed: widget.compact,
+        alignLabelWithHint: false,
+        errorText: widget.errorText,
+        errorStyle: const TextStyle(fontWeight: FontWeight.w400),
+        filled: true,
+        contentPadding: widget.compact
+            ? const EdgeInsets.symmetric(horizontal: 8, vertical: 0)
+            : const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        suffixIcon: (widget.isPassword ?? false)
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    isVisibleText = !isVisibleText;
+                  });
+                },
+                icon: Icon(
+                  isVisibleText
+                      ? FluentIcons.eye_24_regular
+                      : FluentIcons.eye_off_24_regular,
+                  size: 24,
+                  color: PUColors.iconColor,
+                ),
+                splashRadius: 20,
+              )
+            : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.activeBorderColor ?? PUColors.primaryColor),
+          borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: PUColors.borderInputColor),
+          borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: PUColors.borderInputColor),
+          borderRadius: BorderRadius.circular(widget.compact ? 8 : 12),
+        ),
+      ),
+      style: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
+      controller: widget.controller,
+      onChanged: widget.onChanged,
+      onFieldSubmitted: widget.onSubmited,
     );
   }
 }

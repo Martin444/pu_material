@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/pu_colors.dart';
 import '../utils/style/pu_style_fonts.dart';
+import '../widgets/pu_robust_network_image.dart';
 
 /// HeroSection Atom - Banner principal del catálogo/restaurante
 ///
@@ -69,52 +70,57 @@ class HeroSectionAtom extends StatelessWidget {
     return Container(
       height: height,
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: imageUrl == null ? PUColors.restaurantPrimary : null,
-        image: imageUrl != null
-            ? DecorationImage(
-                image: NetworkImage(imageUrl!),
-                fit: BoxFit.cover,
-                onError: (_, __) {},
-              )
-            : null,
-      ),
+      color: imageUrl == null ? PUColors.primaryColor : Colors.black,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Overlay para légibilidade del texto
+          // Imagen de fondo robusta
           if (imageUrl != null)
-            Container(
-              color: overlayColor?.withValues(alpha: overlayOpacity) ??
-                  Colors.black.withValues(alpha: overlayOpacity),
+            PuRobustNetworkImage(
+              imageUrl: imageUrl!,
+              fit: BoxFit.cover,
             ),
+          // Overlay refinado
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Colors.black.withValues(alpha: 0.7),
+                  Colors.black.withValues(alpha: 0.2),
+                ],
+              ),
+            ),
+          ),
 
           // Contenido
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Título
+                // Título con Bodoni Moda (via title1)
                 Text(
                   title,
                   style: PuTextStyle.title1.copyWith(
                     color: titleColor ?? Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
+                    fontSize: 36,
+                    letterSpacing: -0.5,
                   ),
                 ),
 
-                // Subtítulo
+                // Subtítulo con Jost
                 if (subtitle != null && subtitle!.isNotEmpty) ...[
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                   Text(
-                    subtitle!,
-                    style: PuTextStyle.subtitle.copyWith(
+                    subtitle!.toUpperCase(),
+                    style: PuTextStyle.bodySmall.copyWith(
                       color: subtitleColor ?? Colors.white.withValues(alpha: 0.9),
-                      fontSize: 16,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -134,7 +140,7 @@ class HeroSectionAtom extends StatelessWidget {
     );
   }
 
-  /// Construye el botón CTA con accesibilidad
+  /// Construye el botón CTA con estilo Gold
   Widget _buildCtaButton() {
     return Semantics(
       label: 'Botón $ctaText',
@@ -145,24 +151,24 @@ class HeroSectionAtom extends StatelessWidget {
           onTap: onCtaTap,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
             decoration: BoxDecoration(
-              color: ctaColor ?? PUColors.restaurantSecondary,
-              borderRadius: BorderRadius.circular(8),
+              color: ctaColor ?? PUColors.accentColor,
+              borderRadius: BorderRadius.circular(2), // Luxury square corners
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  color: PUColors.accentColor.withValues(alpha: 0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
                 ),
               ],
             ),
             child: Text(
-              ctaText!,
-              style: PuTextStyle.buttonTextStyle.copyWith(
+              ctaText!.toUpperCase(),
+              style: PuTextStyle.bodySmall.copyWith(
                 color: ctaTextColor ?? Colors.white,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.5,
               ),
             ),
           ),
@@ -172,7 +178,7 @@ class HeroSectionAtom extends StatelessWidget {
   }
 }
 
-/// Variante simple del hero con solo título (para negocios pequeños)
+/// Variante simple del hero con diseño minimalista
 class HeroSimpleAtom extends StatelessWidget {
   const HeroSimpleAtom({
     super.key,
@@ -200,30 +206,58 @@ class HeroSimpleAtom extends StatelessWidget {
           ],
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: PuTextStyle.title1.copyWith(
-                color: Colors.white,
-                fontSize: 28,
-              ),
-            ),
-            if (subtitle != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                subtitle!,
-                style: PuTextStyle.subtitle.copyWith(
-                  color: Colors.white.withValues(alpha: 0.85),
+      child: Stack(
+        children: [
+          // Sutil gradiente para profundidad (reemplaza patrón externo con problemas de CORS)
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white.withValues(alpha: 0.05),
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.05),
+                  ],
                 ),
               ),
-            ],
-          ],
-        ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: PuTextStyle.title1.copyWith(
+                    color: Colors.white,
+                    fontSize: 32,
+                  ),
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    width: 40,
+                    height: 2,
+                    color: PUColors.accentColor,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    subtitle!.toUpperCase(),
+                    style: PuTextStyle.bodySmall.copyWith(
+                      color: Colors.white.withValues(alpha: 0.7),
+                      letterSpacing: 3,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

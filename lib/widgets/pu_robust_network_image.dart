@@ -260,65 +260,150 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
     }
 
     // Usar CachedNetworkImage con la URL procesada
-    return CachedNetworkImage(
-      imageUrl: _currentUrl!,
-      width: widget.width,
-      height: widget.height,
-      fit: widget.fit ?? BoxFit.cover,
-      placeholder: (context, url) => widget.placeholder ?? _buildPlaceholder(),
-      errorWidget: (context, url, error) => _buildErrorWithFallback(url, error),
-      httpHeaders: const {
-        'User-Agent': 'Flutter App',
-        'Accept': 'image/*',
-        'Cache-Control': 'no-cache',
-      },
-      fadeInDuration: const Duration(milliseconds: 300),
-      fadeOutDuration: const Duration(milliseconds: 300),
-      maxHeightDiskCache: 1000,
-      maxWidthDiskCache: 1000,
-    );
+    // Procesar la URL para optimización en Cloudinary (solo si es una URL de Cloudinary)
+    String optimizedUrl = _getOptimizedImageUrl(_currentUrl!);
+
+    return LayoutBuilder(builder: (context, constraints) {
+      // Resolver dimensiones seguras para evitar infinitos en ListViews
+      final double? safeWidth = (widget.width != null && widget.width!.isFinite)
+          ? widget.width
+          : (constraints.hasBoundedWidth ? null : 200.0);
+      
+      final double? safeHeight = (widget.height != null && widget.height!.isFinite)
+          ? widget.height
+          : (constraints.hasBoundedHeight ? null : 200.0);
+
+      if (kIsWeb) {
+        return Image.network(
+          optimizedUrl,
+          width: safeWidth,
+          height: safeHeight,
+          fit: widget.fit ?? BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) =>
+              _buildErrorWithFallback(optimizedUrl, error),
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return _buildPlaceholder();
+          },
+          headers: const {
+            'Accept': 'image/*',
+          },
+        );
+      }
+
+      return CachedNetworkImage(
+        imageUrl: optimizedUrl,
+        width: safeWidth,
+        height: safeHeight,
+        fit: widget.fit ?? BoxFit.cover,
+        // Optimización de memoria crítica para Flutter Web / CanvasKit
+        memCacheWidth: (safeWidth != null && safeWidth > 0)
+            ? (safeWidth * 1.2).round().clamp(1, 3000)
+            : null,
+        memCacheHeight: (safeHeight != null && safeHeight > 0)
+            ? (safeHeight * 1.2).round().clamp(1, 3000)
+            : null,
+        maxWidthDiskCache: 1000,
+        maxHeightDiskCache: 1000,
+        placeholder: (context, url) => widget.placeholder ?? _buildPlaceholder(),
+        errorWidget: (context, url, error) => _buildErrorWithFallback(url, error),
+        httpHeaders: const {
+          'User-Agent': 'Flutter App',
+          'Accept': 'image/*',
+          'Cache-Control': 'no-cache',
+        },
+        fadeInDuration: const Duration(milliseconds: 300),
+        fadeOutDuration: const Duration(milliseconds: 300),
+      );
+    });
+  }
+
+  /// Optimiza la URL si es de Cloudinary para reducir el consumo de memoria
+  String _getOptimizedImageUrl(String url) {
+    if (!url.contains('res.cloudinary.com')) return url;
+    
+    // Si ya tiene parámetros de transformación, no tocamos nada por seguridad
+    if (url.contains('/upload/v') && !url.contains('/upload/q_auto,f_auto,w_800/')) {
+      // Insertar optimización: calidad automática, formato automático y ancho máximo de 800px
+      // Esto reduce drásticamente los errores de memoria en CanvasKit
+      return url.replaceFirst('/upload/', '/upload/q_auto,f_auto,w_800/');
+    }
+    
+    return url;
   }
 
   Widget _buildPlaceholder() {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      color: Colors.grey[300],
-      child: const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      final double? h = (widget.height != null && widget.height!.isFinite)
+          ? widget.height
+          : (constraints.hasBoundedHeight ? constraints.maxHeight : 200.0);
+      final double? w = (widget.width != null && widget.width!.isFinite)
+          ? widget.width
+          : (constraints.hasBoundedWidth ? constraints.maxWidth : 200.0);
+
+      return Container(
+        width: w,
+        height: h,
+        color: Colors.grey[300],
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    });
   }
 
   Widget _buildErrorWidget() {
     final errorMsg = _processingResult?.error ?? 'No se pudo cargar la imagen.';
-    return widget.errorWidget ??
-        Container(
-          width: widget.width,
-          height: widget.height,
-          color: Colors.grey[300],
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                FluentIcons.image_off_24_regular,
-                color: Colors.grey,
-                size: 50,
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  errorMsg,
-                  style: const TextStyle(fontSize: 12, color: Colors.black54),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double h = constraints.maxHeight;
+
+        // Tamaños adaptativos para evitar overflow
+        final double iconSize = (h * 0.5).clamp(20.0, 50.0);
+        final bool showText = h >= 80;
+
+        return widget.errorWidget ??
+            Container(
+              width: widget.width != null && widget.width!.isFinite ? widget.width : null,
+              height: widget.height != null && widget.height!.isFinite ? widget.height : (constraints.hasBoundedHeight ? constraints.maxHeight : 200.0),
+              color: Colors.grey[200],
+              padding: const EdgeInsets.all(4),
+              child: Center(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        FluentIcons.image_off_24_regular,
+                        color: Colors.grey[400],
+                        size: iconSize,
+                      ),
+                      if (showText) ...[
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Text(
+                            errorMsg,
+                            style: TextStyle(
+                              fontSize: (h * 0.12).clamp(8.0, 11.0),
+                              color: Colors.black54,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        );
+            );
+      },
+    );
   }
 
   Widget _buildErrorWithFallback(String url, dynamic error) {

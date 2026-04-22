@@ -32,11 +32,11 @@ class CartOrderSummary extends StatelessWidget {
               children: [
                 Text(
                   'Total:',
-                  style: PuTextStyle.priceCartTOtal,
+                  style: PuTextStyle.title2,
                 ),
                 Text(
                   total.toString().convertToCorrency(),
-                  style: PuTextStyle.priceCartTOtal,
+                  style: PuTextStyle.title2,
                 ),
               ],
             ),

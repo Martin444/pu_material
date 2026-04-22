@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pu_material/atoms/product_image.dart';
 import 'package:pu_material/molecule/product_info_block.dart';
 import 'package:pu_material/molecule/product_action_block.dart';
+import 'package:pu_material/utils/pu_colors.dart';
 
 /// Enum para el layout del card
 enum ProductCardLayout {
@@ -264,17 +265,17 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 
   Widget _buildHorizontalCard(BuildContext context, bool isTablet, bool isDesktop) {
-    final padding = isDesktop ? 20.0 : (isTablet ? 18.0 : 16.0);
-    final spacing = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
-    final imageSize = isDesktop ? 100.0 : (isTablet ? 90.0 : 80.0);
-    final borderRadius = isDesktop ? 16.0 : (isTablet ? 14.0 : 12.0);
+    final padding = 12.0;
+    final spacing = 12.0;
+    final imageSize = isDesktop ? 90.0 : 70.0;
+    final borderRadius = 16.0;
 
     return Container(
       padding: EdgeInsets.all(padding),
@@ -335,7 +336,7 @@ class ProductCard extends StatelessWidget {
                   SizedBox(height: spacing * 0.8),
 
                   // Precio y botón de acción en la parte inferior
-                  SizedBox(
+                  Container(
                     height: isDesktop ? 50.0 : (isTablet ? 45.0 : 40.0),
                     child: ProductActionBlock(
                       price: price,
@@ -359,38 +360,20 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  /// Construye la decoración profesional del card
   BoxDecoration _buildCardDecoration(BuildContext context, double borderRadius) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
+    final colorScheme = Theme.of(context).colorScheme;
     return BoxDecoration(
       color: isSelected ? colorScheme.primaryContainer.withValues(alpha: 0.1) : colorScheme.surface,
       borderRadius: BorderRadius.circular(borderRadius),
       border: Border.all(
-        color: isSelected ? colorScheme.primary.withValues(alpha: 0.4) : colorScheme.outline.withValues(alpha: 0.15),
+        color: isSelected ? PUColors.accentColor.withValues(alpha: 0.5) : colorScheme.outline.withValues(alpha: 0.15),
         width: isSelected ? 1.5 : 1,
       ),
       boxShadow: [
-        if (isSelected) ...[
-          BoxShadow(
-            color: colorScheme.primary.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-        ],
         BoxShadow(
-          color: colorScheme.shadow.withValues(alpha: isSelected ? 0.12 : 0.08),
-          blurRadius: isSelected ? 20 : 16,
-          offset: Offset(0, isSelected ? 6 : 4),
-          spreadRadius: 0,
-        ),
-        BoxShadow(
-          color: colorScheme.shadow.withValues(alpha: 0.04),
-          blurRadius: 4,
-          offset: const Offset(0, 2),
-          spreadRadius: 0,
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
         ),
       ],
     );

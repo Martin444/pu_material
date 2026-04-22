@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import '../utils/pu_colors.dart';
 
 /// Átomo: Botón de carrito
 class CartIconButton extends StatelessWidget {
@@ -26,28 +27,35 @@ class CartIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Usar constraints del LayoutBuilder para responsive más preciso
-        final maxWidth = constraints.maxWidth;
-        final isTablet = maxWidth >= 400;
-        final isDesktop = maxWidth >= 600;
-
-        final iconSize = size ?? (isDesktop ? 35.0 : (isTablet ? 22.0 : 20.0));
-        final buttonPadding = isDesktop ? 3.0 : (isTablet ? 5.0 : 2.0);
-
-        return GestureDetector(
-          onTap: onPressed,
-          child: Container(
-            padding: EdgeInsets.all(buttonPadding),
-            decoration: BoxDecoration(
-              color: isSelected ? (selectedColor ?? Colors.green) : (unselectedColor ?? Colors.blue),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              isSelected
-                  ? (selectedIcon ?? FluentIcons.checkmark_24_regular)
-                  : (unselectedIcon ?? FluentIcons.shopping_bag_24_regular),
-              size: iconSize,
-              color: Colors.white,
+        final iconSize = size ?? 20.0;
+        
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: onPressed,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: isSelected 
+                  ? (selectedColor ?? PUColors.accentColor) 
+                  : (unselectedColor ?? PUColors.primaryColor),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: isSelected ? [
+                  BoxShadow(
+                    color: (selectedColor ?? PUColors.accentColor).withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  )
+                ] : null,
+              ),
+              child: Icon(
+                isSelected
+                    ? (selectedIcon ?? Icons.check_rounded)
+                    : (unselectedIcon ?? Icons.add_shopping_cart_rounded),
+                size: iconSize,
+                color: Colors.white,
+              ),
             ),
           ),
         );

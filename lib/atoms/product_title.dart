@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pu_material/utils/style/pu_style_fonts.dart';
+import '../utils/pu_colors.dart';
+import '../utils/style/pu_style_fonts.dart';
 
 /// Átomo: Título del producto
 class ProductTitle extends StatelessWidget {
@@ -20,28 +21,16 @@ class ProductTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Usar constraints del LayoutBuilder para responsive más preciso
-        final maxWidth = constraints.maxWidth;
-        final isTablet = maxWidth >= 400;
-        final isDesktop = maxWidth >= 600;
-
-        final textScaleFactor = isDesktop ? 1.1 : (isTablet ? 1.0 : 0.95);
-        final baseFontSize = fontSize ?? PuTextStyle.nameProductStyle.fontSize ?? 16;
-
-        return Text(
-          title.toUpperCase(),
-          style: PuTextStyle.nameProductStyle.copyWith(
-            fontSize: baseFontSize * textScaleFactor,
-            fontWeight: fontWeight,
-            color: color,
-          ),
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.start,
-        );
-      },
+    return Text(
+      title,
+      style: PuTextStyle.nameProductStyle.copyWith(
+        fontSize: fontSize ?? 16,
+        fontWeight: fontWeight ?? FontWeight.w600,
+        color: color ?? PUColors.textColorRich,
+      ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.start,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pu_material/utils/style/pu_style_fonts.dart';
+import '../utils/pu_colors.dart';
+import '../utils/style/pu_style_fonts.dart';
 
 /// Átomo: Badge o etiqueta informativa
 class ProductBadge extends StatelessWidget {
@@ -18,37 +19,21 @@ class ProductBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Usar constraints del LayoutBuilder para responsive más preciso
-        final maxWidth = constraints.maxWidth;
-        final isTablet = maxWidth >= 400;
-        final isDesktop = maxWidth >= 600;
-
-        final textScaleFactor = isDesktop ? 1.0 : (isTablet ? 0.95 : 0.9);
-        final baseFontSize = fontSize ?? (PuTextStyle.ingredientsListStyle.fontSize ?? 12);
-        final horizontalPadding = isDesktop ? 8.0 : 6.0;
-        final verticalPadding = isDesktop ? 3.0 : 2.0;
-
-        return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding,
-            vertical: verticalPadding,
-          ),
-          decoration: BoxDecoration(
-            color: backgroundColor ?? Colors.transparent,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            text,
-            style: PuTextStyle.ingredientsListStyle.copyWith(
-              fontSize: baseFontSize * textScaleFactor,
-              color: textColor ?? Colors.grey[700],
-            ),
-            textAlign: TextAlign.start,
-          ),
-        );
-      },
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: backgroundColor ?? PUColors.primaryColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        text.toUpperCase(),
+        style: PuTextStyle.bodySmall.copyWith(
+          fontSize: fontSize ?? 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.2,
+          color: textColor ?? PUColors.primaryColor,
+        ),
+      ),
     );
   }
 }
