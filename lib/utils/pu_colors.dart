@@ -12,11 +12,16 @@ class PUColors {
   static const Color selectedItemLight = Color(0xFFFEF08A);   // Pale Gold
   static const Color bgItem = Color(0xFFFFFFFF);
   static const Color bgItemMenuSelected = Color(0xFFF5F5F6);
-  static const Color bgCategorySelected = Color(0xFFFEF9C3);  // Soft Yellow/Gold
+  static const Color bgCategorySelected = Color(0xFFEFF6FF);  // Soft Blue BG
+  
+  // Professional Blues
+  static const Color primaryBlue = Color(0xFF2563EB);         // Royal Blue
+  static const Color primaryBlueDark = Color(0xFF1E40AF);
+  static const Color primaryBlueLight = Color(0xFFDBEAFE);
   
   // Primary Branding (Branding is now sophisticated)
   static const Color primaryColor = Color(0xFF1C1917);        // Use Dark Stone as Primary
-  static const Color accentColor = Color(0xFFCA8A04);         // Gold as Accent
+  static const Color accentColor = Color(0xFF2563EB);         // Royal Blue as Accent (More Professional)
   
   // Semantic
   static const Color bgError = Color(0xFF991B1B);
@@ -41,14 +46,14 @@ class PUColors {
   static const Color textColorMuted = Color(0xFF44403C);      // Stone
   static const Color textColorLight = Color(0xFF78716C);      // Light Stone
   static const Color textColorOnDark = Color(0xFFFAFAF9);     // Off-white
-  static const Color textColorGold = Color(0xFFCA8A04);       // Gold
+  static const Color textColorGold = Color(0xFF2563EB);       // Now Blue (formerly Gold)
   
   // Legacy / Feature Compatibility (Mapped to new theme)
   static const Color restaurantPrimary = Color(0xFF1C1917);
   static const Color restaurantPrimaryLight = Color(0xFF44403C);
   static const Color restaurantPrimaryDark = Color(0xFF0C0A09);
-  static const Color restaurantSecondary = Color(0xFFCA8A04);
-  static const Color restaurantSecondaryLight = Color(0xFFEAB308);
+  static const Color restaurantSecondary = Color(0xFF2563EB); // Now Blue
+  static const Color restaurantSecondaryLight = Color(0xFF3B82F6);
   static const Color restaurantBackground = Color(0xFFFAFAF9);
   static const Color restaurantText = Color(0xFF0C0A09);
   static const Color restaurantTextMuted = Color(0xFF44403C);
@@ -58,8 +63,8 @@ class PUColors {
   static Color textColor2 = const Color(0xFFFAFAF9);
   static Color textColor3 = const Color(0xFF44403C);
   static Color textColor4 = const Color(0xFF78716C);
-  static Color bgLink = const Color(0xFF44403C);
-  static Color bgButton = const Color(0xFF1C1917);
+  static Color bgLink = const Color(0xFF2563EB); // Now Blue
+  static Color bgButton = const Color(0xFF2563EB); // Now Blue (Professional)
   static Color bgSucces = const Color(0xFF166534);
   
   // Hover & Interactive states
@@ -78,7 +83,8 @@ class PUColors {
   
   // CTA Colors (semantic)
   static const Color ctaSuccess = Color(0xFF166534);          // Green CTA
-  static const Color ctaPrimary = Color(0xFFCA8A04);             // Gold CTA (default)
+  static const Color ctaPrimary = Color(0xFF2563EB);          // Blue CTA (Now Primary for Professionalism)
+  static const Color ctaSecondary = Color(0xFF1C1917);        // Dark Stone
   
   // Glassmorphism for membership cards
   static Color glassPremiumBg = const Color(0xFF1C1917).withValues(alpha: 0.85);

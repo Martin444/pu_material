@@ -67,7 +67,7 @@ class PuTextStyle {
   );
 
   static TextStyle labelGold = bodyBase.copyWith(
-    color: PUColors.textColorGold,
+    color: PUColors.accentColor,
     fontWeight: FontWeight.w600,
     fontSize: 14,
   );
@@ -98,7 +98,7 @@ class PuTextStyle {
 
   static TextStyle namePriceCardStyle = bodyLarge.copyWith(
     fontWeight: FontWeight.w700,
-    color: PUColors.textColorGold,
+    color: PUColors.accentColor,
   );
 
   static TextStyle ingredientsListStyle = bodySmall.copyWith(
@@ -122,8 +122,8 @@ class PuTextStyle {
   static TextStyle textbtnStyle = primaryButtonStyle;
   
   static TextStyle secundaryButtonStyle = bodyMedium.copyWith(
-    color: PUColors.textColorMuted,
-    fontWeight: FontWeight.w500,
+    color: PUColors.accentColor,
+    fontWeight: FontWeight.w600,
   );
 
   static TextStyle textInput1 = bodyMedium;
