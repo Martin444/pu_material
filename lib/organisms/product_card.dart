@@ -265,8 +265,8 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
