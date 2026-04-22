@@ -26,10 +26,10 @@ class ButtonSecundary extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: disabled || onPressed == null
-              ? WidgetStateProperty.all(PUColors.bgCategorySelected)
+              ? WidgetStateProperty.all(PUColors.bgCategorySelected.withValues(alpha: 0.5))
               : WidgetStateProperty.all(PUColors.bgCategorySelected),
           overlayColor: WidgetStateProperty.all(
-            const Color.fromARGB(255, 97, 97, 97).withValues(alpha: 0.1),
+            PUColors.primaryColor.withValues(alpha: 0.05),
           ),
           padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(
