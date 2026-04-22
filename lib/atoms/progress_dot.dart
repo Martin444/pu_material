@@ -31,7 +31,7 @@ class ProgressDot extends StatelessWidget {
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: activeColor.withOpacity(0.5),
+                  color: activeColor.withValues(alpha: 0.5),
                   blurRadius: 4,
                   spreadRadius: 1,
                 ),

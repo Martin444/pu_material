@@ -190,7 +190,7 @@ class HeroSimpleAtom extends StatelessWidget {
     return Container(
       height: height,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

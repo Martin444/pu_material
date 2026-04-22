@@ -122,7 +122,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: PUColors.primaryColor.withOpacity(0.1),
+                color: PUColors.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -199,7 +199,7 @@ class BusinessGridOrganism<T> extends StatelessWidget {
           IconAtom(
             icon: emptyIcon,
             size: isCompact ? 48 : 64,
-            color: PUColors.textColor3.withOpacity(0.5),
+            color: PUColors.textColor3.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           TitleAtom(
@@ -241,8 +241,8 @@ class BusinessGridOrganism<T> extends StatelessWidget {
     return Center(
       child: ContainerAtom(
         variant: ContainerVariant.card,
-        backgroundColor: Colors.red.withOpacity(0.05),
-        borderColor: Colors.red.withOpacity(0.2),
+        backgroundColor: Colors.red.withValues(alpha: 0.05),
+        borderColor: Colors.red.withValues(alpha: 0.2),
         borderWidth: 1,
         child: Column(
           mainAxisSize: MainAxisSize.min,

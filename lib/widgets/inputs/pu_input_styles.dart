@@ -54,7 +54,7 @@ class PUInputStyles {
       disabledBorder: OutlineInputBorder(
         borderRadius: PUBorderRadius.md,
         borderSide:
-            BorderSide(color: PUColors.borderInputColor.withOpacity(0.5)),
+            BorderSide(color: PUColors.borderInputColor.withValues(alpha: 0.5)),
       ),
     );
   }

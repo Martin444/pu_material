@@ -78,21 +78,21 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
           decoration: BoxDecoration(
             color: widget.isSelected 
                 ? PUColors.bgCategorySelected 
-                : (_isHovering ? PUColors.primaryColor.withOpacity(0.05) : Colors.transparent),
+                : (_isHovering ? PUColors.primaryColor.withValues(alpha: 0.05) : Colors.transparent),
             borderRadius: BorderRadius.circular(12),
             border: widget.isSelected
                 ? Border.all(
-                    color: PUColors.primaryColor.withOpacity(0.3),
+                    color: PUColors.primaryColor.withValues(alpha: 0.3),
                     width: 1.5,
                   )
                 : Border.all(
-                    color: _isHovering ? PUColors.primaryColor.withOpacity(0.1) : Colors.transparent,
+                    color: _isHovering ? PUColors.primaryColor.withValues(alpha: 0.1) : Colors.transparent,
                     width: 1.5,
                   ),
             boxShadow: _isHovering && !widget.isSelected
                 ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -107,7 +107,7 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
                 width: widget.isSelected ? 4 : (_isHovering ? 2 : 0),
                 height: 20,
                 decoration: BoxDecoration(
-                  color: widget.isSelected ? PUColors.primaryColor : PUColors.primaryColor.withOpacity(0.5),
+                  color: widget.isSelected ? PUColors.primaryColor : PUColors.primaryColor.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -202,7 +202,7 @@ class _ActionButton extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(

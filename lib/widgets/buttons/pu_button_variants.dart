@@ -32,13 +32,13 @@ class PUButtonStyles {
     return ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         if (disabled || states.contains(WidgetState.disabled)) {
-          return PUColors.bgButton.withOpacity(0.5);
+          return PUColors.bgButton.withValues(alpha: 0.5);
         }
         if (states.contains(WidgetState.pressed)) {
-          return PUColors.bgButton.withOpacity(0.8);
+          return PUColors.bgButton.withValues(alpha: 0.8);
         }
         if (states.contains(WidgetState.hovered)) {
-          return PUColors.bgButton.withOpacity(0.9);
+          return PUColors.bgButton.withValues(alpha: 0.9);
         }
         return PUColors.bgButton;
       }),
@@ -49,7 +49,7 @@ class PUButtonStyles {
         RoundedRectangleBorder(borderRadius: PUBorderRadius.md),
       ),
       overlayColor: WidgetStateProperty.all(
-        Colors.white.withOpacity(0.1),
+        Colors.white.withValues(alpha: 0.1),
       ),
     );
   }
@@ -61,10 +61,10 @@ class PUButtonStyles {
     return ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         if (disabled || states.contains(WidgetState.disabled)) {
-          return PUColors.bgCategorySelected.withOpacity(0.5);
+          return PUColors.bgCategorySelected.withValues(alpha: 0.5);
         }
         if (states.contains(WidgetState.pressed)) {
-          return PUColors.bgCategorySelected.withOpacity(0.8);
+          return PUColors.bgCategorySelected.withValues(alpha: 0.8);
         }
         return PUColors.bgCategorySelected;
       }),
@@ -75,7 +75,7 @@ class PUButtonStyles {
         RoundedRectangleBorder(borderRadius: PUBorderRadius.md),
       ),
       overlayColor: WidgetStateProperty.all(
-        Colors.grey.withOpacity(0.1),
+        Colors.grey.withValues(alpha: 0.1),
       ),
     );
   }
@@ -91,7 +91,7 @@ class PUButtonStyles {
       minimumSize: WidgetStateProperty.all(Size(0, _getHeight(size))),
       side: WidgetStateProperty.resolveWith((states) {
         if (disabled || states.contains(WidgetState.disabled)) {
-          return BorderSide(color: PUColors.primaryColor.withOpacity(0.5));
+          return BorderSide(color: PUColors.primaryColor.withValues(alpha: 0.5));
         }
         return BorderSide(color: PUColors.primaryColor);
       }),
@@ -111,7 +111,7 @@ class PUButtonStyles {
       padding: WidgetStateProperty.all(_getPadding(size)),
       minimumSize: WidgetStateProperty.all(Size(0, _getHeight(size))),
       overlayColor: WidgetStateProperty.all(
-        Colors.grey.withOpacity(0.1),
+        Colors.grey.withValues(alpha: 0.1),
       ),
     );
   }
@@ -123,10 +123,10 @@ class PUButtonStyles {
     return ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         if (disabled || states.contains(WidgetState.disabled)) {
-          return PUColors.bgError.withOpacity(0.5);
+          return PUColors.bgError.withValues(alpha: 0.5);
         }
         if (states.contains(WidgetState.pressed)) {
-          return PUColors.bgError.withOpacity(0.8);
+          return PUColors.bgError.withValues(alpha: 0.8);
         }
         return PUColors.bgError;
       }),
@@ -137,7 +137,7 @@ class PUButtonStyles {
         RoundedRectangleBorder(borderRadius: PUBorderRadius.md),
       ),
       overlayColor: WidgetStateProperty.all(
-        Colors.white.withOpacity(0.1),
+        Colors.white.withValues(alpha: 0.1),
       ),
     );
   }

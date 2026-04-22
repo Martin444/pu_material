@@ -85,6 +85,7 @@ export 'package:pu_material/features/orders/ui/atoms/currency_text.dart';
 export 'package:pu_material/features/orders/ui/atoms/table_cell_atom.dart';
 export 'package:pu_material/features/orders/ui/molecules/status_badge.dart';
 export 'package:pu_material/features/orders/ui/molecules/order_compact_card.dart';
+export 'package:pu_material/features/orders/ui/molecules/receipt_dialog.dart';
 export 'package:pu_material/features/orders/ui/organisms/orders_table.dart';
 export 'package:pu_material/features/orders/ui/templates/orders_template.dart';
 export 'package:pu_material/features/orders/utils/time_ago.dart';

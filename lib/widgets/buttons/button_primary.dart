@@ -35,7 +35,7 @@ class ButtonPrimary extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: isDisabled ? null : onPressed,
-          splashColor: PUColors.textColor2.withOpacity(0.12),
+          splashColor: PUColors.textColor2.withValues(alpha: 0.12),
           child: Ink(
             decoration: BoxDecoration(
               color: PUColors.bgButton,
@@ -44,7 +44,7 @@ class ButtonPrimary extends StatelessWidget {
                   ? []
                   : [
                       BoxShadow(
-                        color: PUColors.textColor2.withOpacity(0.10),
+                        color: PUColors.textColor2.withValues(alpha: 0.10),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),

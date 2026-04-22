@@ -31,12 +31,12 @@ class WardStatisticsAtom extends StatelessWidget {
         color: backgroundColor,
         borderRadius: borderRadius,
         border: Border.all(
-          color: PUColors.borderInputColor.withOpacity(0.3),
+          color: PUColors.borderInputColor.withValues(alpha: 0.3),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -86,7 +86,7 @@ class WardStatisticsAtom extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
@@ -119,7 +119,7 @@ class WardStatisticsAtom extends StatelessWidget {
     return Container(
       height: 50,
       width: 1,
-      color: PUColors.borderInputColor.withOpacity(0.3),
+      color: PUColors.borderInputColor.withValues(alpha: 0.3),
     );
   }
 }

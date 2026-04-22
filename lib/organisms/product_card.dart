@@ -241,7 +241,7 @@ class ProductCard extends StatelessWidget {
                     horizontal: spacing,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
                   ),
                 ),
 
@@ -290,7 +290,7 @@ class ProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(borderRadius * 0.7),
                 color: Theme.of(context).colorScheme.surface,
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
                   width: 1,
                 ),
               ),
@@ -335,7 +335,7 @@ class ProductCard extends StatelessWidget {
                   SizedBox(height: spacing * 0.8),
 
                   // Precio y botón de acción en la parte inferior
-                  Container(
+                  SizedBox(
                     height: isDesktop ? 50.0 : (isTablet ? 45.0 : 40.0),
                     child: ProductActionBlock(
                       price: price,
@@ -365,29 +365,29 @@ class ProductCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return BoxDecoration(
-      color: isSelected ? colorScheme.primaryContainer.withOpacity(0.1) : colorScheme.surface,
+      color: isSelected ? colorScheme.primaryContainer.withValues(alpha: 0.1) : colorScheme.surface,
       borderRadius: BorderRadius.circular(borderRadius),
       border: Border.all(
-        color: isSelected ? colorScheme.primary.withOpacity(0.4) : colorScheme.outline.withOpacity(0.15),
+        color: isSelected ? colorScheme.primary.withValues(alpha: 0.4) : colorScheme.outline.withValues(alpha: 0.15),
         width: isSelected ? 1.5 : 1,
       ),
       boxShadow: [
         if (isSelected) ...[
           BoxShadow(
-            color: colorScheme.primary.withOpacity(0.15),
+            color: colorScheme.primary.withValues(alpha: 0.15),
             blurRadius: 20,
             offset: const Offset(0, 8),
             spreadRadius: 0,
           ),
         ],
         BoxShadow(
-          color: colorScheme.shadow.withOpacity(isSelected ? 0.12 : 0.08),
+          color: colorScheme.shadow.withValues(alpha: isSelected ? 0.12 : 0.08),
           blurRadius: isSelected ? 20 : 16,
           offset: Offset(0, isSelected ? 6 : 4),
           spreadRadius: 0,
         ),
         BoxShadow(
-          color: colorScheme.shadow.withOpacity(0.04),
+          color: colorScheme.shadow.withValues(alpha: 0.04),
           blurRadius: 4,
           offset: const Offset(0, 2),
           spreadRadius: 0,

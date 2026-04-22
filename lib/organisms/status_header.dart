@@ -250,7 +250,7 @@ class _StatusHeaderState extends State<StatusHeader> with TickerProviderStateMix
                             Text(
                               widget.config.subtitle,
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                                 fontSize: widget.isMobile ? 14 : 16,
                                 fontWeight: FontWeight.w400,
                               ),

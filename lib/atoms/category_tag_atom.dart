@@ -55,20 +55,20 @@ class CategoryTagAtom extends StatelessWidget {
             color: isSelected ? PUColors.primaryColor : Colors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: isSelected ? PUColors.primaryColor : PUColors.borderInputColor.withOpacity(0.5),
+              color: isSelected ? PUColors.primaryColor : PUColors.borderInputColor.withValues(alpha: 0.5),
               width: 1.5,
             ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: PUColors.primaryColor.withOpacity(0.25),
+                      color: PUColors.primaryColor.withValues(alpha: 0.25),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
                   ]
                 : [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 4,
                       offset: const Offset(0, 1),
                     ),
@@ -108,7 +108,7 @@ class CategoryTagAtom extends StatelessWidget {
                     vertical: 2,
                   ),
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.white.withOpacity(0.2) : PUColors.bgItem.withOpacity(0.7),
+                    color: isSelected ? Colors.white.withValues(alpha: 0.2) : PUColors.bgItem.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

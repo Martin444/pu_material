@@ -29,7 +29,7 @@ class ButtonSecundary extends StatelessWidget {
               ? WidgetStateProperty.all(PUColors.bgCategorySelected)
               : WidgetStateProperty.all(PUColors.bgCategorySelected),
           overlayColor: WidgetStateProperty.all(
-            const Color.fromARGB(255, 97, 97, 97).withOpacity(0.1),
+            const Color.fromARGB(255, 97, 97, 97).withValues(alpha: 0.1),
           ),
           padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(

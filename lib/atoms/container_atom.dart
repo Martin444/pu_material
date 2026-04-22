@@ -125,17 +125,17 @@ class ContainerAtom extends StatelessWidget {
     switch (variant) {
       case ContainerVariant.card:
         return Border.all(
-          color: PUColors.borderInputColor.withOpacity(0.2),
+          color: PUColors.borderInputColor.withValues(alpha: 0.2),
           width: 1,
         );
       case ContainerVariant.compact:
         return Border.all(
-          color: PUColors.borderInputColor.withOpacity(0.15),
+          color: PUColors.borderInputColor.withValues(alpha: 0.15),
           width: 1,
         );
       case ContainerVariant.spacious:
         return Border.all(
-          color: PUColors.borderInputColor.withOpacity(0.2),
+          color: PUColors.borderInputColor.withValues(alpha: 0.2),
           width: 1,
         );
       case ContainerVariant.minimal:
@@ -148,7 +148,7 @@ class ContainerAtom extends StatelessWidget {
       case ContainerVariant.card:
         return [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -156,7 +156,7 @@ class ContainerAtom extends StatelessWidget {
       case ContainerVariant.compact:
         return [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 2,
             offset: const Offset(0, 1),
           ),
@@ -164,7 +164,7 @@ class ContainerAtom extends StatelessWidget {
       case ContainerVariant.spacious:
         return [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

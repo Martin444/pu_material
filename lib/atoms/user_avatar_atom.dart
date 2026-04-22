@@ -49,7 +49,7 @@ class UserAvatarAtom extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: backgroundColor ?? PUColors.primaryColor.withOpacity(0.1),
+        color: backgroundColor ?? PUColors.primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(size / 2),
         border: borderWidth > 0 && borderColor != null
             ? Border.all(

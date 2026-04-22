@@ -7,6 +7,11 @@ class Order {
   final String alias; // "Juan pedro2020"
   final String idCliente; // "Martín"
   final int totalCentavos; // 38232 * 100 o la representación que uses
+  final String? paymentUrl;
+  final String? customerEmail;
+  final String? customerPhone;
+  final String? operationId;
+  final List<OrderItem>? fullItems;
 
   const Order({
     required this.numero,
@@ -16,6 +21,11 @@ class Order {
     required this.alias,
     required this.idCliente,
     required this.totalCentavos,
+    this.paymentUrl,
+    this.customerEmail,
+    this.customerPhone,
+    this.operationId,
+    this.fullItems,
   });
 
   /// Factory constructor para crear una orden de ejemplo
@@ -54,7 +64,11 @@ class Order {
         other.creado == creado &&
         other.alias == alias &&
         other.idCliente == idCliente &&
-        other.totalCentavos == totalCentavos;
+        other.totalCentavos == totalCentavos &&
+        other.paymentUrl == paymentUrl &&
+        other.customerEmail == customerEmail &&
+        other.customerPhone == customerPhone &&
+        other.operationId == operationId;
   }
 
   @override
@@ -65,6 +79,22 @@ class Order {
         creado.hashCode ^
         alias.hashCode ^
         idCliente.hashCode ^
-        totalCentavos.hashCode;
+        totalCentavos.hashCode ^
+        paymentUrl.hashCode ^
+        customerEmail.hashCode ^
+        customerPhone.hashCode ^
+        operationId.hashCode;
   }
+}
+
+class OrderItem {
+  final String productName;
+  final int quantity;
+  final double price;
+
+  OrderItem({
+    required this.productName,
+    required this.quantity,
+    required this.price,
+  });
 }

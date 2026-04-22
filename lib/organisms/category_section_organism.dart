@@ -87,12 +87,12 @@ class CategorySectionOrganism<T> extends StatelessWidget {
         color: PUColors.bgItem,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: PUColors.borderInputColor.withOpacity(0.3),
+          color: PUColors.borderInputColor.withValues(alpha: 0.3),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -162,7 +162,7 @@ class CategorySectionOrganism<T> extends StatelessWidget {
                   height: 20,
                   width: 1,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
-                  color: PUColors.borderInputColor.withOpacity(0.5),
+                  color: PUColors.borderInputColor.withValues(alpha: 0.5),
                 ),
             ],
           ),
@@ -186,13 +186,13 @@ class CategorySectionOrganism<T> extends StatelessWidget {
           Icon(
             FluentIcons.folder_24_regular,
             size: 48,
-            color: PUColors.iconColor.withOpacity(0.5),
+            color: PUColors.iconColor.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
             emptyMessage,
             style: PuTextStyle.description1.copyWith(
-              color: PUColors.textColor3.withOpacity(0.7),
+              color: PUColors.textColor3.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -263,7 +263,7 @@ class _HeaderActionButton extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(

@@ -33,7 +33,7 @@ class ActionButtonAtom extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(padding),
           decoration: BoxDecoration(
-            color: backgroundColor ?? PUColors.primaryColor.withOpacity(0.1),
+            color: backgroundColor ?? PUColors.primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: SvgPicture.asset(

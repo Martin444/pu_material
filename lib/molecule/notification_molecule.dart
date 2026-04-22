@@ -88,7 +88,7 @@ class NotificationMolecule extends StatelessWidget {
                 child: IconAtom(
                   icon: FluentIcons.dismiss_24_regular,
                   size: 16,
-                  color: _getDefaultIconColor().withOpacity(0.7),
+                  color: _getDefaultIconColor().withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -114,26 +114,26 @@ class NotificationMolecule extends StatelessWidget {
   Color _getDefaultBackgroundColor() {
     switch (type) {
       case NotificationType.info:
-        return PUColors.primaryColor.withOpacity(0.1);
+        return PUColors.primaryColor.withValues(alpha: 0.1);
       case NotificationType.success:
-        return Colors.green.withOpacity(0.1);
+        return Colors.green.withValues(alpha: 0.1);
       case NotificationType.warning:
-        return Colors.orange.withOpacity(0.1);
+        return Colors.orange.withValues(alpha: 0.1);
       case NotificationType.error:
-        return Colors.red.withOpacity(0.1);
+        return Colors.red.withValues(alpha: 0.1);
     }
   }
 
   Color _getDefaultBorderColor() {
     switch (type) {
       case NotificationType.info:
-        return PUColors.primaryColor.withOpacity(0.3);
+        return PUColors.primaryColor.withValues(alpha: 0.3);
       case NotificationType.success:
-        return Colors.green.withOpacity(0.3);
+        return Colors.green.withValues(alpha: 0.3);
       case NotificationType.warning:
-        return Colors.orange.withOpacity(0.3);
+        return Colors.orange.withValues(alpha: 0.3);
       case NotificationType.error:
-        return Colors.red.withOpacity(0.3);
+        return Colors.red.withValues(alpha: 0.3);
     }
   }
 
