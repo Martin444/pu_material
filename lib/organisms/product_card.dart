@@ -192,11 +192,11 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Imagen del producto con Stack para badges e indicadores
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 1, // Imagen cuadrada para consistencia
-                  child: ProductImage(
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ProductImage(
                     imageUrl: imageUrl,
                     fit: BoxFit.cover,
                     borderRadius: BorderRadius.only(
@@ -204,7 +204,6 @@ class ProductCard extends StatelessWidget {
                       topRight: Radius.circular(borderRadius),
                     ),
                   ),
-                ),
                 // Indicador de selección (Checkmark)
                 if (isSelected)
                   Positioned(
@@ -241,7 +240,8 @@ class ProductCard extends StatelessWidget {
                       backgroundColor: badgeBackgroundColor,
                     ),
                   ),
-              ],
+                ],
+              ),
             ),
 
             // Contenido informativo y acciones

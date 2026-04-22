@@ -101,7 +101,7 @@ class HeroSectionAtom extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Título con Bodoni Moda (via title1)
+                // Título con Sansation (via title1)
                 Text(
                   title,
                   style: PuTextStyle.title1.copyWith(
@@ -111,7 +111,7 @@ class HeroSectionAtom extends StatelessWidget {
                   ),
                 ),
 
-                // Subtítulo con Jost
+                // Subtítulo con Sansation
                 if (subtitle != null && subtitle!.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(

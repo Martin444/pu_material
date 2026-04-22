@@ -14,34 +14,33 @@ class McOptionBtnTile<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 10,
-      right: 10,
-      child: PopupMenuButton<String>(
-        onSelected: (String result) {
-          if (result == 'settings') {
-            actionSelected(item, 'edit');
-          } else if (result == 'info') {
-            actionSelected(item, 'delete');
-          }
-        },
-        offset: const Offset(-140, 30),
-        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-          const PopupMenuItem<String>(
-            value: 'settings',
-            child: ListTile(
-              leading: Icon(FluentIcons.edit_24_regular),
-              title: Text('Editar'),
-            ),
+    return PopupMenuButton<String>(
+      onSelected: (String result) {
+        if (result == 'settings') {
+          actionSelected(item, 'edit');
+        } else if (result == 'info') {
+          actionSelected(item, 'delete');
+        }
+      },
+      offset: const Offset(-140, 30),
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: 'settings',
+          child: ListTile(
+            leading: Icon(FluentIcons.edit_24_regular),
+            title: Text('Editar'),
           ),
-          const PopupMenuItem<String>(
-            value: 'info',
-            child: ListTile(
-              leading: Icon(FluentIcons.delete_24_regular),
-              title: Text('Eliminar'),
-            ),
+        ),
+        const PopupMenuItem<String>(
+          value: 'info',
+          child: ListTile(
+            leading: Icon(FluentIcons.delete_24_regular),
+            title: Text('Eliminar'),
           ),
-        ],
+        ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.all(10),
         child: Icon(
           FluentIcons.more_vertical_24_regular,
           color: PUColors.iconColor,

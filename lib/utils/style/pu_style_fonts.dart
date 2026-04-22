@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pu_material/utils/pu_colors.dart';
 
 class PuTextStyle {
-  // --- Font Pairings: Bodoni Moda (Serif) & Jost (Sans-serif) ---
+  // --- Font Pairings: Reverted to Sansation-bold ---
   
-  // Base font styles using Google Fonts
-  static TextStyle get headingBase => GoogleFonts.bodoniModa(
+  static const String _fontFamily = 'Sansation-bold';
+
+  // Base font styles
+  static TextStyle get headingBase => const TextStyle(
+    fontFamily: _fontFamily,
     fontWeight: FontWeight.w700,
     color: PUColors.textColorRich,
   );
 
-  static TextStyle get bodyBase => GoogleFonts.jost(
+  static TextStyle get bodyBase => const TextStyle(
+    fontFamily: _fontFamily,
     fontWeight: FontWeight.w400,
     color: PUColors.textColorMuted,
   );
 
-  // --- Headings (Premium Serif) ---
+  // --- Headings ---
   
   static TextStyle title1 = headingBase.copyWith(
     fontSize: 32,
@@ -38,7 +41,7 @@ class PuTextStyle {
     fontSize: 28,
   );
 
-  // --- Body Text (Clean Sans-serif) ---
+  // --- Body Text ---
   
   static TextStyle bodyLarge = bodyBase.copyWith(
     fontSize: 18,
@@ -69,7 +72,7 @@ class PuTextStyle {
     fontSize: 14,
   );
 
-  // --- Legacy Compatibility (Mapped to new pairings) ---
+  // --- Legacy Compatibility ---
   
   static TextStyle title3Withe = title3.copyWith(color: Colors.white);
   static TextStyle title3disable = title3.copyWith(color: Colors.grey.shade400);
@@ -136,14 +139,16 @@ class PuTextStyle {
   static TextStyle buttonTextStyle = primaryButtonStyle;
 
   // --- Membership Feature Styles ---
-  // Glassmorphism card price display
-  static TextStyle get membershipPriceLarge => GoogleFonts.jost(
+  // Reverted to Sansation
+  static TextStyle get membershipPriceLarge => const TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 48,
     fontWeight: FontWeight.w700,
     color: Colors.white,
   );
 
-  static TextStyle get membershipPriceLabel => GoogleFonts.jost(
+  static TextStyle get membershipPriceLabel => const TextStyle(
+    fontFamily: _fontFamily,
     fontSize: 18,
     fontWeight: FontWeight.w400,
     color: Colors.white70,
@@ -207,3 +212,4 @@ class PuTextStyle {
     color: PUColors.textColorRich,
   );
 }
+
