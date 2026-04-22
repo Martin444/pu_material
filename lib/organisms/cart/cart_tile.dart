@@ -23,6 +23,7 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 120,
       padding: const EdgeInsets.symmetric(
         vertical: 15,
         horizontal: 10,
@@ -43,12 +44,12 @@ class CartTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(
-            flex: 1,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
             child: PuRobustNetworkImage(
               imageUrl: item.photoUrl ?? '',
-              height: double.infinity,
-              width: double.infinity,
+              height: 90,
+              width: 90,
               fit: BoxFit.cover,
             ),
           ),

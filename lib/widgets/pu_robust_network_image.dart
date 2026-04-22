@@ -263,47 +263,59 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
     // Procesar la URL para optimización en Cloudinary (solo si es una URL de Cloudinary)
     String optimizedUrl = _getOptimizedImageUrl(_currentUrl!);
 
-    if (kIsWeb) {
-      return Image.network(
-        optimizedUrl,
-        width: widget.width,
-        height: widget.height,
-        fit: widget.fit ?? BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _buildErrorWithFallback(optimizedUrl, error),
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return _buildPlaceholder();
-        },
-        headers: const {
-          'Accept': 'image/*',
-        },
-      );
-    }
+    return LayoutBuilder(builder: (context, constraints) {
+      // Resolver dimensiones seguras para evitar infinitos en ListViews
+      final double? safeWidth = (widget.width != null && widget.width!.isFinite)
+          ? widget.width
+          : (constraints.hasBoundedWidth ? null : 200.0);
+      
+      final double? safeHeight = (widget.height != null && widget.height!.isFinite)
+          ? widget.height
+          : (constraints.hasBoundedHeight ? null : 200.0);
 
-    return CachedNetworkImage(
-      imageUrl: optimizedUrl,
-      width: widget.width,
-      height: widget.height,
-      fit: widget.fit ?? BoxFit.cover,
-      // Optimización de memoria crítica para Flutter Web / CanvasKit
-      memCacheWidth: (widget.width != null && widget.width!.isFinite && widget.width! > 0)
-          ? (widget.width! * 1.2).round().clamp(1, 3000)
-          : null,
-      memCacheHeight: (widget.height != null && widget.height!.isFinite && widget.height! > 0)
-          ? (widget.height! * 1.2).round().clamp(1, 3000)
-          : null,
-      maxWidthDiskCache: 1000,
-      maxHeightDiskCache: 1000,
-      placeholder: (context, url) => widget.placeholder ?? _buildPlaceholder(),
-      errorWidget: (context, url, error) => _buildErrorWithFallback(url, error),
-      httpHeaders: const {
-        'User-Agent': 'Flutter App',
-        'Accept': 'image/*',
-        'Cache-Control': 'no-cache',
-      },
-      fadeInDuration: const Duration(milliseconds: 300),
-      fadeOutDuration: const Duration(milliseconds: 300),
-    );
+      if (kIsWeb) {
+        return Image.network(
+          optimizedUrl,
+          width: safeWidth,
+          height: safeHeight,
+          fit: widget.fit ?? BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) =>
+              _buildErrorWithFallback(optimizedUrl, error),
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return _buildPlaceholder();
+          },
+          headers: const {
+            'Accept': 'image/*',
+          },
+        );
+      }
+
+      return CachedNetworkImage(
+        imageUrl: optimizedUrl,
+        width: safeWidth,
+        height: safeHeight,
+        fit: widget.fit ?? BoxFit.cover,
+        // Optimización de memoria crítica para Flutter Web / CanvasKit
+        memCacheWidth: (safeWidth != null && safeWidth > 0)
+            ? (safeWidth * 1.2).round().clamp(1, 3000)
+            : null,
+        memCacheHeight: (safeHeight != null && safeHeight > 0)
+            ? (safeHeight * 1.2).round().clamp(1, 3000)
+            : null,
+        maxWidthDiskCache: 1000,
+        maxHeightDiskCache: 1000,
+        placeholder: (context, url) => widget.placeholder ?? _buildPlaceholder(),
+        errorWidget: (context, url, error) => _buildErrorWithFallback(url, error),
+        httpHeaders: const {
+          'User-Agent': 'Flutter App',
+          'Accept': 'image/*',
+          'Cache-Control': 'no-cache',
+        },
+        fadeInDuration: const Duration(milliseconds: 300),
+        fadeOutDuration: const Duration(milliseconds: 300),
+      );
+    });
   }
 
   /// Optimiza la URL si es de Cloudinary para reducir el consumo de memoria
@@ -321,14 +333,23 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
   }
 
   Widget _buildPlaceholder() {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      color: Colors.grey[300],
-      child: const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      final double? h = (widget.height != null && widget.height!.isFinite)
+          ? widget.height
+          : (constraints.hasBoundedHeight ? constraints.maxHeight : 200.0);
+      final double? w = (widget.width != null && widget.width!.isFinite)
+          ? widget.width
+          : (constraints.hasBoundedWidth ? constraints.maxWidth : 200.0);
+
+      return Container(
+        width: w,
+        height: h,
+        color: Colors.grey[300],
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    });
   }
 
   Widget _buildErrorWidget() {
@@ -344,8 +365,8 @@ class _PuRobustNetworkImageState extends State<PuRobustNetworkImage> {
 
         return widget.errorWidget ??
             Container(
-              width: widget.width,
-              height: widget.height,
+              width: widget.width != null && widget.width!.isFinite ? widget.width : null,
+              height: widget.height != null && widget.height!.isFinite ? widget.height : (constraints.hasBoundedHeight ? constraints.maxHeight : 200.0),
               color: Colors.grey[200],
               padding: const EdgeInsets.all(4),
               child: Center(
