@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../../utils/pu_colors.dart';
+import '../../../../utils/style/pu_style_fonts.dart';
 import '../../models/order.dart';
 import '../../utils/time_ago.dart';
 import '../atoms/cell_text.dart';
@@ -95,7 +97,10 @@ class OrdersTable extends StatelessWidget {
       minWidth: 80,
       cellBuilder: (context, order) => CellText(
         '#${order.numero}',
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        style: PuTextStyle.bodySmall.copyWith(
+          fontWeight: FontWeight.bold,
+          color: PUColors.primaryBlue,
+        ),
       ),
     );
 
@@ -117,7 +122,7 @@ class OrdersTable extends StatelessWidget {
         minWidth: 140,
         cellBuilder: (context, order) => CellText(
           order.idCliente,
-          style: const TextStyle(fontSize: 13),
+          style: PuTextStyle.bodySmall,
         ),
       );
     }
@@ -131,7 +136,7 @@ class OrdersTable extends StatelessWidget {
       cellBuilder: (context, order) => CellText(
         order.detalle,
         maxLines: 1,
-        style: const TextStyle(fontSize: 13),
+        style: PuTextStyle.bodySmall,
       ),
     );
 
@@ -156,15 +161,14 @@ class OrdersTable extends StatelessWidget {
       flex: 2,
       minWidth: 100,
       alignment: Alignment.centerRight,
-      cellBuilder: (context, order) => CurrencyText(
-        order.totalCentavos,
-        align: TextAlign.right,
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: 15,
-          color: Theme.of(context).colorScheme.onSurface,
+        cellBuilder: (context, order) => CurrencyText(
+          order.totalCentavos,
+          align: TextAlign.right,
+          style: PuTextStyle.bodyMedium.copyWith(
+            fontWeight: FontWeight.w800,
+            color: PUColors.textColorRich,
+          ),
         ),
-      ),
     );
 
     // Acciones
@@ -187,7 +191,7 @@ class OrdersTable extends StatelessWidget {
           icon: const Icon(FluentIcons.receipt_24_regular),
           tooltip: 'Ver Comprobante',
           iconSize: 20,
-          color: Theme.of(context).colorScheme.primary,
+          color: PUColors.primaryBlue,
         ),
         if (order.estado.toLowerCase() == 'pendiente' && order.paymentUrl != null)
           IconButton(
@@ -200,7 +204,7 @@ class OrdersTable extends StatelessWidget {
             icon: const Icon(FluentIcons.share_24_regular),
             tooltip: 'Compartir Link de Pago',
             iconSize: 20,
-            color: Colors.blue.shade600,
+            color: const Color(0xFF2563EB),
           ),
       ],
     );
@@ -231,10 +235,11 @@ class _TableViewState extends State<_TableView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final headerStyle = theme.textTheme.labelLarge?.copyWith(
-          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-          fontWeight: FontWeight.w600,
+    final headerStyle = PuTextStyle.bodySmall.copyWith(
+          color: PUColors.textColorMuted.withValues(alpha: 0.8),
+          fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
+          fontSize: 11,
         );
 
     return Container(
@@ -256,9 +261,9 @@ class _TableViewState extends State<_TableView> {
           children: [
             // Header
             Material(
-              color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+              color: PUColors.primaryBlue.withValues(alpha: 0.04),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
                   children: widget.columns
                       .map((c) => Expanded(
@@ -286,7 +291,7 @@ class _TableViewState extends State<_TableView> {
                   onExit: (_) => setState(() => _hoveredIndex = null),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isHovered ? theme.colorScheme.primary.withValues(alpha: 0.03) : null,
+                      color: isHovered ? PUColors.primaryBlue.withValues(alpha: 0.05) : null,
                       border: Border(
                         bottom: BorderSide(
                           color: theme.dividerColor.withValues(alpha: 0.1),
