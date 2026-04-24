@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import '../atoms/container_atom.dart';
+import '../atoms/icon_atom.dart';
 import '../utils/pu_colors.dart';
 
-class AdminDataTableMolecule extends StatelessWidget {
+class AdminDataTableMolecule extends StatefulWidget {
   final List<String> headers;
   final List<AdminTableRow> rows;
   final double? columnSpacing;
   final double? horizontalMargin;
+  final bool showPagination;
+  final int currentPage;
+  final int totalPages;
+  final ValueChanged<int>? onPageChanged;
+  final VoidCallback? onRowTap;
 
   const AdminDataTableMolecule({
     super.key,
@@ -14,36 +20,138 @@ class AdminDataTableMolecule extends StatelessWidget {
     required this.rows,
     this.columnSpacing,
     this.horizontalMargin,
+    this.showPagination = false,
+    this.currentPage = 1,
+    this.totalPages = 1,
+    this.onPageChanged,
+    this.onRowTap,
   });
+
+  @override
+  State<AdminDataTableMolecule> createState() => _AdminDataTableMoleculeState();
+}
+
+class _AdminDataTableMoleculeState extends State<AdminDataTableMolecule> {
+  int? _hoveredRowIndex;
 
   @override
   Widget build(BuildContext context) {
     return ContainerAtom(
       variant: ContainerVariant.card,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: DataTable(
-          headingRowColor: WidgetStateProperty.all(PUColors.bgInput),
-          border: TableBorder.all(color: PUColors.borderInputColor),
-          columnSpacing: columnSpacing ?? 24,
-          horizontalMargin: horizontalMargin ?? 16,
-          columns: headers
-              .map((h) => DataColumn(
-                    label: Text(
-                      h,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ))
-              .toList(),
-          rows: rows
-              .map((row) => DataRow(
-                    cells: row.cells
-                        .map((cell) => DataCell(
-                              cell.build(),
-                            ))
-                        .toList(),
-                  ))
-              .toList(),
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              headingRowColor: WidgetStateProperty.all(PUColors.bgInput),
+              border: TableBorder(
+                horizontalInside: BorderSide(color: PUColors.borderInputColor.withValues(alpha: 0.5)),
+              ),
+              columnSpacing: widget.columnSpacing ?? 24,
+              horizontalMargin: widget.horizontalMargin ?? 16,
+              headingRowHeight: 56,
+              dataRowMinHeight: 52,
+              dataRowMaxHeight: 52,
+              columns: widget.headers
+                  .map((h) => DataColumn(
+                        label: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            h,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: PUColors.textColorMuted,
+                            ),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              rows: List.generate(widget.rows.length, (index) {
+                final row = widget.rows[index];
+                return DataRow(
+                  color: WidgetStateProperty.resolveWith((states) {
+                    if (states.contains(WidgetState.hovered) || _hoveredRowIndex == index) {
+                      return PUColors.primaryBlueLight.withValues(alpha: 0.3);
+                    }
+                    return index.isEven
+                        ? PUColors.bgItem
+                        : Colors.transparent;
+                  }),
+                  cells: row.cells
+                      .map((cell) => DataCell(
+                            cell.build(),
+                          ))
+                      .toList(),
+                );
+              }),
+            ),
+          ),
+          if (widget.showPagination && widget.totalPages > 1) _buildPagination(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPagination() {
+    return ContainerAtom(
+      variant: ContainerVariant.minimal,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Página ${widget.currentPage} de ${widget.totalPages}',
+            style: const TextStyle(
+              fontSize: 13,
+              color: PUColors.textColorMuted,
+            ),
+          ),
+          Row(
+            children: [
+              _PaginationButton(
+                icon: Icons.chevron_left,
+                onTap: widget.currentPage > 1
+                    ? () => widget.onPageChanged?.call(widget.currentPage - 1)
+                    : null,
+              ),
+              const SizedBox(width: 8),
+              _PaginationButton(
+                icon: Icons.chevron_right,
+                onTap: widget.currentPage < widget.totalPages
+                    ? () => widget.onPageChanged?.call(widget.currentPage + 1)
+                    : null,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PaginationButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onTap;
+
+  const _PaginationButton({required this.icon, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ContainerAtom(
+        variant: ContainerVariant.minimal,
+        padding: const EdgeInsets.all(8),
+        backgroundColor: onTap != null ? PUColors.bgInput : PUColors.bgItem,
+        borderColor: onTap != null ? PUColors.borderInputColor : Colors.transparent,
+        borderWidth: 1,
+        child: IconAtom(
+          icon: icon,
+          color: onTap != null ? PUColors.textColorRich : PUColors.textColorLight,
+          size: 20,
         ),
       ),
     );
