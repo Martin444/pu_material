@@ -12,7 +12,7 @@ void main() {
         numero: '001',
         detalle: 'Test order',
         estado: 'Pendiente',
-        creado: DateTime.now(),
+        created: DateTime.now(),
         alias: 'TestAlias',
         idCliente: 'Test Client',
         totalCentavos: 100000,
@@ -37,9 +37,9 @@ void main() {
       final twoHoursAgo = now.subtract(const Duration(hours: 2));
       final threeDaysAgo = now.subtract(const Duration(days: 3));
 
-      expect(TimeAgo.format(fiveMinutesAgo), 'Hace 5 min');
-      expect(TimeAgo.format(twoHoursAgo), 'Hace 2 horas');
-      expect(TimeAgo.format(threeDaysAgo), 'Hace 3 días');
+      expect(TimeAgo.format(fiveMinutesAgo), '5 min');
+      expect(TimeAgo.format(twoHoursAgo), '2 horas');
+      expect(TimeAgo.format(threeDaysAgo), '3 días');
     });
 
     test('TimeAgo.formatShort should format correctly', () {

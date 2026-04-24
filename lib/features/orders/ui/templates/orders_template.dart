@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:pu_material/features/orders/models/order.dart';
+import 'package:pu_material/features/orders/ui/organisms/orders_table.dart';
 
-/// Template base para la página de órdenes
 class OrdersTemplate extends StatelessWidget {
-  final Widget toolbar;
-  final Widget body;
+  final List<Order> orders;
+  final bool isLoading;
+  final bool hasMore;
+  final VoidCallback? onLoadMore;
 
   const OrdersTemplate({
-    super.key,
-    required this.toolbar,
-    required this.body,
+    required this.orders,
+    this.isLoading = false,
+    this.hasMore = false,
+    this.onLoadMore,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: toolbar,
-      ),
-      body: SafeArea(child: body),
+    return Column(
+      children: [
+        Expanded(child: OrdersTable(data: orders)),
+        if (isLoading) const CircularProgressIndicator(),
+        if (hasMore)
+          TextButton(
+            onPressed: onLoadMore,
+            child: const Text('Cargar más'),
+          ),
+      ],
     );
   }
 }

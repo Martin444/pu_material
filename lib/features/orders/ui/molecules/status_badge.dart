@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/pu_colors.dart';
-import '../atoms/badge.dart';
+import 'package:pu_material/features/orders/ui/atoms/badge.dart' as atoms;
 
-/// Widget molecular para mostrar el estado de una orden con colores específicos
 class StatusBadge extends StatelessWidget {
-  final String estado;
+  final String status;
 
-  const StatusBadge(this.estado, {super.key});
+  const StatusBadge(this.status);
 
-  Color _colorFor(String s, BuildContext context) {
-    switch (s.toLowerCase()) {
-      case 'pendiente':
-        return const Color(0xFFD97706); // Amber-600
-      case 'en curso':
-        return const Color(0xFF2563EB); // Royal Blue
+  Color get _color {
+    switch (status.toLowerCase()) {
+      case 'completed':
       case 'completado':
-        return const Color(0xFF059669); // Emerald-600
+        return Colors.green;
+      case 'pending':
+      case 'pendiente':
+        return Colors.orange;
+      case 'cancelled':
       case 'cancelado':
-        return const Color(0xFFDC2626); // Red-600
-      case 'confirmado':
-      case 'confirmed':
-        return const Color(0xFF4F46E5); // Indigo-600
+        return Colors.red;
       default:
-        return PUColors.primaryColor;
+        return Colors.blue;
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final c = _colorFor(estado, context);
-    return OrderBadge(label: estado, color: c);
-  }
+  Widget build(BuildContext context) => atoms.Badge(label: status, color: _color);
 }
