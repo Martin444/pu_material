@@ -40,54 +40,61 @@ class _AdminDataTableMoleculeState extends State<AdminDataTableMolecule> {
       variant: ContainerVariant.card,
       padding: EdgeInsets.zero,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              headingRowColor: WidgetStateProperty.all(PUColors.bgInput),
-              border: TableBorder(
-                horizontalInside: BorderSide(color: PUColors.borderInputColor.withValues(alpha: 0.5)),
-              ),
-              columnSpacing: widget.columnSpacing ?? 24,
-              horizontalMargin: widget.horizontalMargin ?? 16,
-              headingRowHeight: 56,
-              dataRowMinHeight: 52,
-              dataRowMaxHeight: 52,
-              columns: widget.headers
-                  .map((h) => DataColumn(
-                        label: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            h,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                              color: PUColors.textColorMuted,
-                            ),
-                          ),
-                        ),
-                      ))
-                  .toList(),
-              rows: List.generate(widget.rows.length, (index) {
-                final row = widget.rows[index];
-                return DataRow(
-                  color: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.hovered) || _hoveredRowIndex == index) {
-                      return PUColors.primaryBlueLight.withValues(alpha: 0.3);
-                    }
-                    return index.isEven
-                        ? PUColors.bgItem
-                        : Colors.transparent;
-                  }),
-                  cells: row.cells
-                      .map((cell) => DataCell(
-                            cell.build(),
-                          ))
-                      .toList(),
-                );
-              }),
-            ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                  child: DataTable(
+                    headingRowColor: WidgetStateProperty.all(PUColors.bgInput),
+                    border: TableBorder(
+                      horizontalInside: BorderSide(color: PUColors.borderInputColor.withValues(alpha: 0.5)),
+                    ),
+                    columnSpacing: widget.columnSpacing ?? 24,
+                    horizontalMargin: widget.horizontalMargin ?? 16,
+                    headingRowHeight: 56,
+                    dataRowMinHeight: 52,
+                    dataRowMaxHeight: 52,
+                    columns: widget.headers
+                        .map((h) => DataColumn(
+                              label: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  h,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                    color: PUColors.textColorMuted,
+                                  ),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                    rows: List.generate(widget.rows.length, (index) {
+                      final row = widget.rows[index];
+                      return DataRow(
+                        color: WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.hovered) || _hoveredRowIndex == index) {
+                            return PUColors.primaryBlueLight.withValues(alpha: 0.3);
+                          }
+                          return index.isEven
+                              ? PUColors.bgItem
+                              : Colors.transparent;
+                        }),
+                        cells: row.cells
+                            .map((cell) => DataCell(
+                                  cell.build(),
+                                ))
+                            .toList(),
+                      );
+                    }),
+                  ),
+                ),
+              );
+            },
           ),
           if (widget.showPagination && widget.totalPages > 1) _buildPagination(),
         ],
@@ -225,6 +232,22 @@ class SwitchTableCell extends AdminTableCell {
       value: value,
       onChanged: onChanged,
       activeColor: PUColors.primaryBlue,
+    );
+  }
+}
+
+class ActionTableCell extends AdminTableCell {
+  final IconData icon;
+  final VoidCallback onTap;
+  final Color? color;
+
+  ActionTableCell({required this.icon, required this.onTap, this.color});
+
+  @override
+  Widget build() {
+    return IconButton(
+      icon: Icon(icon, color: color, size: 20),
+      onPressed: onTap,
     );
   }
 }
