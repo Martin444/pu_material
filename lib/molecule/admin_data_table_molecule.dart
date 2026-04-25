@@ -248,7 +248,20 @@ class ActionTableCell extends AdminTableCell {
     return IconButton(
       icon: Icon(icon, color: color, size: 20),
       onPressed: onTap,
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
     );
+  }
+}
+
+class WidgetTableCell extends AdminTableCell {
+  final Widget widget;
+
+  WidgetTableCell(this.widget);
+
+  @override
+  Widget build() {
+    return widget;
   }
 }
 
