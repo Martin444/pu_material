@@ -23,11 +23,15 @@ class PUColors {
   static const Color primaryColor = Color(0xFF1C1917);        // Use Dark Stone as Primary
   static const Color accentColor = Color(0xFF2563EB);         // Royal Blue as Accent (More Professional)
   
-  // Semantic
-  static const Color bgError = Color(0xFF991B1B);
-  static const Color bgSuccess = Color(0xFF166534);
-  static const Color bgWarning = Color(0xFF92400E);
-  static const Color bgInfo = Color(0xFF1E293B);
+  // Semantic Colors (explicit)
+  static const Color errorColor = Color(0xFF991B1B);
+  static const Color warningColor = Color(0xFF92400E);
+  static const Color successColor = Color(0xFF166534);
+  static const Color infoColor = Color(0xFF1E293B);
+
+  // Alias para backwards compatibility
+  static const Color bgError = errorColor;
+  static const Color bgSuccess = successColor;
   
   // Glass Effects
   static Color glassBg = Colors.white.withValues(alpha: 0.7);

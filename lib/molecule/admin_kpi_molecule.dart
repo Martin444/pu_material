@@ -11,6 +11,7 @@ class AdminKpiMolecule extends StatefulWidget {
   final Color? iconBackground;
   final VoidCallback? onTap;
   final String? subtitle;
+  final double? width;
 
   const AdminKpiMolecule({
     super.key,
@@ -21,6 +22,7 @@ class AdminKpiMolecule extends StatefulWidget {
     this.iconBackground,
     this.onTap,
     this.subtitle,
+    this.width,
   });
 
   @override
@@ -42,6 +44,7 @@ class _AdminKpiMoleculeState extends State<AdminKpiMolecule> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
           transform: Matrix4.identity()..scale(_isHovered ? 1.02 : 1.0),
+          width: widget.width,
           child: ContainerAtom(
             variant: ContainerVariant.card,
             padding: const EdgeInsets.all(12),
@@ -61,7 +64,7 @@ class _AdminKpiMoleculeState extends State<AdminKpiMolecule> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Expanded(
+                  Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,

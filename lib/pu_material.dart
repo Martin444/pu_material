@@ -13,6 +13,7 @@ export 'package:pu_material/widgets/buttons/button_primary.dart';
 export 'package:pu_material/widgets/buttons/button_secundary.dart';
 export 'package:pu_material/widgets/buttons/pu_button_variants.dart';
 export 'package:pu_material/widgets/inputs/pu_input.dart';
+export 'package:pu_material/widgets/inputs/pu_input_dropdown.dart';
 export 'package:pu_material/widgets/inputs/pu_input_styles.dart';
 export 'package:pu_material/widgets/pu_robust_network_image.dart';
 export 'package:pu_material/atoms/label_text.dart';
@@ -45,6 +46,7 @@ export 'package:pu_material/atoms/interactive_atom.dart';
 // 🧬 Molecules (Component Combinations)
 export 'package:pu_material/widgets/buttons/mc_option_buttons_tile.dart';
 export 'package:pu_material/widgets/dialogs/warning_dialog.dart';
+export 'package:pu_material/widgets/dialogs/pu_dialog.dart';
 export 'package:pu_material/widgets/menu/items/itemdraw.dart';
 export 'package:pu_material/molecule/order_item_card.dart';
 export 'package:pu_material/molecule/status_progress_indicator.dart';
@@ -74,6 +76,8 @@ export 'package:pu_material/molecule/pagination_molecule.dart';
 // Admin Atoms
 export 'package:pu_material/atoms/filter_chip_atom.dart';
 export 'package:pu_material/atoms/search_bar_atom.dart';
+export 'package:pu_material/atoms/detail_row_atom.dart';
+export 'package:pu_material/atoms/pu_badge_atom.dart';
 
 // Admin Organisms
 export 'package:pu_material/organisms/user_table_organism.dart';

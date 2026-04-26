@@ -45,6 +45,7 @@ class ButtonSecundary extends StatelessWidget {
         ),
         onPressed: disabled || onPressed == null ? null : onPressed,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             !load
