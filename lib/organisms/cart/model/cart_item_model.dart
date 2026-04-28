@@ -44,4 +44,16 @@ class CartItemModel {
       deliveryTime: json['deliveryTime'] as int?,
     );
   }
+
+  // Método para convertir una instancia de CartItemModel en un mapa (JSON)
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'photoURL': photoUrl,
+      'name': name,
+      'price': price,
+      'quantity': quantity,
+      'deliveryTime': deliveryTime,
+    };
+  }
 }
