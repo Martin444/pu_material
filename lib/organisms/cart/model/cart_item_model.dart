@@ -33,18 +33,6 @@ class CartItemModel {
     );
   }
 
-  // Método para convertir un mapa (JSON) en una instancia de CartItemModel
-  factory CartItemModel.fromJson(Map<String, dynamic> json) {
-    return CartItemModel(
-      id: json['id'] as String?,
-      photoUrl: json['photoURL'] as String?,
-      name: json['name'] as String?,
-      price: json['price'] != null ? (json['price'] as num).toDouble() : null,
-      quantity: json['quantity'] as int?,
-      deliveryTime: json['deliveryTime'] as int?,
-    );
-  }
-
   // Método para convertir una instancia de CartItemModel en un mapa (JSON)
   Map<String, dynamic> toJson() {
     return {
@@ -55,5 +43,17 @@ class CartItemModel {
       'quantity': quantity,
       'deliveryTime': deliveryTime,
     };
+  }
+
+  // Método para convertir un mapa (JSON) en una instancia de CartItemModel
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      id: json['id'] as String?,
+      photoUrl: json['photoURL'] as String?,
+      name: json['name'] as String?,
+      price: json['price'] != null ? (json['price'] as num).toDouble() : null,
+      quantity: json['quantity'] as int?,
+      deliveryTime: json['deliveryTime'] as int?,
+    );
   }
 }
