@@ -12,7 +12,7 @@ class AdminDataTableMolecule extends StatefulWidget {
   final int currentPage;
   final int totalPages;
   final ValueChanged<int>? onPageChanged;
-  final VoidCallback? onRowTap;
+  final ValueChanged<int>? onRowTap;
 
   const AdminDataTableMolecule({
     super.key,
@@ -76,6 +76,9 @@ class _AdminDataTableMoleculeState extends State<AdminDataTableMolecule> {
                     rows: List.generate(widget.rows.length, (index) {
                       final row = widget.rows[index];
                       return DataRow(
+                        onSelectChanged: widget.onRowTap != null
+                            ? (selected) => widget.onRowTap!(index)
+                            : null,
                         color: WidgetStateProperty.resolveWith((states) {
                           if (states.contains(WidgetState.hovered) || _hoveredRowIndex == index) {
                             return PUColors.primaryBlueLight.withValues(alpha: 0.3);
