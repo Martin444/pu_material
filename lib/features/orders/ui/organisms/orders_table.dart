@@ -9,6 +9,7 @@ class OrdersTable extends StatelessWidget {
   final int totalPages;
   final ValueChanged<int>? onPageChanged;
   final void Function(Order order)? onTap;
+  final void Function(Order order)? onViewDetail;
 
   const OrdersTable({
     required this.data,
@@ -16,6 +17,7 @@ class OrdersTable extends StatelessWidget {
     this.totalPages = 1,
     this.onPageChanged,
     this.onTap,
+    this.onViewDetail,
   });
 
   @override
@@ -25,7 +27,7 @@ class OrdersTable extends StatelessWidget {
     }
 
     return AdminDataTableMolecule(
-      headers: const ['Orden', 'Cliente', 'Contacto', 'Estado', 'Items', 'Total', 'Fecha'],
+      headers: const ['Orden', 'Cliente', 'Contacto', 'Estado', 'Items', 'Total', 'Fecha', 'Acciones'],
       rows: data.map((order) {
         return AdminTableRow([
           WidgetTableCell(Text(order.numero, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14))),
@@ -59,6 +61,21 @@ class OrdersTable extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           )),
           WidgetTableCell(Text(_formatDate(order.created), style: const TextStyle(fontSize: 13, color: Colors.grey))),
+          WidgetTableCell(
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.visibility_outlined, size: 20, color: Color(0xFF6366F1)),
+                  onPressed: () => onViewDetail?.call(order),
+                  tooltip: 'Ver detalle',
+                  splashRadius: 20,
+                  constraints: const BoxConstraints(),
+                  padding: const EdgeInsets.all(8),
+                ),
+              ],
+            ),
+          ),
         ]);
       }).toList(),
       showPagination: totalPages > 1,
