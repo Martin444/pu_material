@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/pu_colors.dart';
 import '../utils/style/pu_style_fonts.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import '../atoms/container_atom.dart';
-import '../atoms/title_atom.dart';
 import '../atoms/subtitle_atom.dart';
 import '../atoms/icon_atom.dart';
 import '../widgets/pu_robust_network_image.dart';

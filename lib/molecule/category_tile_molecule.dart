@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../utils/pu_colors.dart';
 import '../utils/style/pu_style_fonts.dart';
 
@@ -77,8 +76,8 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
             horizontal: 16,
           ),
           decoration: BoxDecoration(
-            color: widget.isSelected 
-                ? PUColors.bgCategorySelected 
+            color: widget.isSelected
+                ? PUColors.bgCategorySelected
                 : (_isHovering ? PUColors.primaryColor.withValues(alpha: 0.05) : Colors.transparent),
             borderRadius: BorderRadius.circular(12),
             border: widget.isSelected
@@ -112,7 +111,7 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              
+
               const SizedBox(width: 8),
 
               // Texto con tipografía premium

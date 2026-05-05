@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../utils/pu_colors.dart';
 
 /// Átomo: Botón de carrito
@@ -28,7 +27,7 @@ class CartIconButton extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final iconSize = size ?? 20.0;
-        
+
         return MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
@@ -37,17 +36,18 @@ class CartIconButton extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: isSelected 
-                  ? (selectedColor ?? PUColors.accentColor) 
-                  : (unselectedColor ?? PUColors.primaryColor),
+                color:
+                    isSelected ? (selectedColor ?? PUColors.accentColor) : (unselectedColor ?? PUColors.primaryColor),
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: isSelected ? [
-                  BoxShadow(
-                    color: (selectedColor ?? PUColors.accentColor).withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  )
-                ] : null,
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: (selectedColor ?? PUColors.accentColor).withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        )
+                      ]
+                    : null,
               ),
               child: Icon(
                 isSelected

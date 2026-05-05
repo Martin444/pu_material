@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pu_material/utils/pu_colors.dart';
 import 'package:pu_material/utils/style/pu_style_fonts.dart';
 
 class PuDialog extends StatelessWidget {
