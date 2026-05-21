@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pu_material/features/orders/models/order.dart';
+import 'package:pu_material/utils/formaters/currency_converter.dart';
 
 class ReceiptDialog extends StatelessWidget {
   final Order order;
@@ -16,7 +17,7 @@ class ReceiptDialog extends StatelessWidget {
         children: [
           Text('Cliente: ${order.alias}'),
           Text('Estado: ${order.estado}'),
-          Text('Total: \$${(order.totalCentavos / 100).toStringAsFixed(2)}'),
+          Text('Total: ${(order.totalCentavos / 100).toCurrency()}'),
           const SizedBox(height: 16),
           const Text('Detalles:'),
           Text(order.detalle),

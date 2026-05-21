@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pu_material/features/orders/models/order.dart';
 import 'package:pu_material/features/orders/ui/molecules/status_badge.dart';
 import 'package:pu_material/molecule/admin_data_table_molecule.dart';
+import 'package:pu_material/utils/formaters/currency_converter.dart';
 
 class OrdersTable extends StatelessWidget {
   final List<Order> data;
@@ -56,8 +57,8 @@ class OrdersTable extends StatelessWidget {
           ),
           WidgetTableCell(StatusBadge(order.estado)),
           WidgetTableCell(Text('${order.fullItems.length} productos', style: const TextStyle(fontSize: 14))),
-          WidgetTableCell(Text(
-            '\$${(order.totalCentavos / 100).toStringAsFixed(2)}',
+           WidgetTableCell(Text(
+            (order.totalCentavos / 100).toCurrency(),
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           )),
           WidgetTableCell(Text(_formatDate(order.created), style: const TextStyle(fontSize: 13, color: Colors.grey))),

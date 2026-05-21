@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pu_material/features/orders/models/order.dart';
+import 'package:pu_material/utils/formaters/currency_converter.dart';
 
 class OrderCompactCard extends StatelessWidget {
   final Order order;
@@ -13,7 +14,7 @@ class OrderCompactCard extends StatelessWidget {
       child: ListTile(
         title: Text(order.numero),
         subtitle: Text(order.detalle),
-        trailing: Text('\$${(order.totalCentavos / 100).toStringAsFixed(2)}'),
+        trailing: Text((order.totalCentavos / 100).toCurrency()),
         onTap: onTap,
       ),
     );

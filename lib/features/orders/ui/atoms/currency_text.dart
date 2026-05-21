@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pu_material/utils/formaters/currency_converter.dart';
 
 class CurrencyText extends StatelessWidget {
   final int centavos;
@@ -9,6 +10,6 @@ class CurrencyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = centavos / 100;
-    return Text('\$${value.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14));
+    return Text(value.toCurrency(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14));
   }
 }

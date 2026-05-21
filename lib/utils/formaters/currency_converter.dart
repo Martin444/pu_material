@@ -1,20 +1,23 @@
 import 'package:intl/intl.dart';
 
+final _currencyFormatter = NumberFormat.currency(
+  symbol: '',
+  decimalDigits: 2,
+  locale: 'es_AR',
+);
+
 extension PUStringFormater on String {
   String convertToCorrency() {
     final originalValue = double.tryParse(this);
     if (originalValue == null) {
       return '\$${0.00}';
-      // return 'Error: Valor no válido';
     }
+    return '\$${_currencyFormatter.format(originalValue)}';
+  }
+}
 
-    final formatter = NumberFormat.currency(
-      symbol: '',
-      decimalDigits: 2, // Dos decimales
-      locale: 'es_AR', // Cambia a tu localización deseada
-    );
-
-    final formattedValue = formatter.format(originalValue);
-    return '\$$formattedValue';
+extension PUDoubleFormater on double {
+  String toCurrency() {
+    return '\$${_currencyFormatter.format(this)}';
   }
 }

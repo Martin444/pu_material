@@ -21,6 +21,11 @@ class PUInput extends StatefulWidget {
   final TextEditingController controller;
   final bool compact;
   final Color? activeBorderColor;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final int? maxLines;
+  final int? minLines;
+  final bool showLabel;
 
   const PUInput({
     super.key,
@@ -39,6 +44,11 @@ class PUInput extends StatefulWidget {
     this.validator,
     this.compact = false,
     this.activeBorderColor,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLines = 1,
+    this.minLines,
+    this.showLabel = true,
   });
 
   @override
@@ -80,13 +90,25 @@ class _PUInputState extends State<PUInput> {
       keyboardType: widget.textInputType,
       focusNode: widget.focusNode,
       inputFormatters: getFormatForTypeInput(),
+      readOnly: widget.readOnly,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      onTap: widget.onTap,
       decoration: InputDecoration(
         fillColor: PUColors.bgInput,
         hoverColor: PUColors.bgInput,
         focusColor: PUColors.bgInput,
+        labelText: widget.showLabel ? widget.labelText : null,
+        labelStyle: PuTextStyle.description1.copyWith(
+          color: PUColors.textColorMuted,
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
+        ),
         hintText: widget.hintText,
-        hintStyle: widget.compact ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13) : PuTextStyle.hintTextStyle,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        hintStyle: widget.compact
+            ? PuTextStyle.hintTextStyle.copyWith(fontSize: 13)
+            : PuTextStyle.hintTextStyle.copyWith(color: Colors.grey.shade400),
+        floatingLabelBehavior: widget.showLabel ? FloatingLabelBehavior.always : FloatingLabelBehavior.never,
         isCollapsed: widget.compact,
         alignLabelWithHint: false,
         errorText: widget.errorText,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../atoms/container_atom.dart';
 import '../atoms/icon_atom.dart';
 import '../utils/pu_colors.dart';
+import '../utils/formaters/currency_converter.dart';
 
 class AdminDataTableMolecule extends StatefulWidget {
   final List<String> headers;
@@ -197,7 +198,7 @@ class PriceTableCell extends AdminTableCell {
   @override
   Widget build() {
     return Text(
-      '\$${price.toStringAsFixed(2)}',
+      price.toCurrency(),
       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
     );
   }

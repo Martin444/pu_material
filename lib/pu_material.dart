@@ -109,3 +109,15 @@ export 'package:pu_material/features/orders/ui/organisms/orders_table.dart';
 export 'package:pu_material/features/orders/ui/templates/orders_template.dart';
 export 'package:pu_material/features/orders/utils/time_ago.dart';
 
+// Events Feature Models
+export 'package:pu_material/features/events/models/event_ui_model.dart';
+export 'package:pu_material/features/events/models/venue_ui_model.dart';
+export 'package:pu_material/features/events/models/ticket_type_ui_model.dart';
+
+// Events Feature UI
+export 'package:pu_material/features/events/ui/molecules/event_card_molecule.dart';
+export 'package:pu_material/features/events/ui/organisms/event_list_organism.dart';
+export 'package:pu_material/features/events/ui/templates/events_dashboard_template.dart';
+export 'package:pu_material/features/events/ui/templates/event_detail_template.dart';
+export 'package:pu_material/features/events/ui/templates/event_create_template.dart';
+

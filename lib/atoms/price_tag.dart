@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pu_material/utils/formaters/currency_converter.dart';
 
 class PriceTag extends StatelessWidget {
   final double price;
@@ -7,6 +8,6 @@ class PriceTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('\$${price.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
+    return Text(price.toCurrency(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
   }
 }
