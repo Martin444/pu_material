@@ -137,7 +137,7 @@ class CategorySectionOrganism<T> extends StatelessWidget {
             children: [
               // Botón de editar
               if (onEditSelected != null)
-                _HeaderActionButton(
+                HeaderActionButton(
                   icon: FluentIcons.edit_24_regular,
                   color: PUColors.primaryColor,
                   onTap: onEditSelected!,
@@ -149,7 +149,7 @@ class CategorySectionOrganism<T> extends StatelessWidget {
 
               // Botón de eliminar
               if (onDeleteSelected != null)
-                _HeaderActionButton(
+                HeaderActionButton(
                   icon: FluentIcons.delete_24_regular,
                   color: Colors.red,
                   onTap: onDeleteSelected!,
@@ -238,9 +238,10 @@ class CategorySectionOrganism<T> extends StatelessWidget {
   }
 }
 
-/// Átomo interno para botones de acción del header
-class _HeaderActionButton extends StatelessWidget {
-  const _HeaderActionButton({
+/// Átomo para botones de acción del header
+class HeaderActionButton extends StatelessWidget {
+  const HeaderActionButton({
+    super.key,
     required this.icon,
     required this.color,
     required this.onTap,
