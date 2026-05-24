@@ -12,6 +12,15 @@ class Order {
   final String? operationId;
   final List<OrderItem> fullItems;
 
+  // Nuevos campos de transparencia
+  final String statusRaw;
+  final int subtotalCentavos;
+  final double marketplaceFeePercentage;
+  final int marketplaceFeeAmountCentavos;
+  final int? mpProcessingFeeCentavos;
+  final int? netAmountCentavos;
+  final String? paymentStatus;
+
   Order({
     required this.numero,
     required this.detalle,
@@ -25,6 +34,13 @@ class Order {
     this.customerPhone,
     this.operationId,
     this.fullItems = const [],
+    this.statusRaw = '',
+    this.subtotalCentavos = 0,
+    this.marketplaceFeePercentage = 0,
+    this.marketplaceFeeAmountCentavos = 0,
+    this.mpProcessingFeeCentavos,
+    this.netAmountCentavos,
+    this.paymentStatus,
   });
 
   factory Order.example() {

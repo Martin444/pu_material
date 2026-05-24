@@ -8,15 +8,29 @@ class StatusBadge extends StatelessWidget {
 
   Color get _color {
     switch (status.toLowerCase()) {
+      case 'confirmed':
+      case 'confirmado':
+        return Colors.blue;
+      case 'processing':
+      case 'en curso':
+        return Colors.orange;
+      case 'shipped':
+      case 'enviado':
+        return Colors.indigo;
+      case 'delivered':
+      case 'entregado':
       case 'completed':
       case 'completado':
         return Colors.green;
       case 'pending':
       case 'pendiente':
-        return Colors.orange;
+        return Colors.amber;
       case 'cancelled':
       case 'cancelado':
         return Colors.red;
+      case 'failed':
+      case 'fallido':
+        return Colors.red.shade700;
       default:
         return Colors.blue;
     }
