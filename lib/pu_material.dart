@@ -41,6 +41,7 @@ export 'package:pu_material/atoms/icon_atom.dart';
 export 'package:pu_material/atoms/container_atom.dart';
 export 'package:pu_material/atoms/hero_section_atom.dart';
 export 'package:pu_material/atoms/interactive_atom.dart';
+export 'package:pu_material/atoms/pwa_install_button_atom.dart';
 
 // 🧬 Molecules (Component Combinations)
 export 'package:pu_material/widgets/buttons/mc_option_buttons_tile.dart';
