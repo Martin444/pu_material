@@ -15,10 +15,31 @@ class PuDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(title, style: PuTextStyle.title2),
-      content: content,
-      actions: actions,
+    return Dialog(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(title, style: PuTextStyle.title2),
+              const SizedBox(height: 20),
+              SingleChildScrollView(
+                child: content,
+              ),
+              if (actions.isNotEmpty) ...[
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: actions,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 
