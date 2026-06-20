@@ -122,3 +122,6 @@ export 'package:pu_material/features/events/ui/templates/events_dashboard_templa
 export 'package:pu_material/features/events/ui/templates/event_detail_template.dart';
 export 'package:pu_material/features/events/ui/templates/event_create_template.dart';
 
+// Catalog Feature
+export 'package:pu_material/features/catalog/organisms/catalog_grid_organism.dart';
+
