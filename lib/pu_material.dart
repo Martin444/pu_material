@@ -2,6 +2,7 @@ library pu_material;
 
 // 🛠️ Utilities & Tokens
 export 'package:pu_material/utils/pu_design_tokens.dart';
+export 'package:pu_material/utils/pu_breakpoints.dart';
 export 'package:pu_material/utils/pu_colors.dart';
 export 'package:pu_material/utils/validators/validators_utils.dart';
 export 'package:pu_material/utils/style/pu_style_fonts.dart';
