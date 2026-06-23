@@ -43,6 +43,9 @@ export 'package:pu_material/atoms/icon_atom.dart';
 export 'package:pu_material/atoms/container_atom.dart';
 export 'package:pu_material/atoms/hero_section_atom.dart';
 export 'package:pu_material/atoms/interactive_atom.dart';
+export 'package:pu_material/atoms/mp_benefit_badge.dart';
+export 'package:pu_material/atoms/share_action_button.dart';
+export 'package:pu_material/atoms/share_status_icon.dart';
 
 // 🧬 Molecules (Component Combinations)
 export 'package:pu_material/widgets/buttons/mc_option_buttons_tile.dart';
@@ -65,6 +68,15 @@ export 'package:pu_material/molecule/info_tile_molecule.dart';
 export 'package:pu_material/molecule/welcome_header_molecule.dart';
 export 'package:pu_material/molecule/notification_molecule.dart';
 export 'package:pu_material/molecule/business_card_molecule.dart';
+export 'package:pu_material/molecule/mp_banner_actions.dart';
+export 'package:pu_material/molecule/mp_banner_benefits.dart';
+export 'package:pu_material/molecule/mp_banner_header.dart';
+export 'package:pu_material/molecule/share_header.dart';
+export 'package:pu_material/molecule/share_input_section.dart';
+export 'package:pu_material/molecule/share_link_display.dart';
+export 'package:pu_material/molecule/item_category_tile.dart';
+export 'package:pu_material/molecule/category_tags_section.dart';
+export 'package:pu_material/molecule/menu_ward_item_tiles.dart';
 
 // Admin Molecules
 export 'package:pu_material/molecule/admin_nav_molecule.dart';
@@ -95,6 +107,16 @@ export 'package:pu_material/organisms/cart/cart_tile.dart';
 export 'package:pu_material/organisms/cart/cart_item_list.dart';
 export 'package:pu_material/organisms/cart/cart_order_summary.dart';
 export 'package:pu_material/organisms/cart/model/cart_item_model.dart';
+export 'package:pu_material/organisms/share_options_section.dart';
+export 'package:pu_material/organisms/share_qr_card.dart';
+export 'package:pu_material/organisms/share_link_menu_dialog.dart';
+export 'package:pu_material/organisms/catalog_empty_state.dart';
+export 'package:pu_material/organisms/dashboard_error_state.dart';
+export 'package:pu_material/organisms/service_home_view.dart';
+export 'package:pu_material/organisms/mp_link_banner.dart';
+export 'package:pu_material/organisms/missing_logo_banner.dart';
+export 'package:pu_material/organisms/unlinked_catalogs_banner.dart';
+export 'package:pu_material/organisms/commerce_selection_dialog.dart';
 
 // 📦 Shared Feature Components
 // Orders Feature
@@ -124,4 +146,15 @@ export 'package:pu_material/features/events/ui/templates/event_create_template.d
 
 // Catalog Feature
 export 'package:pu_material/features/catalog/organisms/catalog_grid_organism.dart';
+
+// Customer Feature
+export 'package:pu_material/features/customer/atoms/customer_atoms.dart';
+export 'package:pu_material/features/customer/molecules/customer_molecules.dart';
+export 'package:pu_material/features/customer/organisms/customer_organisms.dart';
+export 'package:pu_material/features/customer/templates/customer_templates.dart';
+export 'package:pu_material/features/customer/utils/responsive_breakpoints.dart';
+
+// Technical Widgets
+export 'package:pu_material/widgets/pu_responsive_builder.dart';
+export 'package:pu_material/atoms/role_action_config.dart';
 
