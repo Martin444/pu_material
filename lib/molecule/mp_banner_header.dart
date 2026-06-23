@@ -75,10 +75,10 @@ class MPBannerHeader extends StatelessWidget {
               ),
             ],
           ),
-          child: const Icon(
-            FluentIcons.wallet_24_regular,
-            color: Color(0xFF009EE3),
-            size: 32,
+          child: Image.asset(
+            'assets/logo/logo-mp.png',
+            width: 32,
+            height: 32,
           ),
         ),
         const SizedBox(width: 20),
