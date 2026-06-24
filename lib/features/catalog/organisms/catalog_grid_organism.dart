@@ -9,7 +9,7 @@ class CatalogGridOrganism<T> extends StatelessWidget {
   final IconData emptyIcon;
   final String emptyMessage;
   final String createButtonLabel;
-  final VoidCallback onCreateItem;
+  final VoidCallback? onCreateItem;
 
   const CatalogGridOrganism({
     super.key,
@@ -19,7 +19,7 @@ class CatalogGridOrganism<T> extends StatelessWidget {
     required this.emptyIcon,
     this.emptyMessage = 'No hay productos en este catálogo',
     this.createButtonLabel = 'Cargar primer producto',
-    required this.onCreateItem,
+    this.onCreateItem,
   });
 
   @override
@@ -56,15 +56,17 @@ class CatalogGridOrganism<T> extends StatelessWidget {
         SvgPicture.asset(PUImages.noDataImageSvg, height: 140),
         const SizedBox(height: 20),
         Text(emptyMessage, style: PuTextStyle.description1, textAlign: TextAlign.center),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: 300,
-          child: ButtonPrimary(
-            title: createButtonLabel,
-            onPressed: onCreateItem,
-            load: false,
+        if (onCreateItem != null) ...[
+          const SizedBox(height: 20),
+          SizedBox(
+            width: 300,
+            child: ButtonPrimary(
+              title: createButtonLabel,
+              onPressed: onCreateItem!,
+              load: false,
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

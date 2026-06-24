@@ -4,9 +4,9 @@ import 'package:pu_material/utils/pu_assets.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class CatalogEmptyState extends StatelessWidget {
-  final VoidCallback onCreateCatalog;
+  final VoidCallback? onCreateCatalog;
 
-  const CatalogEmptyState({super.key, required this.onCreateCatalog});
+  const CatalogEmptyState({super.key, this.onCreateCatalog});
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +48,27 @@ class CatalogEmptyState extends StatelessWidget {
               ),
               const SizedBox(height: 48),
               const GettingStartedSteps(),
-              const SizedBox(height: 48),
-              Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 320,
+              if (onCreateCatalog != null) ...[
+                const SizedBox(height: 48),
+                Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 320,
+                  ),
+                  child: ButtonPrimary(
+                    title: 'Crear mi primer catálogo',
+                    onPressed: onCreateCatalog!,
+                    load: false,
+                  ),
                 ),
-                child: ButtonPrimary(
-                  title: 'Crear mi primer catálogo',
-                  onPressed: onCreateCatalog,
-                  load: false,
+                const SizedBox(height: 16),
+                Text(
+                  'Solo te tomará un par de minutos.',
+                  style: PuTextStyle.description2.copyWith(
+                    color: const Color(0xFF94A3B8),
+                    fontSize: 13,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Solo te tomará un par de minutos.',
-                style: PuTextStyle.description2.copyWith(
-                  color: const Color(0xFF94A3B8),
-                  fontSize: 13,
-                ),
-              ),
+              ],
             ],
           ),
         ),

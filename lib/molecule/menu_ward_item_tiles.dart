@@ -8,6 +8,8 @@ class MenuItemTile extends StatelessWidget {
   final bool selected;
   final Function(CatalogItemModel) onAddCart;
   final Function(CatalogItemModel, String) actionSelected;
+  final bool showEditAction;
+  final bool showDeleteAction;
 
   const MenuItemTile({
     super.key,
@@ -15,6 +17,8 @@ class MenuItemTile extends StatelessWidget {
     required this.selected,
     required this.onAddCart,
     required this.actionSelected,
+    this.showEditAction = true,
+    this.showDeleteAction = true,
   });
 
   @override
@@ -36,6 +40,8 @@ class MenuItemTile extends StatelessWidget {
           child: McOptionBtnTile(
             actionSelected: actionSelected,
             item: item,
+            showEditAction: showEditAction,
+            showDeleteAction: showDeleteAction,
           ),
         ),
       ],
@@ -48,6 +54,8 @@ class WardItemTile extends StatelessWidget {
   final bool selected;
   final Function(CatalogItemModel) onAddCart;
   final Function(CatalogItemModel, String) actionSelected;
+  final bool showEditAction;
+  final bool showDeleteAction;
 
   const WardItemTile({
     super.key,
@@ -55,6 +63,8 @@ class WardItemTile extends StatelessWidget {
     required this.selected,
     required this.onAddCart,
     required this.actionSelected,
+    this.showEditAction = true,
+    this.showDeleteAction = true,
   });
 
   @override
@@ -78,6 +88,8 @@ class WardItemTile extends StatelessWidget {
           child: McOptionBtnTile(
             actionSelected: actionSelected,
             item: item,
+            showEditAction: showEditAction,
+            showDeleteAction: showDeleteAction,
           ),
         ),
       ],

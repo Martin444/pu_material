@@ -7,13 +7,21 @@ class McOptionBtnTile<T> extends StatelessWidget {
     super.key,
     required this.actionSelected,
     required this.item,
+    this.showEditAction = true,
+    this.showDeleteAction = true,
   });
 
   final Function(T p1, String p2) actionSelected;
   final T item;
+  final bool showEditAction;
+  final bool showDeleteAction;
 
   @override
   Widget build(BuildContext context) {
+    if (!showEditAction && !showDeleteAction) {
+      return const SizedBox.shrink();
+    }
+
     return PopupMenuButton<String>(
       onSelected: (String result) {
         if (result == 'settings') {
@@ -24,20 +32,22 @@ class McOptionBtnTile<T> extends StatelessWidget {
       },
       offset: const Offset(-140, 30),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'settings',
-          child: ListTile(
-            leading: Icon(FluentIcons.edit_24_regular),
-            title: Text('Editar'),
+        if (showEditAction)
+          const PopupMenuItem<String>(
+            value: 'settings',
+            child: ListTile(
+              leading: Icon(FluentIcons.edit_24_regular),
+              title: Text('Editar'),
+            ),
           ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'info',
-          child: ListTile(
-            leading: Icon(FluentIcons.delete_24_regular),
-            title: Text('Eliminar'),
+        if (showDeleteAction)
+          const PopupMenuItem<String>(
+            value: 'info',
+            child: ListTile(
+              leading: Icon(FluentIcons.delete_24_regular),
+              title: Text('Eliminar'),
+            ),
           ),
-        ),
       ],
       child: Padding(
         padding: const EdgeInsets.all(10),
