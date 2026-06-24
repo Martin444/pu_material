@@ -9,12 +9,14 @@ class ShareLinkMenuDialog extends StatefulWidget {
   final String idMenu;
   final String? accountEmail;
   final String urlMenuOrigin;
+  final String? slug;
 
   const ShareLinkMenuDialog({
     super.key,
     required this.idMenu,
     this.accountEmail,
     required this.urlMenuOrigin,
+    this.slug,
   });
 
   @override
@@ -32,7 +34,10 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
   String? whatsappErrorText;
   String? emailErrorText;
 
-  String get menuUrl => '${widget.urlMenuOrigin}/${widget.idMenu}';
+  String get menuUrl {
+    final identifier = (widget.slug != null && widget.slug!.isNotEmpty) ? widget.slug! : widget.idMenu;
+    return '${widget.urlMenuOrigin}/$identifier';
+  }
 
   void _copyToClipboard() {
     Clipboard.setData(ClipboardData(text: menuUrl));
@@ -158,8 +163,9 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
 
           canvas.toBlob().then((blob) {
             final url = html.Url.createObjectUrlFromBlob(blob);
+            final qrFileName = (widget.slug != null && widget.slug!.isNotEmpty) ? widget.slug! : widget.idMenu;
             final anchor = html.AnchorElement(href: url)
-              ..setAttribute('download', 'menucom_qr_${widget.idMenu}.png')
+              ..setAttribute('download', 'menucom_qr_$qrFileName.png')
               ..style.display = 'none';
 
             html.document.body?.append(anchor);
