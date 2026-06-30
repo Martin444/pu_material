@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:pu_material/pu_material.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
@@ -41,6 +42,10 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
 
   void _copyToClipboard() {
     Clipboard.setData(ClipboardData(text: menuUrl));
+    FirebaseAnalytics.instance.logEvent(
+      name: 'catalog_link_copied',
+      parameters: {'catalog_id': widget.idMenu, 'source': 'share_dialog'},
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
@@ -96,6 +101,14 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
     final url =
         'https://wa.me/$trimmedNumber?text=${Uri.encodeComponent(menuUrl)}';
     if (await canLaunchUrl(Uri.parse(url))) {
+      FirebaseAnalytics.instance.logEvent(
+        name: 'catalog_shared',
+        parameters: {
+          'catalog_id': widget.idMenu,
+          'source': 'share_dialog',
+          'method': 'whatsapp',
+        },
+      );
       await launchUrl(Uri.parse(url));
     } else {
       setState(() {
@@ -130,6 +143,14 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
     final url =
         'mailto:$trimmedEmail?subject=${Uri.encodeComponent('Menú')}&body=${Uri.encodeComponent(menuUrl)}';
     if (await canLaunchUrl(Uri.parse(url))) {
+      FirebaseAnalytics.instance.logEvent(
+        name: 'catalog_shared',
+        parameters: {
+          'catalog_id': widget.idMenu,
+          'source': 'share_dialog',
+          'method': 'email',
+        },
+      );
       await launchUrl(Uri.parse(url));
     } else {
       setState(() {
@@ -173,6 +194,11 @@ class _ShareLinkMenuDialogState extends State<ShareLinkMenuDialog> {
             anchor.remove();
 
             html.Url.revokeObjectUrl(url);
+
+            FirebaseAnalytics.instance.logEvent(
+              name: 'catalog_qr_generated',
+              parameters: {'catalog_id': widget.idMenu, 'source': 'share_dialog'},
+            );
 
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
