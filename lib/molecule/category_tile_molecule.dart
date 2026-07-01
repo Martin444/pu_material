@@ -148,7 +148,7 @@ class _CategoryTileMoleculeState<T> extends State<CategoryTileMolecule<T>> {
                         const SizedBox(width: 8),
                         _ActionButton(
                           icon: Icons.delete_outline,
-                          color: Colors.redAccent.withOpacity(0.8),
+                          color: Colors.redAccent.withValues(alpha: 0.8),
                           onTap: () => widget.onDelete!(widget.item),
                           tooltip: 'Eliminar',
                         ),
