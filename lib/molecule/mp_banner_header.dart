@@ -33,8 +33,7 @@ class MPRefreshButton extends StatelessWidget {
             )
           : IconButton(
               onPressed: onRefresh,
-              icon: const Icon(
-                  FluentIcons.arrow_sync_24_regular, color: Colors.white),
+              icon: const Icon(FluentIcons.arrow_sync_24_regular, color: Colors.white),
               tooltip: 'Actualizar estado',
             ),
     );
@@ -63,10 +62,10 @@ class MPBannerHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -77,8 +76,8 @@ class MPBannerHeader extends StatelessWidget {
           ),
           child: Image.asset(
             'assets/logo/logo-mp.png',
-            width: 32,
-            height: 32,
+            width: 52,
+            height: 52,
           ),
         ),
         const SizedBox(width: 20),

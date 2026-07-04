@@ -42,7 +42,7 @@ class MPLinkBanner extends StatelessWidget {
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(14),
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

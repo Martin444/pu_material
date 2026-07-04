@@ -23,6 +23,7 @@ class MPBannerActions extends StatelessWidget {
           const Spacer(),
           SizedBox(
             width: 240,
+            height: 50,
             child: _LinkButton(onLink: onLink),
           ),
         ],
@@ -42,9 +43,9 @@ class _LinkButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF009EE3),
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         elevation: 8,
         shadowColor: Colors.black.withOpacity(0.3),
